@@ -4,9 +4,17 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 
-	<display-name>Struts Hibernate Examples</display-name>
 
+	<display-name>Struts 2 Web Application</display-name>
 
+<web:filter>
+	<web:filter-name>struts2</web:filter-name>
+	<web:filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</web:filter-class>
+</web:filter>
+<web:filter-mapping>
+	<web:filter-name>struts2</web:filter-name>
+	<web:url-pattern>/*</web:url-pattern>
+</web:filter-mapping>
 
 	<servlet>
 		<servlet-name>dispatcherServlet</servlet-name>
@@ -29,8 +37,8 @@
 		<param-name>isLog4jAutoInitializationDisabled</param-name>
 		<param-value>true</param-value>
 	</context-param>
-	
-    
+
+
 	<listener>
 		<listener-class>com.neusoft.cargo.log4j.Log4jConfigListener</listener-class>
 	</listener>
