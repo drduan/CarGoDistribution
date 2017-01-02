@@ -86,7 +86,7 @@ public class UserDao  extends BaseHibernateDAO{
 
 	public User findById(java.lang.Integer id) {
 		try {
-			User instance = (User) getSession().get("cn.elfsoft.entity.Video", id);
+			User instance = (User) getSession().get("com.neusoft.cargo.entity.User", id);
 			return instance;
 		} catch (RuntimeException re) {
 			throw re;

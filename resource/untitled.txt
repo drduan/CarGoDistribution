@@ -1,0 +1,31 @@
+import org.hibernate.Session;
+public class HibernateDao extends Parent implements Interface {
+	
+
+
+	private Session Session;
+	public Session getSession(){
+		return HibernateSessionFactory.getSession;
+	}
+
+	public boolean add(Object obj){
+
+		Transaction transaction = Session.beginTransaction();
+
+		try
+		{
+			Session.save(obj);
+			transaction.commit();
+		}catch (HibernateException e) {
+			
+			transaction.rollback();
+			flag = false;
+			e.printStacktrace();
+
+		}finally{
+			
+		}
+
+	}
+
+}

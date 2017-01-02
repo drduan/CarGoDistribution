@@ -62,6 +62,17 @@
 		<url-pattern>*.action</url-pattern>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>validationCode</servlet-name>
+		<servlet-class>com.neusoft.cargo.servlet.ValidationCodeServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>validationCode</servlet-name>
+		<url-pattern>/validationCodeServlet.png</url-pattern>
+	</servlet-mapping>
+
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>/WEB-INF/log4j.xml</param-value>
@@ -74,9 +85,9 @@
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
-	<listener>
-		<listener-class>com.neusoft.cargo.log4j.Log4jConfigListener</listener-class>
-	</listener>
+	 <listener>
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>
 
 	<!-- 配置可以把post请求转为put delete请求的filter -->
 

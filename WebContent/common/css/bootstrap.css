@@ -4493,7 +4493,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #f8f8f8;
+	
+	/* todo*/
+  /*background-color: #f8f8f8;*/
+ background-color: none;
   border-color: #e7e7e7;
 }
 .navbar-default .navbar-brand {
@@ -4960,7 +4963,9 @@ a.badge:focus {
   padding-bottom: 30px;
   margin-bottom: 30px;
   color: inherit;
-  background-color: #eee;
+  background-color: none;
+  /*background-color: #eee;*/
+ 
 }
 .jumbotron h1,
 .jumbotron .h1 {

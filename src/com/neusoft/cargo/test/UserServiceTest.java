@@ -1,19 +1,35 @@
 package com.neusoft.cargo.test;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.runner.RunWith;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/test-app-config.xml"})
-@Configuration
-@Transactional
-@EnableTransactionManagement
-@ComponentScan({ "com.company" })
+//@ContextConfiguration({ "/spring-hibernate.xml" })
+//@Configuration
+//@Transactional
+//@EnableTransactionManagement
+//@ComponentScan({ "com.neusoft.cargo" })
 public class UserServiceTest {
+//	@Autowired
+//	private static UserServiceImpl userService;
+	private static final Logger logger = LogManager.getLogger(UserServiceTest.class);
+
+	public static void main(String[] args) {
+
+		
+		 logger.trace("Entering application.");
+	     //   Bar bar = new Bar();
+	        if (true) {
+	            logger.error("Didn't do it.");
+	        }
+	        logger.trace("Exiting application.");
+	        
+//		User person = new User();
+//		person.setUsername("a");
+//		userService.save(person);
+		// TODO: handle exception
+	}
 
 }
