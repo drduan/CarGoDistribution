@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>欢迎注册-中国货运物流信息平台</title>
 </head>
-
+<script type="text/javascript" src="common/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
 function refreshCode(imgObj) {  
     if (!imgObj) {  
@@ -23,7 +23,15 @@ function refreshCode(imgObj) {
     }  
 }  
 </script>
-<body>
+
+<script type="text/javascript">
+function hide(){
+	$("#p").hide();
+			}
+
+</script>
+
+<body onload="hide()">
 	<div class="container-fluid">
 	 <jsp:include page="head.jsp"></jsp:include>
 		<div class="row">
@@ -34,7 +42,7 @@ function refreshCode(imgObj) {
 						<form method="post"
 							action="${pageContext.request.contextPath}/User/register.do">
 							<ul class="list-unstyled">
-								<li>您的身份是 <input type="radio" name="usertype" value="DRIVER">
+								<li>您的身份是 <input type="radio" name="usertype" value="DRIVER" id="driver">
 									车主： <input type="radio" name="usertype" value="OWNER"> 货主：
 								</li>
 								<li> 会员登录名 
@@ -60,10 +68,16 @@ function refreshCode(imgObj) {
 							</ul>
 						</form>
 					</div>
-					<div class="col-md-4"></div>
+					<div class="col-md-4">
+						
+						
+						<p id="p">hello</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script type="text/javascript" src="common/js/bootstrap.js"></script>
 </body>
 </html>

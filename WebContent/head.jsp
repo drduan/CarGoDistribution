@@ -6,6 +6,7 @@
 <link href="common/css/bootstrap.css" rel="stylesheet" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
+
 </head>
 <body class="container-fluid" style="margin: 0;">
 

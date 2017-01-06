@@ -18,43 +18,43 @@
 			<nav class="navbar navbar-default " 
 				role="navigation">
 				<div class="nav-navbar-btn" align="center">
-					<a class="first01">分站</a> <a href="http://beijing.chinawutong.com/"
-						target="_blank">北京</a> <a href="http://shanghai.chinawutong.com/"
-						target="_blank">上海</a> <a href="http://guangdong.chinawutong.com/"
-						target="_blank">广东</a> <a href="http://zhejiang.chinawutong.com/"
-						target="_blank">浙江</a> <a href="http://jiangsu.chinawutong.com/"
-						target="_blank">江苏</a> <a href="http://tianjin.chinawutong.com/"
-						target="_blank">天津</a> <a href="http://chongqing.chinawutong.com/"
-						target="_blank">重庆</a> <a href="http://sx.chinawutong.com/"
-						target="_blank">山西</a> <a href="http://shandong.chinawutong.com/"
-						target="_blank">山东</a> <a href="http://henan.chinawutong.com/"
-						target="_blank">河南</a> <a href="http://sichuan.chinawutong.com/"
-						target="_blank">四川</a> <a href="http://hubei.chinawutong.com/"
-						target="_blank">湖北</a> <a href="http://fujian.chinawutong.com/"
-						target="_blank">福建</a> <a href="http://shanxi.chinawutong.com/"
-						target="_blank">陕西</a> <a href="http://hunan.chinawutong.com/"
-						target="_blank">湖南</a> <a href="http://yunnan.chinawutong.com/"
-						target="_blank">云南</a> <a href="http://guangxi.chinawutong.com/"
-						target="_blank">广西</a> <a href="http://anhui.chinawutong.com/"
-						target="_blank">安徽</a> <a href="http://hebei.chinawutong.com/"
-						target="_blank">河北</a> <a href="http://hainan.chinawutong.com/"
-						target="_blank">海南</a> <a href="http://liaoning.chinawutong.com/"
-						target="_blank">辽宁</a> <a href="http://qinghai.chinawutong.com/"
-						target="_blank">青海</a> <a href="http://jilin.chinawutong.com/"
-						target="_blank">吉林</a> <a href="http://gansu.chinawutong.com/"
-						target="_blank">甘肃</a> <a href="http://jiangxi.chinawutong.com/"
-						target="_blank">江西</a> <a href="http://hlj.chinawutong.com/"
-						target="_blank">黑龙江</a> <a href="http://nmg.chinawutong.com/"
-						target="_blank">内蒙古</a> <a href="http://ningxia.chinawutong.com/"
-						target="_blank">宁夏</a> <a href="http://guizhou.chinawutong.com/"
+					<a class="first01">分站</a> <a href="#"
+						target="_blank">北京</a> <a href="#"
+						target="_blank">上海</a> <a href="#"
+						target="_blank">广东</a> <a href="#"
+						target="_blank">浙江</a> <a href="#"
+						target="_blank">江苏</a> <a href="#"
+						target="_blank">天津</a> <a href="#"
+						target="_blank">重庆</a> <a href="#"
+						target="_blank">山西</a> <a href="#"
+						target="_blank">山东</a> <a href="#"
+						target="_blank">河南</a> <a href="#"
+						target="_blank">四川</a> <a href="#"
+						target="_blank">湖北</a> <a href="#"
+						target="_blank">福建</a> <a href="#"
+						target="_blank">陕西</a> <a href="#"
+						target="_blank">湖南</a> <a href="#"
+						target="_blank">云南</a> <a href="#"
+						target="_blank">广西</a> <a href="#"
+						target="_blank">安徽</a> <a href="#"
+						target="_blank">河北</a> <a href="#"
+						target="_blank">海南</a> <a href="#"
+						target="_blank">辽宁</a> <a href="#"
+						target="_blank">青海</a> <a href="#"
+						target="_blank">吉林</a> <a href="#"
+						target="_blank">甘肃</a> <a href="#"
+						target="_blank">江西</a> <a href="#"
+						target="_blank">黑龙江</a> <a href="#"
+						target="_blank">内蒙古</a> <a href="#"
+						target="_blank">宁夏</a> <a href="#"
 						target="_blank">贵州</a> <span><a data-toggle="collapse"
 						data-target="#demo">更多</a>
 						<div id="demo" class="collapse in">
-							<a href="http://xianggang.chinawutong.com/" target="_blank">香港</a>
-							<a href="http://xinjiang.chinawutong.com/" target="_blank">新疆</a>
-							<a href="http://taiwan.chinawutong.com/" target="_blank">台湾</a> <a
-								href="http://xizang.chinawutong.com/" target="_blank">西藏</a> <a
-								href="http://aomen.chinawutong.com/" target="_blank">澳门</a>
+							<a href="#" target="_blank">香港</a>
+							<a href="#" target="_blank">新疆</a>
+							<a href="#" target="_blank">台湾</a> <a
+								href="#" target="_blank">西藏</a> <a
+								href="#" target="_blank">澳门</a>
 						</div> </span>
 				</div>
 			</nav>

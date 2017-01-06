@@ -75,8 +75,9 @@
 
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
-		<param-value>/WEB-INF/log4j.xml</param-value>
+		<param-value>classpath:log4j.properties</param-value>
 	</context-param>
+	
 	<!-- 监听servletContext，启动contextConfigLocation中的spring配置信息 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
