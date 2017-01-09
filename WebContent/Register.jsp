@@ -10,30 +10,42 @@
 </head>
 <script type="text/javascript" src="common/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
-function refreshCode(imgObj) {  
-    if (!imgObj) {  
-        imgObj = document.getElementById("validationCode");  
-    }  
-    var index = imgObj.src.indexOf("?");  
-    if(index != -1) {  
-        var url = imgObj.src.substring(0,index + 1);  
-        imgObj.src = url + Math.random();  
-    } else {  
-        imgObj.src = imgObj.src + "?" + Math.random();  
-    }  
-}  
+	function refreshCode(imgObj) {
+		if (!imgObj) {
+			imgObj = document.getElementById("validationCode");
+		}
+		var index = imgObj.src.indexOf("?");
+		if (index != -1) {
+			var url = imgObj.src.substring(0, index + 1);
+			imgObj.src = url + Math.random();
+		} else {
+			imgObj.src = imgObj.src + "?" + Math.random();
+		}
+	}
 </script>
 
 <script type="text/javascript">
-function hide(){
-	$("#p").hide();
-			}
+	$(document).ready(
+	function () {
+
+	
+$("#usertype").click(function(){
+	
+	
+var selectt = $("#usertype").val();
+console.log(selectt);
+//$('#'+selectt).show();
+
+$("[id="+selectt+"]").toggle();
+		});
+	});
+
 
 </script>
 
-<body onload="hide()">
+<body >
 	<div class="container-fluid">
-	 <jsp:include page="head.jsp"></jsp:include>
+		<jsp:include page="head.jsp"></jsp:include>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
@@ -42,24 +54,29 @@ function hide(){
 						<form method="post"
 							action="${pageContext.request.contextPath}/User/register.do">
 							<ul class="list-unstyled">
-								<li>您的身份是 <input type="radio" name="usertype" value="DRIVER" id="driver">
-									车主： <input type="radio" name="usertype" value="OWNER"> 货主：
+								<li>
+								<select id="usertype" >
+										<option value="DRIVER">车主</option>
+										<option value="OWNER">货主</option>
+										<option 	value="GUEST">游客</option>
+								</select>
+								<br/>
 								</li>
-								<li> 会员登录名 
-								<input type="text" name="username"/> 
+								<li>会员登录名 <input type="text" name="username" />
 								</li>
-								<li>手机号 <input type="text" name="phone" placeholder="请输入手机号">
-									<button type="button" value="">获取验证码</button>
+								<li>手机号
+								 <input type="text" name="phone" placeholder="请输入手机号">
+								<button type="button" value="">获取验证码</button>
 								</li>
-								<li> 验证码 <input type="text" placeholder="请输入短信中的验证码	">
-
-									<button type="button" hidden="hidden" value="确定" />
+								<li>验证码
+								 <input type="text" placeholder="请输入短信中的验证码">
 								</li>
-									<img id="validationCode" alt="验证码图片" title="验证码图片"
-									src="./validationCodeServlet.png"
-									onclick="refreshCode(this)" />
-									<a id="aRecode" href="javascript:void(0);"
+								<li>
+								<img id="validationCode" alt="验证码图片" title="验证码图片"
+									src="./validationCodeServlet.png" onclick="refreshCode(this)" />
+								<a id="aRecode" href="javascript:void(0);"
 									onclick="refreshCode()">换一张</a>
+									</li>
 								<li>密码 <input type="text" placeholder="请输入6-20位登录密码"
 									id="password"></li>
 								<li>再次输入密码<input type="text" placeholder="请再次输入登录密码"
@@ -69,15 +86,18 @@ function hide(){
 						</form>
 					</div>
 					<div class="col-md-4">
-						
-						
-						<p id="p">hello</p>
+
+						<div class="tab-content">
+							<div id="OWNER" style="display: none" >hello owner</div>
+							<div id="DRIVER" style="display: none" >hello driver</div>
+							<div id="GUEST" style="display: none" >hello guest</div>
+
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	<script type="text/javascript" src="common/js/bootstrap.js"></script>
+</div>
+		<script type="text/javascript" src="common/js/bootstrap.js"></script>
 </body>
 </html>

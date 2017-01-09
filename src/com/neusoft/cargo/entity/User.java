@@ -12,6 +12,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+
+// 用户为guest 存着基础信息
 @Entity
 @Table(name = "user",uniqueConstraints={
 		@UniqueConstraint(columnNames= "id"),
