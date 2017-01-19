@@ -5,20 +5,32 @@
 <head>
 <title>空车配货平台首页-I</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="common/css/bootstrap.css" rel="stylesheet" />
+<link href="common/css/bootstrap.min.css" rel="stylesheet" />
+<link href="common/css/font-awesome.min.css" rel="stylesheet"/>
+
+<style type="text/css">
+.navbar {
+  position: relative;
+  min-height: 20px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+}
+</style>
 </head>
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid" style="background: ddddd">
 
-		<div class="row" style="  background-image: url(resources/images/index_car.png) ">
+<!--  background-image: url(resources/images/index_car.png) -->
+		<div class="row">
 
+			
+			<div class="container-fluid" >
 			<jsp:include page="head.jsp"></jsp:include>
-			<div class="col-md-12">
-			<nav class="navbar navbar-default " 
-				role="navigation">
-				<div class="nav-navbar-btn" align="center">
-					<a class="first01">分站</a> <a href="#"
+			<nav class="navbar .nav-divider" 
+				role="navigation" style="background: #dddddd" >
+				<div class="nav" style=" border-bottom: solid #ddddd 1px;padding-left: 0px;font-size: 12px" >
+					<a class="first01" style="color: red" >分站</a> <a href="#"
 						target="_blank">北京</a> <a href="#"
 						target="_blank">上海</a> <a href="#"
 						target="_blank">广东</a> <a href="#"
@@ -49,7 +61,7 @@
 						target="_blank">宁夏</a> <a href="#"
 						target="_blank">贵州</a> <span><a data-toggle="collapse"
 						data-target="#demo">更多</a>
-						<div id="demo" class="collapse in">
+						<div id="demo" class="collapse out">
 							<a href="#" target="_blank">香港</a>
 							<a href="#" target="_blank">新疆</a>
 							<a href="#" target="_blank">台湾</a> <a
@@ -166,51 +178,9 @@
 	</div>
 
 	<!-- 各种模态框 -->
-	<div class="modal fade" id="modal-container-302051" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">×</button>
-					<h4 class="modal-title" id="myModalLabel">登录框</h4>
-				</div>
-				<div class="modal-body">
-					<form role="form">
-						<div class="form-group">
-
-							<label for="exampleInputEmail1"> 邮箱地址 </label> <input
-								type="email" class="form-control" id="exampleInputEmail1" />
-						</div>
-						<div class="form-group">
-
-							<label for="exampleInputPassword1"> 密码 </label> <input
-								type="password" class="form-control" id="exampleInputPassword1" />
-						</div>
-						<div class="form-group">
-
-							<label for="exampleInputFile"> 输入文件 </label> <input type="file"
-								id="exampleInputFile" />
-							<p class="help-block">Example block-level help text here.</p>
-						</div>
-						<div class="checkbox">
-
-							<label> <input type="checkbox" /> Check me out
-							</label>
-						</div>
-						<button type="submit" class="btn btn-default" data-dismiss="modal">
-							Submit</button>
-					</form>
-				</div>
-				<div class="modal-footer"></div>
-			</div>
-
-		</div>
-
-	</div>
+	
 
 	<script type="text/javascript" src="common/js/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="common/js/bootstrap.js"></script>
+	<script type="text/javascript" src="common/js/bootstrap.min.js"></script>
 </body>
 </html>
