@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-
+<link href="../common/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
 <body class="container-fluid" style="margin: 0;">
 
@@ -18,24 +18,29 @@
 				<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
 					class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">欢迎来到空车配货网站！</a>
+			<a class="navbar-brand" href="<%=request.getContextPath() %>">欢迎来到空车配货网站！</a>
 		</div>
 
 		<div class="collapse navbar-collapse "
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">手机版app下载</a></li>
-				<li><a href="#">帮助</a></li>
+				<li class="active">
+					
+					<a href="#"><i class="fa fa-android"></i>App下载</a></li>
+				<li>
+					<a href="#">帮助</a></li>
 
 			</ul>
 		
 			<ul class="nav navbar-nav navbar-right">
 
-				<li><a href="User/Register.jsp">注册</a></li>
+				<li><a href="<%=request.getContextPath() %>/User/register_step1.jsp">
+					注册</a></li>
 				<li><a id="modal-302051" href="#modal-container-302051"
 					role="button" class="btn" data-toggle="modal"><i class="fa fa-user"></i>登录</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">菜单<strong class="caret"></strong></a>
+					data-toggle="dropdown">
+					菜单<strong class="caret"></strong></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">Action</a></li>
 						<li><a href="#">Another action</a></li>

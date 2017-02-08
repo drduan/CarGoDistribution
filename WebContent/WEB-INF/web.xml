@@ -97,5 +97,15 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 	
+	<web:error-page>
+	 <error-code>404</error-code>  
+         <location>/error.jsp</location>  
+ 	</web:error-page>
+    	<web:error-page>
+         <error-code>500</error-code>  
+      <location>/error.jsp</location>  
+      
+	</web:error-page>
+
 
 </web-app>

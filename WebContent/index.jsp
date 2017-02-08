@@ -177,6 +177,7 @@
 		</div>
 	</div>
 
+<jsp:include page="foot.jsp"></jsp:include>
 	<!-- 各种模态框 -->
 	
 
