@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.neusoft.cargo.dao.DepretedUserDao;
 import com.neusoft.cargo.dao.UserDao;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.service.UserService;
@@ -13,6 +14,7 @@ import com.neusoft.cargo.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 	@Resource
+//	private DepretedUserDao userDao;
 	private UserDao userDao;
 	
 
@@ -27,8 +29,11 @@ public class UserServiceImpl implements UserService {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else {
 		}
+		else {
+			
+		}
+		
 	}
 
 	public void remove(int id) {
@@ -40,6 +45,7 @@ public class UserServiceImpl implements UserService {
 
 	public User find(int id) {
 	//	return em.find(User.class, id);
-		return userDao.findById(id);
+//		return userDao.findById(id);
+		return userDao.findOne(id);
 	}
 }

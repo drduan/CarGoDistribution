@@ -1,20 +1,13 @@
 package com.neusoft.cargo.action;
 
 import java.io.File;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.digester.annotations.rules.AttributeCallParam;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
-// 这是一个pojo
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,11 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
-import com.google.gxp.org.apache.xerces.impl.xpath.regex.REUtil;
-import com.neusoft.cargo.entity.Driver;
-import com.neusoft.cargo.entity.Owner;
 import com.neusoft.cargo.entity.User;
-import com.neusoft.cargo.entity.User.UserType;
 import com.neusoft.cargo.service.impl.UserServiceImpl;
 
 @Controller("UserAction")
@@ -52,31 +41,16 @@ public class UserAction extends BaseAction {
 	 * 
 	 * 	@Validated ？？
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "/register.do")
-	public String Register(@Validated User user, String userType, HttpServletRequest req, HttpSession session) {
+	@RequestMapping(method = RequestMethod.POST, value = "register.do")
+	public String Register(User user, String userType, HttpServletRequest req, HttpSession session)
+	{
 
-		
-		Logger.getRootLogger().log(Priority.INFO, "GoIn");
-	
-		if (user == null) {
-
-			return "../error";
-		}
-		if (user.getUsertype() == UserType.DRIVER) {
-			User user2 = new Driver();
+		System.out.println(user.getEmail());
+			User user2 = new User();
 			user2 = user;
 			userService.save(user);
-			return "redirect:/";
-		}
-		if (user.getUsertype() == UserType.OWNER) {
-			User user2 = new Owner();
-			user2 = user;
-			userService.save(user);
-			return "redirect:/";
-		} else {
-			return "../error";
-		}
-//		Redirect
+
+		return "redirect:/";
 	}
 
 	/*
@@ -87,9 +61,7 @@ public class UserAction extends BaseAction {
 	@ResponseBody
 	public String userexist(HttpSession session) {
 
-		// htmlobj=$.ajax({url:"/jquery/test1.txt",async:false});
 
-		// return "{\"message\",\"fail\"}";
 		return "{\"message\":\"" + session.getAttribute("validationCode") + "\"}";
 
 	}
@@ -134,27 +106,18 @@ public class UserAction extends BaseAction {
 	 * 	
 	 */
 	@RequestMapping(value = "/reg_next.do" ,method=RequestMethod.GET)
-//	public String dealUserType(@RequestParam(value = "cust_kind") String cust_kind,RedirectAttributes redirectAttrs,Model model) 
 	
-	public String dealUserType(@RequestParam(value = "cust_kind") String cust_kind,RedirectAttributes redirectAttrs,Model model) 
-	
+	public String dealUserType(@RequestParam(value = "cust_kind") int cust_kind,RedirectAttributes redirectAttrs,Model model) 
 	{
 		
-		//@ModelAttribute 并不是存在session里边
 		
-		System.err.println(""+cust_kind);
-//		,BindingResult result
-//		if (result.hasErrors()) {
-////		     return "accounts/new";
-//			Logger.getRootLogger().log(Priority.ERROR, "HasError");
-//		   }
-		
+
 		switch (cust_kind) {
 		
-		case "1":
+		case 1:
 			redirectAttrs.addFlashAttribute("usertype", "1");
 			break;
-		case "2":
+		case 2:
 			redirectAttrs.addFlashAttribute("usertype", "2");
 			break;
 		default:
