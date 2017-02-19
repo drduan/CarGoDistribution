@@ -4,8 +4,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
-<link href="../common/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body class="container-fluid" style="margin: 0;">
 
@@ -36,7 +34,7 @@
 
 
 				<li><a
-					href="<%=request.getContextPath() %>/User/register_step1.jsp">
+					href="<%=request.getContextPath() %>/User/register.do">
 						注册</a></li>
 				<li><a id="modal-302051" href="#modal-container-302051"
 					role="button" class="btn" data-toggle="modal"><i

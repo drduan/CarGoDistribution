@@ -5,15 +5,16 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="../common/css/bootstrap.min.css" />
-<script type="text/javascript" src="../common/js/jquery-3.1.1.min.js"></script>
+<link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../static/css/font-awesome.min.css" rel="stylesheet"/>
+<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
 
 <title>欢迎注册-中国货运物流信息平台-第一步</title>
 </head>
 <body>
 
 	<div class="container-fluid">
-		<jsp:include page="../head.jsp"></jsp:include>
+		<jsp:include page="../include/head.jsp"></jsp:include>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
@@ -102,6 +103,6 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="../common/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
 </body>
 </html>

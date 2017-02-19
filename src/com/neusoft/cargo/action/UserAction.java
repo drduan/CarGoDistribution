@@ -14,6 +14,8 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.PasswordService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,19 +43,23 @@ public class UserAction extends BaseAction {
 
 	Logger logger = Logger.getLogger(UserAction.class);
 
-	// @RequestMapping("/greeting")
-	// public String greeting(@RequestParam(value="name", required=false,
-	// defaultValue="World") String name, Model model) {
-	// model.addAttribute("name", name);
-	// return "greeting";
-	// }
+	
+	@RequestMapping(value="register.do", method = RequestMethod.GET)
+	public String index() {
+
+		return "views/layout/register_step1";
+	}
+	
+	
+	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	@ResponseBody
-//	@RequiresPermissions(value)
-	// @@RequestBody
 	public String login(User userValidate) {
 
 		logger.log(Priority.DEBUG, "OK");
+		
+		 ensureUserIsLoggedOut();
+		
 		UsernamePasswordToken token = new UsernamePasswordToken(userValidate.getUsername(), userValidate.getPassword());
 		// token.setRememberMe(userValidate.getRememberme());
 		token.setRememberMe(true);
@@ -69,6 +75,33 @@ public class UserAction extends BaseAction {
 			return "error password";
 		}
 
+	}
+	
+	// Logout the user fully before continuing.
+	private void ensureUserIsLoggedOut()
+	{
+	    try
+	    {
+	        // Get the user if one is logged in.
+	        Subject currentUser = SecurityUtils.getSubject();
+	        if (currentUser == null)
+	        {
+	        	logger.log(Priority.DEBUG,"current user == null");
+	            return;
+	        }
+	        // Log the user out and kill their session if possible.
+	        currentUser.logout();
+	        Session session = currentUser.getSession(false);
+	        if (session == null)
+	            return;
+
+	        session.stop();
+	    }
+	    catch (Exception e)
+	    {
+	        // Ignore all errors, as we're trying to silently 
+	        // log the user out.
+	    }
 	}
 
 	/*
@@ -189,13 +222,15 @@ public class UserAction extends BaseAction {
 		default:
 			break;
 		}
-		return "redirect:../User/redirect_reg_next.do";// 默认为forward模式
+		return "redirect:/User/redirect_reg_next.do";// 默认为forward模式
 	}
 
 	@RequestMapping(value = "redirect_reg_next.do", method = RequestMethod.GET)
 	public String dealUserTypeAndRedirect(@ModelAttribute("usertype") String form,
 			RedirectAttributesModelMap redirectAttrs, ModelAndView model) {
-		return "forward:///User/register_step2.jsp";
+		
+		logger.log(Priority.DEBUG, "message");
+		return "views/layout/register_step2";
 	}
 
 }

@@ -4,12 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link href="common/css/bootstrap.min.css" rel="stylesheet" />
-<link href="common/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="/static/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
 <body>
-<div class="footer">
+<div class="footer" style="display: none">
 	<div class="container">
 		<div class="pull-left">
 			<ul class="concat clearfix list-unstyled form-inline">

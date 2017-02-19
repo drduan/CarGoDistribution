@@ -5,8 +5,8 @@
 <head>
 <title>空车配货平台首页-I</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="common/css/bootstrap.min.css" rel="stylesheet" />
-<link href="common/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="static/css/bootstrap.min.css" rel="stylesheet" />
+<link href="static/css/font-awesome.min.css" rel="stylesheet"/>
 
 <style type="text/css">
 .navbar {
@@ -26,7 +26,7 @@
 
 			
 			<div class="container-fluid" >
-			<jsp:include page="head.jsp"></jsp:include>
+			<jsp:include page="../include/head.jsp"></jsp:include>
 			<nav class="navbar .nav-divider" 
 				role="navigation" style="background: #dddddd" >
 				<div class="nav" style=" border-bottom: solid #ddddd 1px;padding-left: 0px;font-size: 12px" >
@@ -177,11 +177,11 @@
 		</div>
 	</div>
 
-<jsp:include page="foot.jsp"></jsp:include>
+<jsp:include page="../include/foot.jsp"></jsp:include>
 	<!-- 各种模态框 -->
 	
 
-	<script type="text/javascript" src="common/js/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="common/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -142,7 +142,7 @@ $("#usertype").change(
 
 <body >
 	<div class="container-fluid">
-		<jsp:include page="../head.jsp"></jsp:include>
+		<jsp:include page="../include/head.jsp"></jsp:include>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
