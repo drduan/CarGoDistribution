@@ -1,6 +1,9 @@
 package com.neusoft.cargo.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,16 +12,23 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import net.sf.oval.constraint.NotEmpty;
+
 // 用户为guest 存着基础信息
 @Entity
-@Table(name = "user",uniqueConstraints={
+
+@Table(name = "t_user",uniqueConstraints={
 		@UniqueConstraint(columnNames= "id"),
-		@UniqueConstraint(columnNames = "Phone")
+//		@UniqueConstraint(columnNames = "Phone") phone 独立主键
 })
 public class User implements Serializable{
 
@@ -59,7 +69,7 @@ public class User implements Serializable{
 		this.email = email;
 	}
 
-	@NotNull
+	@NotEmpty(message="用户名不能为空")
 	private String username;
 	@NotNull
 	@Size(min = 11, max = 15)
@@ -71,7 +81,29 @@ public class User implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private UserType usertype;
 
+	 	@ManyToMany    
+	    @JoinTable(name="t_user_role",joinColumns={@JoinColumn(name="user_id")},inverseJoinColumns={@JoinColumn(name="role_id")})    
+	 	private List<Role> roleList;//一个用户具有多个角色  	
+	
+	    public List<Role> getRoleList() {    
+	        return roleList;    
+	    }    
+	    public void setRoleList(List<Role> roleList) {    
+	        this.roleList = roleList;    
+	    }    
+	        
+	    @Transient    
+	    public Set<String> getRolesName(){    
+	        List<Role> roles=getRoleList();    
+	        Set<String> set=new HashSet<String>();    
+	        for (Role role : roles) {    
+	            set.add(role.getRolename());    
+	        }    
+	        return set;    
+	    }    
+	
 	// 新添加 身份证号 和真实姓名
+
 
 
 	@Size(min = 15, max = 18)

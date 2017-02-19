@@ -30,4 +30,19 @@ public class UserDao  extends AbstractHibernateDAO< User >{
 	public void save(User entity) {
 		super.save(entity);
 	}
+	
+	
+	public User findByName(String name)
+	{
+		
+		String hql= "from bean.User u where u.name=? and u.password=?";
+            return   (User) getHibernateTemplate().find(hql, new String[]{null,name});
+		// this.getHibernateTemplate().
+//		return getCurrentSession().find(User, name)
+//		public T findOne(final long id) {
+//			return (T) getCurrentSession().get(clazz, id);
+//		}
+
+//		return null;
+	}
 }

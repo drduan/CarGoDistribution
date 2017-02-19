@@ -10,7 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
-@Entity
+//@Entity
 public class Student {
 	private int id;
 	private String name;

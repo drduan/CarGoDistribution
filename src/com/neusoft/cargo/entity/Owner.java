@@ -7,9 +7,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "owner")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+//@Entity
+//@Table(name = "owner")
+//@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Owner extends User implements Serializable{
 
 	/**

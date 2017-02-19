@@ -5,12 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link href="../common/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="../common/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body class="container-fluid" style="margin: 0;">
 
 	<nav class="navbar " role="navigation"
-		style="margin-top: 0px; margin-bottom: 0px; border-bottom-width: 0px;  border-bottom: solid #ddddd 1px">
+		style="margin-top: 0px; margin-bottom: 0px; border-bottom-width: 0px; border-bottom: solid #ddddd 1px">
 		<div class="navbar-header">
 
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -24,23 +24,31 @@
 		<div class="collapse navbar-collapse "
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active">
-					
-					<a href="#"><i class="fa fa-android"></i>App下载</a></li>
-				<li>
-					<a href="#">帮助</a></li>
+				<li class="active"><a href="#"><i class="fa fa-android"></i>App下载</a></li>
+				<li><a href="#">帮助</a></li>
 
 			</ul>
-		
+
 			<ul class="nav navbar-nav navbar-right">
 
-				<li><a href="<%=request.getContextPath() %>/User/register_step1.jsp">
-					注册</a></li>
+				<% String name=(String)session.getAttribute("adminname"); 
+   if(name!=null){%>
+
+
+				<li><a
+					href="<%=request.getContextPath() %>/User/register_step1.jsp">
+						注册</a></li>
 				<li><a id="modal-302051" href="#modal-container-302051"
-					role="button" class="btn" data-toggle="modal"><i class="fa fa-user"></i>登录</a></li>
+					role="button" class="btn" data-toggle="modal"><i
+						class="fa fa-user"></i>登录</a></li>
+
+
+
+
+
+
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">
-					菜单<strong class="caret"></strong></a>
+					data-toggle="dropdown"> 菜单<strong class="caret"></strong></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">Action</a></li>
 						<li><a href="#">Another action</a></li>
@@ -50,6 +58,35 @@
 						<li class="divider"></li>
 						<li><a href="#">One more separated link</a></li>
 					</ul></li>
+				<%} else{ %>
+
+
+
+
+				<li class="opts__item message has-unread hidden-sm"><a
+					id="dLabel" class="dropdown-toggle-message"
+					href="/user/notifications"><span class="sr-only">消息</span><span
+						id="messageCount" class="fa fa-bell-o"></span></a>
+				</li>
+				<li class="dropdown hoverDropdown"
+					style="width: 30px; height: 30px; margin-right: 15px"><a
+					class="dropdownBtn user-avatar" data-toggle="dropdown"
+					style="background-image: url('https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64'); width: 30px; height: 30px"
+					href="/u/drduan" aria-expanded="true"> </a>
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li><a href="/u/drduan">我的主页</a></li>
+						<li><a href="/u/drduan/about">我的档案</a></li>
+						<li><a href="/user/finance">我的资产</a></li>
+						<li><a href="/user/settings">账号设置</a></li>
+						<li><a
+							href="/api/user/logout?_=d1495be86a2aa7814b3545ae3ed764b1">退出</a></li>
+						<li class="divider"></li>
+						<li><a href="https://board.segmentfault.com/">建议反馈</a></li>
+						<li><a class="js__action--complain"
+							href="javascript:void(0);">用户申诉</a></li>
+					</ul></li>
+				<%} %>
+
 			</ul>
 
 		</div>
@@ -57,7 +94,7 @@
 	</nav>
 
 
-<div class="modal fade" id="modal-container-302051" role="dialog"
+	<div class="modal fade" id="modal-container-302051" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">

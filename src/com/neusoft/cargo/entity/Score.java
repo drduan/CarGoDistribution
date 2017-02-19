@@ -8,8 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="score")
+//@Entity
+//@Table(name="score")
 public class Score {
 	private int id;
 	private Student student;

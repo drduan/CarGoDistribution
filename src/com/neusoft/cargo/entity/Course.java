@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
-@Entity
+//@Entity
 public class Course {
 	private int id;
 	@NotNull

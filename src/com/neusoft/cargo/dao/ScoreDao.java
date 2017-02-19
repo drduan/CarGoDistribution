@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.neusoft.cargo.entity.Score;
 
 
-@Repository("ScoreDao")
+//@Repository("ScoreDao")
 public class ScoreDao  extends BaseHibernateDAO{
 
 	public void save(Score transientInstance) throws Exception {

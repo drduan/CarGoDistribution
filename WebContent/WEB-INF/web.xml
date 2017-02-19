@@ -8,7 +8,7 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring.xml,classpath:spring-hibernate.xml</param-value>
+		<param-value>classpath:spring.xml,classpath:spring-hibernate.xml,classpath:spring-shiro.xml</param-value>
 	</context-param>
 
 
@@ -28,7 +28,7 @@
 	<!-- openSessionInView配置 作用是延迟session关闭到view层 -->
 	<filter>
 		<filter-name>OpenSessionInViewFilter</filter-name>
-		<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
 		<init-param>
 			<param-name>singleSession</param-name>
 			<param-value>false</param-value>
@@ -38,6 +38,11 @@
 		<filter-name>OpenSessionInViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<!-- 浏览器form表单只支持GET与POST请求，而DELETE、PUT等method并不支持， spring3.0添加了一个过滤器，可以将这些请求转换为标准的http方法，使得支持GET、POST、PUT与DELETE请求， 
+		该过滤器为HiddenHttpMethodFilter。带占位符的 URL 是 Spring3.0 新增的功能， 该功能在SpringMVC 向 
+		REST 目 标挺进发展过程中具有里程碑的意义。 通过 @PathVariable 可以将 URL 中占位符参数绑定到控制器处理方法的入参中： URL 
+		中的 {xxx} 占位符可以通过@PathVariable("xxx") 绑定到操作方法的入参中。 -->
 	<filter>
 		<filter-name>HiddenHttpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
@@ -46,6 +51,7 @@
 		<filter-name>HiddenHttpMethodFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
 
 	<servlet>
 		<servlet-name>dispatcherServlet</servlet-name>
@@ -73,11 +79,12 @@
 		<url-pattern>/validationCodeServlet.png</url-pattern>
 	</servlet-mapping>
 
+
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>classpath:log4j2.xml</param-value>
 	</context-param>
-	
+
 	<!-- 监听servletContext，启动contextConfigLocation中的spring配置信息 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -86,9 +93,21 @@
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
-	 <listener>
-    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-  </listener>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 阻止用户重复登陆 -->
+
 
 	<!-- 配置可以把post请求转为put delete请求的filter -->
 
@@ -96,16 +115,19 @@
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
-	
+
 	<web:error-page>
-	 <error-code>404</error-code>  
-         <location>/error.jsp</location>  
- 	</web:error-page>
-    	<web:error-page>
-         <error-code>500</error-code>  
-      <location>/error.jsp</location>  
-      
+		<error-code>404</error-code>
+		<location>/error.jsp</location>
 	</web:error-page>
+	<web:error-page>
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+
+	</web:error-page>
+	<web:welcome-file-list>
+	<web:welcome-file>/index.jsp</web:welcome-file>
+	</web:welcome-file-list>
 
 
 </web-app>
