@@ -32,7 +32,7 @@
 			<ul class="nav navbar-nav navbar-right">
 
 				<% String name=(String)session.getAttribute("adminname"); 
-   if(name!=null){%>
+   if(name==null){%>
 
 
 				<li><a
@@ -105,29 +105,24 @@
 					<h4 class="modal-title" id="myModalLabel">登录框</h4>
 				</div>
 				<div class="modal-body">
-					<form role="form">
+					<form role="form" action="login.do" method="post">
 						<div class="form-group">
 
 							<label for="exampleInputEmail1"> 邮箱地址 </label> <input
-								type="email" class="form-control" id="exampleInputEmail1" />
+							name="email"	type="email" class="form-control" id="exampleInputEmail1" />
 						</div>
 						<div class="form-group">
 
 							<label for="exampleInputPassword1"> 密码 </label> <input
-								type="password" class="form-control" id="exampleInputPassword1" />
+								type="password" name="password" class="form-control" id="exampleInputPassword1" />
 						</div>
-						<div class="form-group">
-
-							<label for="exampleInputFile"> 输入文件 </label> <input type="file"
-								id="exampleInputFile" />
-							<p class="help-block">Example block-level help text here.</p>
-						</div>
+						
 						<div class="checkbox">
 
-							<label> <input type="checkbox" /> Check me out
+							<label> <input type="checkbox"  name="rememberme" /> Check me out
 							</label>
 						</div>
-						<button type="submit" class="btn btn-default" data-dismiss="modal">
+						<button type="submit" class="btn btn-default">
 							Submit</button>
 					</form>
 				</div>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.springframework.stereotype.Service;
 
 import com.neusoft.cargo.dao.DepretedUserDao;
@@ -17,6 +19,7 @@ public class UserServiceImpl implements UserService {
 //	private DepretedUserDao userDao;
 	private UserDao userDao;
 	
+	private Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	public List<User> findAll() {
 		return userDao.findAll();
@@ -54,8 +57,7 @@ public class UserServiceImpl implements UserService {
 	public User findByName(String name)
 	{
 		
+//		User u_result =  userDao.findByName(name);
 		return userDao.findByName(name);
-//		return null;
-		
 	}
 }
