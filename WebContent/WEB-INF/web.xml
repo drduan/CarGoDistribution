@@ -6,12 +6,18 @@
 
 	<display-name>springmvc</display-name>
 
+	<!-- Web容器加载顺序ServletContext-> context->param->listener->filter->servlet -->
+	<!-- 指定Spring的配置文件 加载所有的配置文件-->
+	<!-- 否则Spring会默认从WEB-INF下寻找配置文件,contextConfigLocation属性是Spring内部固定的 -->
+	<!-- 通过ContextLoaderListener的父类ContextLoader的第120行发现CONFIG_LOCATION_PARAM固定为contextConfigLocation -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring.xml,classpath:spring-hibernate.xml,classpath:spring-shiro.xml</param-value>
 	</context-param>
 
-
+	<!-- 解决乱码问题 -->
+	<!-- forceEncoding默认为false,此时效果可大致理解为request.setCharacterEncoding("UTF-8") -->
+	<!-- forceEncoding=true后,可大致理解为request.setCharacterEncoding("UTF-8")和response.setCharacterEncoding("UTF-8") -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -19,20 +25,29 @@
 			<param-name>encoding</param-name>
 			<param-value>utf-8</param-value>
 		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- openSessionInView配置 作用是延迟session关闭到view层 -->
+	<!-- openSessionInView配置 作用是延迟session关闭到view层  -->
+	<!-- 配置Session -->
 	<filter>
 		<filter-name>OpenSessionInViewFilter</filter-name>
 		<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
 		<init-param>
 			<param-name>singleSession</param-name>
-			<param-value>false</param-value>
+			<param-value>true</param-value>
 		</init-param>
+		 <init-param>
+            <param-name>flushMode</param-name>
+            <param-value>AUTO</param-value>
+        </init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>OpenSessionInViewFilter</filter-name>
@@ -85,20 +100,34 @@
 	</context-param>
 
 	<!-- 监听servletContext，启动contextConfigLocation中的spring配置信息 -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+
 	<!-- 防止spring内存溢出监听器 -->
+	<!-- 防止发生java.beans.Introspector内存泄露,应将它配置在ContextLoaderListener的前面 -->
+	<!-- 详细描述见http://blog.csdn.net/jadyer/article/details/11991457 -->
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
-
+	<!-- 实例化Spring容器 -->
+	<!-- 应用启动时,该监听器被执行,它会读取Spring相关配置文件,其默认会到WEB-INF中查找applicationContext.xml -->
+	<!-- http://starscream.iteye.com/blog/1107036 -->
+	<!-- http://www.davenkin.me/post/2012-10-18/40039948363 -->
+	<!-- WebApplicationContextUtils.getWebApplicationContext() -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<filter>
+		<!--===============================================shiro过虑器================================================ -->
+		<!-- shiro过虑器，DelegatingFilterProx会从spring容器中找shiroFilter代理模式（律师模式） -->
+
 		<filter-name>shiroFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>shiroFilter</filter-name>
@@ -125,8 +154,23 @@
 
 	</web:error-page>
 	<web:welcome-file-list>
-	<web:welcome-file>/home.do</web:welcome-file>
+		<web:welcome-file>home.do</web:welcome-file>
 	</web:welcome-file-list>
-
+	<error-page>
+		<error-code>405</error-code>
+		<location>/WEB-INF/405.html</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/500.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/WEB-INF/500.jsp</location>
+	</error-page>
 
 </web-app>

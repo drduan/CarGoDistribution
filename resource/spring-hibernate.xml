@@ -50,13 +50,21 @@
 			</props>
 		</property>
 		<!-- 扫描hibernate注解配置的entity -->
+		<!-- XML配置映射关系 <mapping resource="Employee.hbm.xml" /> -->
+		<!-- 注册ORM映射文件 -->
+		<!-- spring不起作用 <mapping package="com.myweb.entity"/> -->
 		<property name="packagesToScan" value="com.neusoft.cargo.entity" />
 	</bean>
 
+	<!-- 配置Dao要注入的hibernateTemplate -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
+		<!-- 支持hibernate seiion 和spring jdbctemplate -->
 	</bean>
 
 	<!-- 配置事务增强处理Bean，指定事务管理器 -->
@@ -80,6 +88,7 @@
 
 	<!-- Spring aop事务管理 -->
 	<aop:config>
+
 		<!-- 配置切入点 -->
 		<aop:pointcut id="transactionPointcut"
 			expression="execution(* com.neusoft.cargo.service..*Impl.*(..))" />

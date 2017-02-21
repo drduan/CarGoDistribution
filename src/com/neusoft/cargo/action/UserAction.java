@@ -12,8 +12,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
-import org.apache.shiro.authc.credential.PasswordService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.service.impl.UserServiceImpl;
+import com.neusoft.cargo.util.Md5Util;
 
 @Controller("UserAction")
 @RequestMapping("/User")
@@ -43,65 +41,59 @@ public class UserAction extends BaseAction {
 
 	Logger logger = Logger.getLogger(UserAction.class);
 
-	
-	@RequestMapping(value="register.do", method = RequestMethod.GET)
+	@RequestMapping(value = "register.do", method = RequestMethod.GET)
 	public String index() {
 
 		return "views/layout/register_step1";
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(User userValidate) {
+	public String login(User userValidate, boolean rememberMe) {
+		// @RequestParam(value = "rememberMe") boolean rememberMe
+		ensureUserIsLoggedOut();
 
-		logger.log(Priority.DEBUG, "OK");
-		
-		 ensureUserIsLoggedOut();
-		
-		UsernamePasswordToken token = new UsernamePasswordToken(userValidate.getUsername(), userValidate.getPassword());
-		// token.setRememberMe(userValidate.getRememberme());
-		token.setRememberMe(true);
+		logger.error(userValidate.toString());
+		UsernamePasswordToken token = new UsernamePasswordToken(userValidate.getEmail(),
+				Md5Util.md5Encode(userValidate.getPassword()));
+		token.setRememberMe(rememberMe);
+
 		try {
 			SecurityUtils.getSubject().login(token);
-			// return new Message("login success");
+			SecurityUtils.getSubject().getSession();
+			logger.info("User [" + token.getPrincipal() + "] logged in successfully.");
+			
 			return "login success";
 		} catch (UnknownAccountException uae) {
-			// return new Message("error username");
 			return "error username";
 		} catch (IncorrectCredentialsException ice) {
-			// return new Message("error password");
 			return "error password";
+		}finally {
+			token.clear();
 		}
 
 	}
-	
-	// Logout the user fully before continuing.
-	private void ensureUserIsLoggedOut()
-	{
-	    try
-	    {
-	        // Get the user if one is logged in.
-	        Subject currentUser = SecurityUtils.getSubject();
-	        if (currentUser == null)
-	        {
-	        	logger.log(Priority.DEBUG,"current user == null");
-	            return;
-	        }
-	        // Log the user out and kill their session if possible.
-	        currentUser.logout();
-	        Session session = currentUser.getSession(false);
-	        if (session == null)
-	            return;
 
-	        session.stop();
-	    }
-	    catch (Exception e)
-	    {
-	        // Ignore all errors, as we're trying to silently 
-	        // log the user out.
-	    }
+	// Logout the user fully before continuing.
+	private void ensureUserIsLoggedOut() {
+		try {
+			// Get the user if one is logged in.
+			Subject currentUser = SecurityUtils.getSubject();
+			if (currentUser == null) {
+				logger.log(Priority.DEBUG, "current user == null");
+				return;
+			}
+			// Log the user out and kill their session if possible.
+			currentUser.logout();
+			Session session = currentUser.getSession(false);
+			if (session == null)
+				return;
+
+			session.stop();
+		} catch (Exception e) {
+			// Ignore all errors, as we're trying to silently
+			// log the user out.
+		}
 	}
 
 	/*
@@ -112,38 +104,20 @@ public class UserAction extends BaseAction {
 	@RequestMapping(method = RequestMethod.POST, value = "register.do")
 	public String Register(User user, String userType, HttpServletRequest req, HttpSession session) {
 
+		logger.error("message");
 		System.out.println(user.getEmail());
-		
-
+			
 		session.setAttribute("username", user.getUsername());
-		// session.setAttribute(arg0, arg1);
 		session.setMaxInactiveInterval(6000);
-	
-		
-		
-		
-		
-		DefaultPasswordService passwordService  = new DefaultPasswordService();
-		 String pwd = user.getPassword();  
-	        String newpwd = passwordService.encryptPassword(pwd);  
-	        user.setPassword(newpwd);  
-	        userService.save(user);
-	        
-	        
-	        
-//	        User user3 = userService.createUser();  
-//	        int uid = user.getUserid();  
-//	        List<Mapping_UR> urlist = u.getMapping_UR();  
-//	        if (urlist != null) {  
-//	            for (Mapping_UR ur : urlist) {  
-//	                if (ur != null) {  
-//	                    int roleid = ur.getRole().getRoleid();  
-//	                    userService.correlationRoles(uid, roleid);  
-//	                }  
-//	            }  
-//	        }
 
-	return"redirect:/";
+		String pwd = user.getPassword();
+		String newpwd = Md5Util.md5Encode(pwd);
+		
+		user.setPassword(newpwd);
+
+		userService.save(user);
+
+		return "redirect:/";
 
 	}
 
@@ -168,8 +142,8 @@ public class UserAction extends BaseAction {
 	@ResponseBody
 	public String ifvalidatecodeexist(HttpSession session,
 			@RequestParam(value = "validationCode") String validationCode) {
-		String string = session.getAttribute("validationCode").toString();
-		return "" + string.equals(validationCode);
+		String string = session.getAttribute("validationCode").toString().toLowerCase();
+		return "" + string.equals(validationCode.toLowerCase());
 	}
 
 	/*
@@ -228,7 +202,7 @@ public class UserAction extends BaseAction {
 	@RequestMapping(value = "redirect_reg_next.do", method = RequestMethod.GET)
 	public String dealUserTypeAndRedirect(@ModelAttribute("usertype") String form,
 			RedirectAttributesModelMap redirectAttrs, ModelAndView model) {
-		
+
 		logger.log(Priority.DEBUG, "message");
 		return "views/layout/register_step2";
 	}

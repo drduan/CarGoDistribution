@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
 <link href="../static/css/font-awesome.min.css" rel="stylesheet"/>
-<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
 
 <title>欢迎注册-中国货运物流信息平台-第一步</title>
 </head>

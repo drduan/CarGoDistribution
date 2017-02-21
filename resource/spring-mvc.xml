@@ -11,11 +11,12 @@
 
 
 	<mvc:annotation-driven />
-	
+	<!-- 静态资源映射 -->
+	<mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
 	<!-- 自动扫描@Controller注入为bean -->
 	<context:component-scan base-package="com.neusoft.cargo.action" />
 	<!-- 以下为SpringMVC配置 -->
-
+	<mvc:view-controller path="/" view-name="redirect:/home.do" />
 
 	<!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**" /> <bean 
 		class="com.neusoft.cargo.intercapter.AccessStatisticsIntceptor" /> </mvc:interceptor> 

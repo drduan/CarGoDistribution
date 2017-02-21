@@ -53,7 +53,6 @@
 	
 	$().ready(function() {
 		$("#commentForm").validate({
-			debug : false,
 			rules : {
 				username : {
 					required : true,
@@ -61,12 +60,12 @@
 				},
 				password : {
 					required : true,
-					minlength : 5
+					minlength : 5,
 				},
 				confirm_password : {
 					required : true,
 					minlength : 5,
-					equalTo : "#password"
+					 equalTo: "#password_id"
 				},
 				phone : {
 					required : true,
@@ -87,7 +86,6 @@
 				},
 				validationCode : {
 					required : true,
-					
 					remote : {
 						url : "ifvalidationcode.do",
 						type : "post",
@@ -171,8 +169,7 @@
 
 										<!-- todo -->
 										<form action="register.do" method="post" dir="ltr"
-											id="commentForm">
-											<!-- onsubmit="return check();" -->
+											id="commentForm" >
 											<table id="Table1" cellpadding="0" cellspacing="0"
 												width="100%" border="0" align="center"
 												style="margin-top: 10px;">
@@ -189,16 +186,16 @@
 													<tr>
 														<td align="right" height="45"><span class="font14">输入登录密码：</span>
 															<span style="color: #FF0000; font-size: 18px">*</span></td>
-														<td height="45" align="left"><input name="password"
-															minlength="8" type="password" id="password" required>
+														<td height="45" align="left">
+														<input id="password_id" name="password"  type="password" required>
 														</td>
 													</tr>
 													<tr>
 														<td align="right" height="45"><span class="font14">确认登录密码：
 														</span><span style="color: #FF0000; font-size: 18px">*</span></td>
-														<td height="45" align="left"><input
-															name="confirm_password" minlength="8" type="password"
-															id="confirm_password"></td>
+														<td height="45" align="left">
+														<input id="confirm_password"  name="confirm_password" type="password" required>
+															</td>
 													</tr>
 
 

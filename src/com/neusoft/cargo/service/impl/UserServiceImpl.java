@@ -26,6 +26,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void save(User person) {
+		
+		logger.log(Priority.DEBUG, person.toString());
 		if (person.getId() == null) {
 			try {
 				userDao.save(person);

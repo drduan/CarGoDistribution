@@ -32,7 +32,7 @@ public class UserDao extends AbstractHibernateDAO<User> {
 
 	public User findByName(String name) {
 
-		List<User> result = (List<User>) this.getHibernateTemplate().find("from User u where u.username=?", name);
+		List<User> result = (List<User>) this.getHibernateTemplate().find("from User u where u.email=?", name);
 		if (result.isEmpty()) {
 
 			return null;
@@ -44,5 +44,13 @@ public class UserDao extends AbstractHibernateDAO<User> {
 		}
 
 		
+	}
+
+	public User getUniqueByProperty(String paramName, String value) {
+		// TODO Auto-generated method stub
+//		log.error("paramName"+paramName+"value"+value);
+		
+		
+		return  (User) this.getHibernateTemplate().find("from User u where u.username=?", value).get(0);
 	}
 }

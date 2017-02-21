@@ -1,67 +1,103 @@
 package com.neusoft.cargo.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
 
-@Entity    
-@Table(name="t_role") 
-public class Role {
+@Entity
+@Table(name = "sys_role")
+public class Role implements Serializable {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column(unique = true)
+	private String role; // 角色标识 程序中判断使用,如"admin"
+	private String description; // 角色描述,UI界面显示使用
+	// private Boolean available = Boolean.FALSE;  是否可用,如果不可用将不会添加给用户
 	
-	 private Integer id;    
-	    private String rolename;    
-	    private List<Permission> permissionList;//一个角色对应多个权限   
-	    
-	    private List<User> userList;//一个角色对应多个用户    
-	        
-	    @Id    
-	    @GeneratedValue(strategy=GenerationType.IDENTITY)    
-	    public Integer getId() {    
-	        return id;    
-	    }    
-	    public void setId(Integer id) {    
-	        this.id = id;    
-	    }    
-	    public String getRolename() {    
-	        return rolename;    
-	    }    
-	    public void setRolename(String rolename) {    
-	        this.rolename = rolename;    
-	    }    
-	    @OneToMany(mappedBy="role")    
-	    public List<Permission> getPermissionList() {    
-	        return permissionList;    
-	    }    
-	    public void setPermissionList(List<Permission> permissionList) {    
-	        this.permissionList = permissionList;    
-	    }    
-	    @ManyToMany    
-	    @JoinTable(name="t_user_role",joinColumns={@JoinColumn(name="role_id")},inverseJoinColumns={@JoinColumn(name="user_id")})    
-	    public List<User> getUserList() {    
-	        return userList;    
-	    }    
-	    public void setUserList(List<User> userList) {    
-	        this.userList = userList;    
-	    }    
-	        
-	    @Transient    
-	    public List<String> getPermissionsName(){    
-	        List<String> list=new ArrayList<String>();    
-	        List<Permission> perlist=getPermissionList();    
-	        for (Permission per : perlist) {    
-	            list.add(per.getPermissionname());    
-	        }    
-	        return list;    
-	    }   
+	
+	@OneToMany(targetEntity = Permission.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@JoinTable(name = "sys_role_permission", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id", unique = true))
+	private List<Permission> permissions = new ArrayList<>();
+
+	public Role() {
+	}
+
+	public Role(String role, String description) {
+		this.role = role;
+		this.description = description;
+		// this.available = available;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	// public Boolean getAvailable() {
+	// return available;
+	// }
+	//
+	// public void setAvailable(Boolean available) {
+	// this.available = available;
+	// }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		Role role = (Role) o;
+
+		if (id != null ? !id.equals(role.id) : role.id != null)
+			return false;
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
+
+	@Override
+	public String toString() {
+		return "Role{" + "id=" + id + ", role='" + role + '\'' + ", description='" + description + '\'' + ", available="
+				+ "true" + '}';
+	}
+
 }

@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Priority;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,17 +21,34 @@ import com.alibaba.fastjson.JSON;
 public class BaseAction {
 	private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(BaseAction.class);
 
-	@RequestMapping(value="home.do", method = RequestMethod.GET)
+	@RequestMapping(value = "home.do", method = RequestMethod.GET)
 	public String index() {
-
 		return "views/layout/index";
 	}
 	
+
+	@RequestMapping(value = "logout.do")
+	public String logout() {
+		Subject currentUser = SecurityUtils.getSubject();
+		currentUser.logout();
+		return "redirect:/";
+	}
+
+	
+	@RequestMapping(value="admin.do")
+	public String admin(){
+		
+		return "views/lauout/admin/index.jsp";
+	}
 	
 	
-
-//	protected Logger logger = LoggerFactory.getLogger(getClass());
-
+	@RequestMapping(value="user.do")
+	public String user(){
+		
+		return "views/lauout/user/index.jsp";
+	}
+	
+	
 	public void OutputJson(Object object, String type) {
 		PrintWriter out = null;
 		HttpServletResponse httpServletResponse = ServletActionContext.getResponse();
@@ -45,17 +64,6 @@ public class BaseAction {
 		logger.debug("json:" + json);
 		out.print(json);
 		out.close();
-	}
-
-	/* 获取登录用户ID */
-	public int getLoginUserId() {
-		return 0;
-	}
-
-	/* 获取登录用户名 */
-	public String getLoginUserName() {
-		// }
-		return null;
 	}
 
 
