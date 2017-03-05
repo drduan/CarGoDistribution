@@ -12,7 +12,6 @@
 
 	<mvc:annotation-driven />
 	<!-- 静态资源映射 -->
-	<mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
 	<!-- 自动扫描@Controller注入为bean -->
 	<context:component-scan base-package="com.neusoft.cargo.action" />
 	<!-- 以下为SpringMVC配置 -->
@@ -43,6 +42,34 @@
 			</props>
 		</property>
 	</bean>
+	<!-- DispatcherServlet中id固定了 -->
+	<!-- action="XXX.do?method=fileupload" enctype="multipart/form-data" -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="10485760" />
+	</bean>
 
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.apache.shiro.authz.UnauthorizedException">/static/403.html</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 导入 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<!-- Enable Shiro Annotations for Spring-configured beans. Only run after 
+		the lifecycleBeanProcessor has run: -->
+	<bean
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+		depends-on="lifecycleBeanPostProcessor" />
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
 
 </beans>

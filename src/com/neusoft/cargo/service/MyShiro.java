@@ -1,12 +1,12 @@
 package com.neusoft.cargo.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.neusoft.cargo.dao.UserDao;
 import com.neusoft.cargo.entity.Role;
 import com.neusoft.cargo.entity.User;
+
+import javassist.compiler.ast.NewExpr;
 
 @Service
 @Transactional
@@ -44,26 +46,36 @@ public class MyShiro extends AuthorizingRealm {
 		// 获取登录时输入的用户名
 		logger.debug("开始\t PrincipalCollection \t认证 ");
 		String loginName = (String) principalCollection.getPrimaryPrincipal();
-
-		//User admin = userDao.getUniqueByProperty("username", loginName);
-		User user = userDao.findByName(loginName);
-//
-//		List<Role> lr = new ArrayList<Role>();
-//		lr.add(new Role("admin"));
-//
-//		user.setRoleList(lr);
+		// User admin = userDao.getUniqueByProperty("username", loginName);
+		User user = userDao.findByMail(loginName);
+	
+		
+		//
+		// List<Role> lr = new ArrayList<Role>();
+		// lr.add(new Role("admin"));
+		//
+		// user.setRoleList(lr);
 
 		if (user != null) {
 			// 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-
 			// 用户的角色集合
-			info.setRoles(user.getRolesName());
-
+			Set<String> sr = new HashSet<String>();
+			sr.add("user");
+			info.setRoles(sr);
+			
+		
+			// info.setRoles(user.getRolesName());
 			// 用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
-			Set <Role> roleList = user.getRoleList();
-			for (Role role : roleList) {
-				info.addStringPermission(role.getRole());
+			// Set <Role> roleList = user.getRoleList();
+			// for (Role role : roleList) {
+			//// info.addStringPermission(role.getRole());
+			// info.addRole(role.getRole());
+			// }
+			//
+			for (String role : info.getRoles()) {
+
+				logger.error("userrole"+role.toString());
 			}
 			return info;
 		}
@@ -82,23 +94,22 @@ public class MyShiro extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
 			throws AuthenticationException {
-		// TODO Auto-generated method stub
 		// UsernamePasswordToken对象用来存放提交的登录信息
 
 		logger.debug("开始\t UsernamePasswordToken \t认证 ");
 
 		UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-		// 查出是否有此用户
-		User user = userDao.findByName(token.getPrincipal().toString());
-		logger.debug("AuthenticationToken \n" + token.toString() + "\n" + token.getPrincipal().toString());
+		// String password = String.valueOf(token.getPassword());
+		User user = userDao.findByMail(token.getPrincipal().toString());
+
 		if (user != null) {
 
-			Set<Role> lRoles = user.getRoleList();
+			// Set<Role> lRoles = user.getRoleList();
 			// 若存在，将此用户存放到登录认证info中
-			return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
-		}
-		// return null;
+			SecurityUtils.getSubject().getSession().setAttribute("user", user);
+			return new SimpleAuthenticationInfo(user.getEmail(), user.getPassword(), getName());
 
+		}
 		return null;
 	}
 

@@ -30,9 +30,9 @@ public class UserDao extends AbstractHibernateDAO<User> {
 		super.save(entity);
 	}
 
-	public User findByName(String name) {
+	public User findByMail(String email) {
 
-		List<User> result = (List<User>) this.getHibernateTemplate().find("from User u where u.email=?", name);
+		List<User> result = (List<User>) this.getHibernateTemplate().find("from User u where u.email=?", email);
 		if (result.isEmpty()) {
 
 			return null;

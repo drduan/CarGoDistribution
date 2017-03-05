@@ -21,13 +21,14 @@
 				<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
 					class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<%=request.getContextPath()%>">欢迎来到空车配货网站！</a>
+			<a class="navbar-brand" href="<%=request.getContextPath()%>/home.do">欢迎来到空车配货网站！</a>
 		</div>
+		
 
 		<div class="collapse navbar-collapse "
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#"><i class="fa fa-android"></i>App下载</a></li>
+				<li class="active"><a href="https://www.pgyer.com/1pFJ"><i class="fa fa-android"></i>App下载</a></li>
 				<li><a href="#">帮助</a></li>
 
 			</ul>
@@ -67,25 +68,26 @@
 
 					<li class="opts__item message has-unread hidden-sm"><a
 						id="dLabel" class="dropdown-toggle-message"
-						href="/user/notifications"><span class="sr-only">消息</span><span
-							id="messageCount" class="fa fa-bell-o"></span></a></li>
+						href="#">
+						
+						<span class="sr-only">
+						
+						消息</span>
+						<span
+							id="messageCount" class="fa fa-bell-o">15</span></a></li>
 					<li class="dropdown hoverDropdown"
 						style="width: 30px; height: 30px; margin-right: 15px"><a
 						class="dropdownBtn user-avatar" data-toggle="dropdown"
-						style="background-image: url('https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64'); width: 30px; height: 30px"
-						href="/u/drduan" aria-expanded="true"> </a>
+						style="background-image: url('${avater}'); width: 30px; height: 30px"
+						href="#" aria-expanded="true"> </a>
 						<ul class="dropdown-menu dropdown-menu-right">
-							<li><a href="/u/drduan">我的主页</a></li>
-							<li><a href="/u/drduan/about">我的档案</a></li>
-							<li><a href="/user/finance">我的资产</a></li>
+							<li><a href="<%=request.getContextPath()%>/User/profile.do">我的主页</a></li>
 							<li><a href="/user/settings">账号设置</a></li>
 							<li><a
 								href="/api/user/logout?_=d1495be86a2aa7814b3545ae3ed764b1">退出</a></li>
 							<li class="divider"></li>
 							<li><a href="https://board.segmentfault.com/">建议反馈</a></li>
-							<li><a class="js__action--complain"
-								href="javascript:void(0);">用户申诉</a></li>
-						</ul></li>
+						</ul>
 				</shiro:authenticated>
 			</ul>
 
@@ -113,9 +115,8 @@
 						</div>
 						<div class="form-group">
 
-							<label for="_password"> 密码 </label> <input
-								type="password" name="_password" class="form-control"
-								id="password" />
+							<label for="_password"> 密码 </label> <input type="password"
+								name="password" class="form-control" id="password" />
 						</div>
 
 						<div class="checkbox">
@@ -134,6 +135,8 @@
 
 	</div>
 
-
+	<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
 </body>
+
 </html>

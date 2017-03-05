@@ -7,7 +7,7 @@
 	<display-name>springmvc</display-name>
 
 	<!-- Web容器加载顺序ServletContext-> context->param->listener->filter->servlet -->
-	<!-- 指定Spring的配置文件 加载所有的配置文件-->
+	<!-- 指定Spring的配置文件 加载所有的配置文件 -->
 	<!-- 否则Spring会默认从WEB-INF下寻找配置文件,contextConfigLocation属性是Spring内部固定的 -->
 	<!-- 通过ContextLoaderListener的父类ContextLoader的第120行发现CONFIG_LOCATION_PARAM固定为contextConfigLocation -->
 	<context-param>
@@ -35,7 +35,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- openSessionInView配置 作用是延迟session关闭到view层  -->
+	<!-- openSessionInView配置 作用是延迟session关闭到view层 -->
 	<!-- 配置Session -->
 	<filter>
 		<filter-name>OpenSessionInViewFilter</filter-name>
@@ -44,10 +44,10 @@
 			<param-name>singleSession</param-name>
 			<param-value>true</param-value>
 		</init-param>
-		 <init-param>
-            <param-name>flushMode</param-name>
-            <param-value>AUTO</param-value>
-        </init-param>
+		<init-param>
+			<param-name>flushMode</param-name>
+			<param-value>AUTO</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>OpenSessionInViewFilter</filter-name>
@@ -142,6 +142,9 @@
 	<!-- 配置session超时时间，单位分钟 -->
 	<session-config>
 		<session-timeout>30</session-timeout>
+	<!-- Servlet3.0规范中的<tracking-mode>允许你定义JSESSIONID是存储在cookie中还是URL参数中。 -->
+	<!-- 如果会话ID存储在URL中，那么它可能会被无意的存储在多个地方，包括浏览器历史、代理服务器日志、引用日志和web日志等。暴露了会话ID使得网站被session劫持攻击的几率大增 -->
+		<web:tracking-mode>COOKIE</web:tracking-mode>
 	</session-config>
 
 	<web:error-page>

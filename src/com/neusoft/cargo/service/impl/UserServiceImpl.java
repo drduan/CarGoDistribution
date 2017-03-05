@@ -56,10 +56,10 @@ public class UserServiceImpl implements UserService {
 	
 	
 	
-	public User findByName(String name)
+	public User findBymail(String email)
 	{
 		
 //		User u_result =  userDao.findByName(name);
-		return userDao.findByName(name);
+		return userDao.findByMail(email);
 	}
 }

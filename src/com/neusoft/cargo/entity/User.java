@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,15 +31,14 @@ import net.sf.oval.constraint.NotEmpty;
 // 用户为guest 存着基础信息
 @Entity
 @Table(name = "sys_user", uniqueConstraints = { @UniqueConstraint(columnNames = "id"),
-		// @UniqueConstraint(columnNames = "Phone") phone 独立主键
 })
 public class User implements Serializable {
 
 	public User() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public User(String username, String password, String phone, String email, String ID_NUM, String TRUE_NAME) {
+	public User(String username, String password, String phone, String email, String ID_NUM, String TRUE_NAME,
+			String salt,boolean authentication) {
 
 		this.password = password;
 		this.phone = phone;
@@ -46,7 +46,24 @@ public class User implements Serializable {
 		this.email = email;
 		this.ID_NUM = ID_NUM;
 		this.TRUE_NAME = TRUE_NAME;
+		this.hasauthentication = authentication;
 	}
+
+	
+	/*
+	 * 是否经过验证
+	 */
+	private boolean hasauthentication ;
+	
+	
+	public boolean isHasauthentication() {
+		return hasauthentication;
+	}
+
+	public void setHasauthentication(boolean hasauthentication) {
+		this.hasauthentication = hasauthentication;
+	}
+
 
 	/**
 	 * 
@@ -80,22 +97,29 @@ public class User implements Serializable {
 	private String email;
 	@Enumerated(EnumType.STRING)
 	private UserType usertype;
+	// 通常情况下，当字段经过散列处理（如MD5），会生成一段散列值，而散列后的值一般是无法通过特定算法
+	// 得到原始字段的。但是某些情况，比如一个大型的彩虹表，通过在表中搜索该MD5值，很有可能在极短的时间
+	// 内找到该散列值对应的真实字段内容。
+	// 加盐后的散列值，可以极大的降低由于用户数据被盗而带来的密码泄漏风险，即使通过彩虹表寻找到了散列后
+	// 的数值所对应的原始内容，但是由于经过了加盐，插入的字符串扰乱了真正的密码，使得获得真实密码的概率大大降低。
 	private String salt;
 	private Boolean locked = Boolean.FALSE;
 	@Column(name = "create_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate = new Date();
-
-	@ManyToMany(targetEntity = Role.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	
+	@Column
+	@ElementCollection(targetClass=Role.class)
 	private Set<Role> roles = new HashSet<>(); // 一个用户具有多个角色
 
+	@ManyToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	public Set<Role> getRoleList() {
 		return roles;
 	}
 
 	public void setRoleList(Set<Role> roleList) {
-		this.roles = roles;
+		this.roles = roleList;
 	}
 
 	@Transient
@@ -192,30 +216,7 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	// @Override
-	// public int hashCode() {
-	// // TODO Auto-generated method stub
-	// return super.hashCode();
-	// }
-	//
-
-	private boolean rememberMe;
-
-	public boolean isRememberMe() {
-		return rememberMe;
-	}
-
-	public void setRememberMe(boolean rememberMe) {
-		this.rememberMe = rememberMe;
-	}
-
-	// @Override
-	// public String toString() {
-	// // TODO Auto-generated method stub
-	// return
-	// "user"+username+email+usertype+phone+password+"rememberMe:"+rememberMe;
-	// }
-	//
+	
 	public void setLocked(Boolean locked) {
 		this.locked = locked;
 	}

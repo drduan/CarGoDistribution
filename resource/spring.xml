@@ -6,14 +6,27 @@
 			http://www.springframework.org/schema/context
 			http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	<!-- 加载配置文件 -->
-	
-	<context:property-placeholder location="classpath:config.properties"/>
+	<!-- Spring 3.0 的配置Schema文件分布在各模块类包中，如果模块拥有对应的Scheme文件，则可以在模块类包中找到一个config目录,Schema文件就位于该目录中 -->
+	<context:property-placeholder location="classpath:config.properties" />
 	<!-- 扫描service自动注入为bean -->
-	<context:component-scan base-package="com.neusoft.cargo.service.impl,com.neusoft.cargo.dao" />
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	  	<property name="defaultEncoding" value="utf-8"></property>   
-        <property name="maxUploadSize" value="10485760000"></property>  
-        <property name="maxInMemorySize" value="40960"></property> 
+	<context:component-scan
+		base-package="com.neusoft.cargo.service.impl,com.neusoft.cargo.dao" />
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="10485760000"></property>
+		<property name="maxInMemorySize" value="40960"></property>
 	</bean>
-	
+	<!-- Spring Bean作用域 在配置文件中即是scope 针对不同的作用域 -->
+	<!-- 允许用户自定义bean作用域 -->
+	<!-- 第一个 返回该对象缓存实例 缺省作用域 非线程安全 -->
+	<!-- <bean id="userinfo" class="" scope="singleton"></bean> -->
+	<!-- 返回新实例 -->
+	<!-- <bean id="userinfo" class="" scope="prototype"></bean> -->
+	<!-- 返回新实例 仅在当前 request有作用 -->
+	<!-- <bean id="userinfo" class="" scope="request"></bean> -->
+	<!-- <bean id="userinfo" class="" scope="session"></bean> -->
+	<!-- <bean id="userinfo" class="" scope="globalSession"></bean> -->
+
+
 </beans>

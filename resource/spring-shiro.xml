@@ -15,25 +15,15 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="storedCredentialsHexEncoded" value="true" />
 	</bean>
 	<!-- 需要在Spring MVC的配置文件中启动shiro注解 -->
-	<bean
-		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-		depends-on="lifecycleBeanPostProcessor">
-		<property name="proxyTargetClass" value="true" />
-	</bean>
 	<!-- 会话Cookie模板 -->
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
 		<constructor-arg value="sid" />
 		<property name="httpOnly" value="true" />
 		<property name="maxAge" value="180000" />
 	</bean>
-	<bean
-		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-		<property name="securityManager" ref="securityManager" />
-	</bean>
-
+	<!-- credentialsMatcher -->
 	<bean id="MyShiro" class=" com.neusoft.cargo.service.MyShiro">
-	 <property name="credentialsMatcher" ref="credentialsMatcher" />
-	 </bean>
+	</bean>
 	<!-- 配置权限管理器 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- ref对应我们写的realm MyShiro -->
@@ -55,8 +45,16 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="arguments" ref="securityManager" />
 	</bean>
 
+
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.apache.shiro.authz.UnauthorizedException">/static/403.html</prop>
+			</props>
+		</property>
+	</bean>
 	<!-- Shiro生命周期处理器 -->
-	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
 
 	<!-- 缓存管理器 -->
@@ -85,7 +83,10 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				<!-- anon表示此地址不需要任何权限即可访问 -->
 				/static/** = anon
 				/home.do = anon
-				/User/*.do = anon
+				/User/login.do = anon
+				/User/register.do = anon
+				/User/reg_next.do = anon
+				/User/redirect_reg_next.do = anon
 				/validationCodeServlet.png = anon
 				/admins/** = roles[admin]
 				/logout.do = logout

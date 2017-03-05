@@ -33,10 +33,13 @@ public abstract class AbstractHibernateDAO<T extends Serializable> {
 		return getCurrentSession().createQuery("from " + clazz.getName()).list();
 	}
 
+	/*
+	 * save or update
+	 */
 	public void save(final T entity) {
 		log.debug("saving Selllog instance");
 		try {
-			getCurrentSession().save(entity);
+			getCurrentSession().saveOrUpdate(entity);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.debug("save failed");

@@ -29,8 +29,8 @@ public class Role implements Serializable {
 	// private Boolean available = Boolean.FALSE;  是否可用,如果不可用将不会添加给用户
 	
 	
-	@OneToMany(targetEntity = Permission.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	@JoinTable(name = "sys_role_permission", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id", unique = true))
+	@OneToMany(targetEntity = Permission.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "sys_role_permission", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id"))
 	private List<Permission> permissions = new ArrayList<>();
 
 	public Role() {
@@ -66,13 +66,7 @@ public class Role implements Serializable {
 		this.description = description;
 	}
 
-	// public Boolean getAvailable() {
-	// return available;
-	// }
-	//
-	// public void setAvailable(Boolean available) {
-	// this.available = available;
-	// }
+	
 
 	@Override
 	public boolean equals(Object o) {

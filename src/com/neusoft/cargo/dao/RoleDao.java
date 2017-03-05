@@ -4,9 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
+import org.hibernate.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.neusoft.cargo.entity.Role;
 
 @Repository("RoleDao")
-public class RoleDao {
+public class RoleDao extends BaseHibernateDAO{
 	private JdbcTemplate jdbcTemplate ;
 //	private JdbcTemplate jdbcTemplate = JdbcTemplateUtils.jdbcTemplate();
 
@@ -80,11 +79,23 @@ public class RoleDao {
 	/*
 	 *  20170221
 	 */
-	private List<Map<String, Object>> findAll () {
+	public List<Role> findAll () {
 		
-		String sql = "select * from sys_role";
-		return jdbcTemplate.queryForList(sql);
+		String sql = " from Role";
+		Query<Role> query =  getSession().createQuery(sql);
+		return query.list();
 		
+	}
+	
+	public boolean SaveOrUpdate(Role role) {
+		
+		try {
+			getSession().saveOrUpdate(role);
+			return true;
+		} catch (Exception e) {
+			return false;
+			// TODO: handle exception
+		}
 		
 	}
 }
