@@ -8,22 +8,9 @@
 <meta http-equiv="cache-control" content="no-cache">
 <title>空车配货平台首页-I</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="static/css/bootstrap.min.css" rel="stylesheet" />
-<link href="static/css/font-awesome.min.css" rel="stylesheet" />
+<link href="_CarGoDistribution/../static/css/bootstrap.min.css" rel="stylesheet" />
+<link href="_CarGoDistribution/../static/css/font-awesome.min.css" rel="stylesheet" />
 
-<link href="https://cdn.insdep.com/themes/1.0.0/easyui.css"
-	rel="stylesheet" type="text/css">
-<link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css"
-	rel="stylesheet" type="text/css">
-<link href="https://cdn.insdep.com/themes/1.0.0/icon.css"
-	rel="stylesheet" type="text/css">
-
-<script type="text/javascript"
-	src="https://cdn.insdep.com/jquery/jquery-1.11.3.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.insdep.com/easyui/jquery.easyui-1.5.1.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.insdep.com/themes/1.0.0/jquery.insdep-extend.min.js"></script>
 
 
 <style type="text/css">

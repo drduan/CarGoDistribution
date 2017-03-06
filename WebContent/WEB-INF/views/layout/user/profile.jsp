@@ -6,30 +6,25 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
 <!-- https://www.insdep.com -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>个人主页</title>
+
 <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
 <link href="../static/css/font-awesome.min.css" rel="stylesheet" />
+<link href="../static/css/easyui.css" rel="stylesheet" />
+<link href="../static/css/icon.css">
 
-<link href="https://cdn.insdep.com/themes/1.0.0/easyui.css"
-	rel="stylesheet" type="text/css">
-<link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css"
-	rel="stylesheet" type="text/css">
-<link href="https://cdn.insdep.com/themes/1.0.0/icon.css"
-	rel="stylesheet" type="text/css">
-	
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/jquery.easyui.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
 
-<script type="text/javascript"
-	src="https://cdn.insdep.com/jquery/jquery-1.11.3.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.insdep.com/easyui/jquery.easyui-1.5.1.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.insdep.com/themes/1.0.0/jquery.insdep-extend.min.js"></script>
 
 
 </head>
+
 <body>
 
 	<div class="container-fluid">
@@ -38,8 +33,6 @@
 			<div class="col-md-10">
 				<div class="row">
 					<div class="col-md-12">
-
-
 
 						<jsp:include page="/WEB-INF/views/include/head.jsp"></jsp:include>
 						<div
@@ -78,7 +71,6 @@
 									</dl>
 								</div>
 
-
 							</div>
 						</div>
 					</div>
@@ -101,117 +93,50 @@
 				<div class="easyui-tabs" style="height: 500px; padding-top: 0px"
 					data-options="tabPosition:'left',headerWidth:80">
 					<div title="我的订单" style="padding: 10px;">
-					<!-- http://localhost:8080/_CarGoDistribution/static/js/jquery-3.1.1.min.js -->
-					<table id="dg" class="easyui-datagrid" title="Row Editing in DataGrid" style="width:700px;height:auto"
-			data-options="
-				iconCls: 'icon-edit',
-				singleSelect: true,
-				toolbar: '#tb',
-				url: '../static/js/datagrid_data1.js',
-				method: 'get',
-				onClickCell: onClickCell,
-				onEndEdit: onEndEdit
-			">
-		<thead>
-			<tr>
-				<th data-options="field:'itemid',width:80">Item ID</th>
-				<th data-options="field:'productid',width:100,
-						formatter:function(value,row){
-							return row.productname;
-						},
-						editor:{
-							type:'combobox',
-							options:{
-								valueField:'productid',
-								textField:'productname',
-								method:'get',
-								url:'products.json',
-								required:true
-							}
-						}">Product</th>
-				<th data-options="field:'listprice',width:80,align:'right',editor:{type:'numberbox',options:{precision:1}}">List Price</th>
-				<th data-options="field:'unitcost',width:80,align:'right',editor:'numberbox'">Unit Cost</th>
-				<th data-options="field:'attr1',width:250,editor:'textbox'">Attribute</th>
-				<th data-options="field:'status',width:60,align:'center',editor:{type:'checkbox',options:{on:'P',off:''}}">Status</th>
-			</tr>
-		</thead>
-	</table>
+						<!-- http://localhost:8080/_CarGoDistribution/static/js/jquery-3.1.1.min.js -->
+						<div style="margin: 20px 0;"></div>
+						<table id="dg" title="Custom DataGrid Pager"
+							style="width: 700px; height: 250px"
+							data-options="rownumbers:true,singleSelect:true,pagination:true,url:'datagrid_data1.json',method:'get'">
+							<thead>
+								<tr>
+									<th data-options="field:'itemid',width:80">Item ID</th>
+									<th data-options="field:'productid',width:100">Product</th>
+									<th data-options="field:'listprice',width:80,align:'right'">List
+										Price</th>
+									<th data-options="field:'unitcost',width:80,align:'right'">Unit
+										Cost</th>
+									<th data-options="field:'attr1',width:240">Attribute</th>
+									<th data-options="field:'status',width:60,align:'center'">Status</th>
+								</tr>
+							</thead>
+						</table>
+						<script type="text/javascript">
+							$(
+									function() {
+										var pager = $('#dg').datagrid()
+												.datagrid('getPager'); // get the pager of datagrid
+										pager.pagination({
+											buttons : [ {
+												iconCls : 'icon-search',
+												handler : function() {
+													alert('search');
+												}
+											}, {
+												iconCls : 'icon-add',
+												handler : function() {
+													alert('add');
+												}
+											}, {
+												iconCls : 'icon-edit',
+												handler : function() {
+													alert('edit');
+												}
+											} ]
+										});
+									})
+						</script>
 
-	<div id="tb" style="height:auto">
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">Append</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">Remove</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">Accept</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">Reject</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">GetChanges</a>
-	</div>
-	
-	<script type="text/javascript">
-		var editIndex = undefined;
-		function endEditing(){
-			if (editIndex == undefined){return true}
-			if ($('#dg').datagrid('validateRow', editIndex)){
-				$('#dg').datagrid('endEdit', editIndex);
-				editIndex = undefined;
-				return true;
-			} else {
-				return false;
-			}
-		}
-		function onClickCell(index, field){
-			if (editIndex != index){
-				if (endEditing()){
-					$('#dg').datagrid('selectRow', index)
-							.datagrid('beginEdit', index);
-					var ed = $('#dg').datagrid('getEditor', {index:index,field:field});
-					if (ed){
-						($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
-					}
-					editIndex = index;
-				} else {
-					setTimeout(function(){
-						$('#dg').datagrid('selectRow', editIndex);
-					},0);
-				}
-			}
-		}
-		function onEndEdit(index, row){
-			var ed = $(this).datagrid('getEditor', {
-				index: index,
-				field: 'productid'
-			});
-			row.productname = $(ed.target).combobox('getText');
-		}
-		function append(){
-			if (endEditing()){
-				$('#dg').datagrid('appendRow',{status:'P'});
-				editIndex = $('#dg').datagrid('getRows').length-1;
-				$('#dg').datagrid('selectRow', editIndex)
-						.datagrid('beginEdit', editIndex);
-			}
-		}
-		function removeit(){
-			if (editIndex == undefined){return}
-			$('#dg').datagrid('cancelEdit', editIndex)
-					.datagrid('deleteRow', editIndex);
-			editIndex = undefined;
-		}
-		function accept(){
-			if (endEditing()){
-				$('#dg').datagrid('acceptChanges');
-			}
-		}
-		function reject(){
-			$('#dg').datagrid('rejectChanges');
-			editIndex = undefined;
-		}
-		function getChanges(){
-			var rows = $('#dg').datagrid('getChanges');
-			alert(rows.length+' rows are changed!');
-		}
-	</script>
-					
-					
-					
 					</div>
 					<div title="我的汽车" style="padding: 10px;">我的汽车 2</div>
 					<div title="货主评价" style="padding: 10px;">货主评价 3</div>
@@ -224,6 +149,22 @@
 			</div>
 			<div class="col-md-1"></div>
 		</div>
+
 	</div>
+
+	<!-- 分界线 -->
+
+	<div style="margin: 20px 0;">
+		<a href="javascript:void(0)" class="easyui-linkbutton"
+			onclick="$('#w').window('open')">Open</a> <a
+			href="javascript:void(0)" class="easyui-linkbutton"
+			onclick="$('#w').window('close')">Close</a>
+	</div>
+	<div id="w" class="easyui-window" title="Modal Window"
+		data-options="modal:true,closed:true,iconCls:'icon-save'"
+		style="width: 500px; height: 200px; padding: 10px;">The window
+		content.</div>
+
 </body>
+
 </html>

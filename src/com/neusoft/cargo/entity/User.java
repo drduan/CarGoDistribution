@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -111,6 +112,32 @@ public class User implements Serializable {
 	@Column
 	@ElementCollection(targetClass=Role.class)
 	private Set<Role> roles = new HashSet<>(); // 一个用户具有多个角色
+	
+	
+	@ElementCollection(targetClass=Car.class)
+	private Set<Car> stockDailyRecords = new HashSet<Car>(
+			0);
+	
+	
+	//cascade属性的可能值有
+	// all: 所有情况下均进行关联操作，即save-update和delete。
+	// none: 所有情况下均不进行关联操作。这是默认值。
+	// save-update: 在执行save/update/saveOrUpdate时进行关联操作。
+	// delete: 在执行delete 时进行关联操作。
+	// all-delete-orphan:
+	// 当一个节点在对象图中成为孤儿节点时，删除该节点。比如在一个一对多的关系中，Student包含多个book，当在对象关系中删除一个book时，此book即成为孤儿节点。
+	// 像你的问题，设置成save-update就可以了
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Car> getStockDailyRecords() {
+		return this.stockDailyRecords;
+	}
+
+	public void setStockDailyRecords(Set<Car> stockDailyRecords) {
+		this.stockDailyRecords = stockDailyRecords;
+	}
+	
+	
+	
 
 	@ManyToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

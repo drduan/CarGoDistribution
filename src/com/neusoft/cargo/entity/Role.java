@@ -39,7 +39,6 @@ public class Role implements Serializable {
 	public Role(String role, String description) {
 		this.role = role;
 		this.description = description;
-		// this.available = available;
 	}
 
 	public Long getId() {
