@@ -107,7 +107,7 @@
 
 	})
 </script>
-<title>欢迎注册-中国货运物流信息平台-第二步</title>
+<title>欢迎注册-速配网-第二步</title>
 </head>
 <body>
 
@@ -168,7 +168,7 @@
 										</table>
 
 										<!-- todo -->
-										<form action="register.do" method="post" dir="ltr"
+										<form action="owner_register.do" method="post" dir="ltr"
 											id="commentForm" >
 											<table id="Table1" cellpadding="0" cellspacing="0"
 												width="100%" border="0" align="center"
@@ -232,7 +232,7 @@
 														</td>
 														<td height="45" align="left"><img id="validationCode"
 															alt="验证码图片" title="验证码图片"
-															src="../validationCodeServlet.png"
+															src="<%=request.getContextPath()%>/validationCodeServlet.png"
 															onclick="refreshCode(this)" /></td>
 													</tr>
 													<tr>

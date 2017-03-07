@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.neusoft.cargo.dao.DepretedUserDao;
 import com.neusoft.cargo.dao.UserDao;
+import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.service.UserService;
 
@@ -27,17 +28,16 @@ public class UserServiceImpl implements UserService {
 
 	public void save(User person) {
 		
-		logger.log(Priority.DEBUG, person.toString());
-		if (person.getId() == null) {
+	
+		logger.info("message"+"执行User Save"+person.getId());
+		
+		logger.log(Priority.DEBUG, person.toString()+"person ID"+person.getId());
 			try {
 				userDao.save(person);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		else {
-			
-		}
+		
 		
 	}
 
@@ -61,5 +61,10 @@ public class UserServiceImpl implements UserService {
 		
 //		User u_result =  userDao.findByName(name);
 		return userDao.findByMail(email);
+	}
+	
+	
+	public  List<Car> GetCarList(User entity) {
+		return userDao.GetCarList(entity);
 	}
 }

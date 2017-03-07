@@ -44,6 +44,7 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.neusoft.cargo.dao.RoleDao;
 import com.neusoft.cargo.entity.Role;
 import com.neusoft.cargo.entity.User;
+import com.neusoft.cargo.entity.User.UserType;
 import com.neusoft.cargo.service.impl.UserServiceImpl;
 import com.neusoft.cargo.util.Md5Util;
 
@@ -91,10 +92,9 @@ public class UserAction extends BaseAction {
 			SecurityUtils.getSubject().login(token);
 			SecurityUtils.getSubject().getSession();
 			SecurityUtils.getSubject().getSession().setAttribute("avater","https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
-//			SecurityUtils.getSubject().getSession().setAttribute("username", "");
-//			SecurityUtils.getSubject().getSession().setAttribute("userid", "");
 			
 			logger.error(SecurityUtils.getSubject().hasRole("user"));
+			
 			logger.info("User [" + token.getPrincipal() + "] logged in successfully.");
 		} catch (UnknownAccountException e) {
 			logger.error("UnknownAccountException");
@@ -139,13 +139,34 @@ public class UserAction extends BaseAction {
 	 * 
 	 * @Validated ？？
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = "register.do")
-	public String Register(User user, String userType, HttpServletRequest req, HttpSession session) {
-
-		session.setAttribute("username", user.getUsername());
+	@RequestMapping(method = RequestMethod.POST, value = "driver_register.do")
+	public String DriverRegister(User user, String userType, HttpServletRequest req, HttpSession session) {
+		session.setAttribute("usertype", userType);
 		session.setMaxInactiveInterval(6000);
-		user.setEmail(user.getEmail());
-		user.setPhone(user.getPhone());
+		user.setUsertype(UserType.DRIVER);
+		// Role role = new Role("user", "user");
+		List<Role> roles = roleDao.findAll();
+		// Set<Role> roleList = new HashSet<>();
+		Set<Role> roleList = new HashSet<>(roles);
+		// for (Role r : roles) {
+		// if (r.getDescription().equals("user")) {
+		// roleList.add(r);
+		// }
+		// }
+		// roleList.add(ro);
+		String pwd = user.getPassword();
+		String newpwd = Md5Util.md5Encode(pwd);
+		user.setPassword(newpwd);
+		// todo user.setRoleList(roleList);
+		userService.save(user);
+		return "redirect:/";
+	}
+
+	
+	@RequestMapping(method = RequestMethod.POST, value = "owner_register.do")
+	public String OwnerRegister(User user, String userType, HttpServletRequest req, HttpSession session) {
+		session.setAttribute("username", user.getUsername());
+		user.setUsertype(UserType.OWNER);
 		// Role role = new Role("user", "user");
 		List<Role> roles = roleDao.findAll();
 		// Set<Role> roleList = new HashSet<>();
@@ -167,7 +188,7 @@ public class UserAction extends BaseAction {
 		return "redirect:/";
 
 	}
-
+	
 	/*
 	 * 判断用户邮箱是否已经注册 返回可以使用jsonp
 	 */
@@ -253,8 +274,14 @@ public class UserAction extends BaseAction {
 	public String dealUserTypeAndRedirect(@ModelAttribute("usertype") String form,
 			RedirectAttributesModelMap redirectAttrs, ModelAndView model) {
 
-		logger.error("message"+"redirect_reg_next.do");
-		return "views/layout/register_step2";
+		if (form.equals("1")) {
+			return "views/layout/register_driver";
+		}
+		else 
+		{
+			return "views/layout/register_owner";
+		}
+	
 	}
 
 	@RequestMapping(value = "needuserrole.do")

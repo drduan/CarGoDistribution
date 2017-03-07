@@ -1,11 +1,13 @@
 package com.neusoft.cargo.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
+import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.User;
 
 @Repository("UserDao")
@@ -25,32 +27,75 @@ public class UserDao extends AbstractHibernateDAO<User> {
 		setClazz(User.class);
 	}
 
-	@Override
 	public void save(User entity) {
-		super.save(entity);
+		log.error("\"message save");
+		try {
+			this.getHibernateTemplate().saveOrUpdate(entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
 	}
 
+	
+	
+	
 	public User findByMail(String email) {
 
 		List<User> result = (List<User>) this.getHibernateTemplate().find("from User u where u.email=?", email);
 		if (result.isEmpty()) {
 
 			return null;
-			
-		}
-		else {
-			
+
+		} else {
+
 			return result.get(0);
 		}
 
-		
 	}
 
 	public User getUniqueByProperty(String paramName, String value) {
 		// TODO Auto-generated method stub
-//		log.error("paramName"+paramName+"value"+value);
-		
-		
-		return  (User) this.getHibernateTemplate().find("from User u where u.username=?", value).get(0);
+		// log.error("paramName"+paramName+"value"+value);
+
+		return (User) this.getHibernateTemplate().find("from User u where u.username=?", value).get(0);
 	}
+	
+
+	public List<Car> GetCarList(User entity) {
+
+		List<Car> lc = new ArrayList<>();
+		try {
+			// this.getHibernateTemplate().saveOrUpdate(entity);
+//			this.getHibernateTemplate().findByCriteria(null);
+			// Session session=Hibernate_Util.getSession();
+
+//			org.hibernate.Session session = this.getCurrentSession();
+			// 2.定义查询最大记录数的hql
+//			String hql = "from User";
+			//
+			// //3.定义查询最大记录数的Query对象
+//			 Query querypage=session.createQuery(hql);
+			// //4.查询最大记录数的数据
+			// querypage.setMaxResults(page.getPagesize());
+			//
+			// //5.确定查询起点
+			// querypage.setFirstResult(page.getStartrow());
+			//
+			// //6.分页查询
+			// List<Student> list=querypage.list();
+			//
+			// //7.关闭session
+			// Hibernate_Util.closeSession();
+//			return querypage.list();
+			return (List<Car>) this.getHibernateTemplate().find("from User u where u.email=?",entity.getEmail());
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return null;
+
+	}
+	
 }

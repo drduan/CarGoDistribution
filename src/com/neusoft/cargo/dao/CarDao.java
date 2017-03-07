@@ -1,20 +1,21 @@
 package com.neusoft.cargo.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.neusoft.cargo.entity.Car;
 
+@Repository("CarDao")
 public class CarDao extends AbstractHibernateDAO<Car> {
 
-	
-	
-	@Override
 	public void save(Car entity) {
-		// TODO Auto-generated method stub
-	
-		
-		
-		
-		super.save(entity);
+		try {
+			this.getHibernateTemplate().saveOrUpdate(entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
 	}
-	
-	
+
+
 }

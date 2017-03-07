@@ -92,4 +92,11 @@ public class Car implements Serializable {
 
 	private double FreightRates;
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+//		return super.toString();
+		
+		return "Car \t "+"CarHost"+CarHost+"\t CarNumber"+CarNumber+"\t CarType"+CarType;
+	}
 }

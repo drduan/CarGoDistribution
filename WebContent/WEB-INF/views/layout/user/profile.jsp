@@ -16,9 +16,11 @@
 <link href="../static/css/font-awesome.min.css" rel="stylesheet" />
 <link href="../static/css/easyui.css" rel="stylesheet" />
 <link href="../static/css/icon.css">
+<link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css" rel="stylesheet" type="text/css">
 
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/jquery.easyui.min.js"></script>
+
 <script src="../static/js/bootstrap.min.js"></script>
 
 
@@ -38,7 +40,6 @@
 						<div
 							class="easyui-panel panel-body panel-body-noheader panel-body-noborder"
 							id="control" data-options="fit:true,border:false"
-							style="padding: 0px; background-color: rgb(255, 255, 255); width: 967px; height: 86px; background-position: initial initial; background-repeat: initial initial;"
 							title="">
 							<div class="theme-user-info-panel">
 								<div class="left">
@@ -64,7 +65,7 @@
 										</c:if>
 
 									</h1>
-									<h2>管理员</h2>
+									<h2>车主</h2>
 									<dl>
 										<dt>${user.email}</dt>
 										<dd>${user.phone}</dd>
@@ -75,39 +76,29 @@
 						</div>
 					</div>
 				</div>
-				<!-- 
-				<div class="row">
-					<div class="col-md-6">我的汽车</div>
-					<div class="col-md-6">我的订单</div>
-				</div>
-				<div class="row">
-					<div class="col-md-6">货主评价</div>
-
-					<div class="col-md-6">货源收藏</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-					 -->
-
+			
 				<!--  http://www.jeasyui.com/demo/main/index.php?plugin=Tabs& -->
+				
+				<div class="row">
 				<div class="easyui-tabs" style="height: 500px; padding-top: 0px"
 					data-options="tabPosition:'left',headerWidth:80">
 					<div title="我的订单" style="padding: 10px;">
-						<!-- http://localhost:8080/_CarGoDistribution/static/js/jquery-3.1.1.min.js -->
 						<div style="margin: 20px 0;"></div>
-						<table id="dg" title="Custom DataGrid Pager"
+						<h2>我的订单</h2>
+					</div>
+					<div title="我的汽车" style="padding: 10px;">
+
+<table id="dg" title="汽车管理"
 							style="width: 700px; height: 250px"
-							data-options="rownumbers:true,singleSelect:true,pagination:true,url:'datagrid_data1.json',method:'get'">
+							data-options="rownumbers:true,singleSelect:true,pagination:true,url:'User/GetUserCars.json',method:'get'">
 							<thead>
 								<tr>
 									<th data-options="field:'itemid',width:80">Item ID</th>
-									<th data-options="field:'productid',width:100">Product</th>
-									<th data-options="field:'listprice',width:80,align:'right'">List
-										Price</th>
-									<th data-options="field:'unitcost',width:80,align:'right'">Unit
-										Cost</th>
-									<th data-options="field:'attr1',width:240">Attribute</th>
-									<th data-options="field:'status',width:60,align:'center'">Status</th>
+									<th data-options="field:'productid',width:100">车牌号</th>
+									<th data-options="field:'listprice',width:80,align:'right'">运费</th>
+									<th data-options="field:'unitcost',width:80,align:'right'">车辆类型</th>
+									<th data-options="field:'attr1',width:240">负载量</th>
+									<th data-options="field:'status',width:60,align:'center'">联系方式</th>
 								</tr>
 							</thead>
 						</table>
@@ -125,7 +116,7 @@
 											}, {
 												iconCls : 'icon-add',
 												handler : function() {
-													alert('add');
+													$('#w').window('open')
 												}
 											}, {
 												iconCls : 'icon-edit',
@@ -137,15 +128,11 @@
 									})
 						</script>
 
-					</div>
-					<div title="我的汽车" style="padding: 10px;">我的汽车 2</div>
+</div>
 					<div title="货主评价" style="padding: 10px;">货主评价 3</div>
 				</div>
-
-				<div>
-					<font style="margin-top: 100px">NI </font>
 				</div>
-
+			
 			</div>
 			<div class="col-md-1"></div>
 		</div>
@@ -162,8 +149,78 @@
 	</div>
 	<div id="w" class="easyui-window" title="Modal Window"
 		data-options="modal:true,closed:true,iconCls:'icon-save'"
-		style="width: 500px; height: 200px; padding: 10px;">The window
-		content.</div>
+		style="width: 500px; height: 500px; padding: 10px;">
+		
+	<div style="margin:20px 0;">
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="loadLocal()">LoadLocal</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="loadRemote()">LoadRemote</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+	</div>
+	<div class="easyui-panel" title="New Topic" style="width:100%;max-width:400px;padding:30px 60px;">
+		<form id="ff" method="post" action="<%=request.getContextPath() %>/Car/InsertCarForUser.do">
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="CarHost" style="width:100%" data-options="label:'车主:',required:true">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="CarNumber" style="width:100%" data-options="label:'车牌号:',required:true">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="FreightRate" style="width:100%;height:60px" data-options="label:'运费:',required:true">
+			</div>
+			<div style="margin-bottom:20px">
+				<select class="easyui-combobox" name="CarType" label="车辆类型" style="width:100%">
+				<option value="ar">厢式货车</option>
+				<option value="bg">面包车</option>
+				<option value="ca">平板车</option>
+				<option value="zh-cht">半挂车</option>
+				<option value="cs">自卸车</option>
+				<option value="da">保温车</option>
+				<option value="nl">罐式车</option>
+				<option value="en" selected="selected">铁笼车</option>
+				<option value="et">集装箱运输车</option>
+				<option value="fi">轿车运输车</option>
+				<option value="fr">大件运输车</option>
+				<option value="de">起重车</option>
+				<option value="el">危险品车</option>
+				<option value="ht">爬梯车</option>
+				<option value="he">全挂车</option>
+				<option value="hi">加长挂车</option>
+				<option value="mww">金杯车(高顶)</option>
+				<option value="hu">金杯车(低顶)</option>
+				</select>
+			</div>
+			
+			<div style="margin-bottom:20px">
+			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">Submit</a>
+			</div>
+		</form>
+	</div>
+	<script>
+		function loadLocal(){
+			$('#ff').form('load',{
+				CarHost:'myname',
+				CarNumber:'mymail@gmail.com',
+				FreightRate:'subject',
+				CarType:'en'
+			});
+		}
+		function loadRemote(){
+			$('#ff').form('load', '#');
+		}
+		function clearForm(){
+			$('#ff').form('clear');
+		}
+		function submitForm(){
+			$('#ff').form('submit',{
+				onSubmit:function(){
+					return $(this).form('enableValidation').form('validate');
+				}
+			});
+		}
+	</script>
+		
+		
+	</div>
 
 </body>
 
