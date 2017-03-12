@@ -1,8 +1,10 @@
 package com.neusoft.cargo.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -109,14 +111,19 @@ public class User implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate = new Date();
 	
-	@Column
-	@ElementCollection(targetClass=Role.class)
+	@OneToMany(targetEntity=Role.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="user")
 	private Set<Role> roles = new HashSet<>(); // 一个用户具有多个角色
 	
 	
-	@ElementCollection(targetClass=Car.class)
-	private Set<Car> stockDailyRecords = new HashSet<Car>(
-			0);
+	/*
+     * cascade：为级联操作，里面有级联保存，级联删除等，all为所有 
+     * fetch：加载类型，有lazy和eager二种，
+     *   eager为急加载，意为立即加载，在类加载时就加载，lazy为慢加载，第一次调用的时候再加载，由于数据量太大，onetomany一般为lazy
+     * mappedBy：这个为manytoone中的对象名，这个不要变哦
+     * Set<role>：这个类型有两种，一种为list另一种为set
+     */
+	@OneToMany(targetEntity=Car.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="user")
+	private List<Car> stockDailyRecords = new ArrayList<Car>();
 	
 	
 	//cascade属性的可能值有
@@ -127,20 +134,19 @@ public class User implements Serializable {
 	// all-delete-orphan:
 	// 当一个节点在对象图中成为孤儿节点时，删除该节点。比如在一个一对多的关系中，Student包含多个book，当在对象关系中删除一个book时，此book即成为孤儿节点。
 	// 像你的问题，设置成save-update就可以了
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Car> getStockDailyRecords() {
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	
+	public List<Car> getStockDailyRecords() {
 		return this.stockDailyRecords;
 	}
 
-	public void setStockDailyRecords(Set<Car> stockDailyRecords) {
+	public void setStockDailyRecords(List<Car> stockDailyRecords) {
 		this.stockDailyRecords = stockDailyRecords;
 	}
 	
 	
 	
 
-	@ManyToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	public Set<Role> getRoleList() {
 		return roles;
 	}

@@ -9,7 +9,9 @@ public class CarDao extends AbstractHibernateDAO<Car> {
 
 	public void save(Car entity) {
 		try {
-			this.getHibernateTemplate().saveOrUpdate(entity);
+//			this.getHibernateTemplate().saveOrUpdate(entity);
+
+			this.getHibernateTemplate().save(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception

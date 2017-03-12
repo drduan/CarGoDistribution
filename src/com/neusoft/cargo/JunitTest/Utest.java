@@ -1,4 +1,4 @@
-package com.neusoft.cargo.test;
+package com.neusoft.cargo.JunitTest;
 
 import java.util.Random;
 

@@ -23,5 +23,25 @@ public class AdminAction {
 //		Assert.assertEquals("\n user has role admin \n ", true, subject.hasRole("admin")); 
 		return "views/layout/admins/index";
 	}
+	
+	
+	@RequestMapping(value="adminprofile.do")
+	public String AdminProfile() {
+		
+//		logger.info("进入AdminAction");
+//		Subject subject = SecurityUtils.getSubject();
+//		logger.error("hasrole"+subject.hasRole("admin"));
+//		Assert.assertEquals("\n user has role admin \n ", true, subject.hasRole("admin")); 
+		return "views/layout/admins/profile";
+	}
+	
+	
+	@RequestMapping(value = "logout.do")
+	public String logout() {
+		Subject currentUser = SecurityUtils.getSubject();
+		currentUser.logout();
+		return "redirect:/";
+	}
+
 
 }

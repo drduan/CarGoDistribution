@@ -14,7 +14,7 @@
 				<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
 					class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<%=request.getContextPath()%>/home.do">欢迎来到空车配货网站！</a>
+			<a class="navbar-brand" href="<%=request.getContextPath()%>/admins/home.do">欢迎来到空车配货网站！</a>
 		</div>
 		
 
@@ -74,7 +74,7 @@
 						style="background-image: url('${avater}'); width: 30px; height: 30px"
 						href="#" aria-expanded="true"> </a>
 						<ul class="dropdown-menu dropdown-menu-right">
-							<li><a href="<%=request.getContextPath()%>/User/profile.do">我的主页</a></li>
+							<li><a href="<%=request.getContextPath()%>/admins/adminprofile.do">我的主页</a></li>
 							<li><a href="/user/settings">账号设置</a></li>
 							<li><a
 								href="/api/user/logout?_=d1495be86a2aa7814b3545ae3ed764b1">退出</a></li>

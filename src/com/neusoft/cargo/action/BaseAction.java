@@ -26,6 +26,12 @@ public class BaseAction {
 		return "views/layout/index";
 	}
 	
+	@RequestMapping(value = "/loginform.do", method = RequestMethod.GET)
+	public String loginform()
+	{
+		return "views/layout/login";
+	}
+	
 
 	@RequestMapping(value = "logout.do")
 	public String logout() {

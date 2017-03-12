@@ -65,7 +65,7 @@
 										</c:if>
 
 									</h1>
-									<h2>车主</h2>
+									<h2>货主</h2>
 									<dl>
 										<dt>${user.email}</dt>
 										<dd>${user.phone}</dd>
@@ -129,7 +129,7 @@
 						</script>
 
 </div>
-					<div title="货主评价" style="padding: 10px;">货主评价 3</div>
+					<div title="车主评价" style="padding: 10px;">货主评价 3</div>
 				</div>
 				</div>
 			

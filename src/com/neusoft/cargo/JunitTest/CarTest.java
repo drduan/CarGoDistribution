@@ -1,6 +1,6 @@
-package com.neusoft.cargo.test;
+package com.neusoft.cargo.JunitTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Set;
 
@@ -25,7 +25,7 @@ public class CarTest {
 
 	   @Test
 	   public void manufacturerIsNull() {
-	      User car = new User( "ASd", "DD-AB-123"," 155664117","33", "142232199308104814", "22","salt" );
+	      User car = new User( "ASd", "DD-AB-123"," 155664117","33", "142232199308104814", "22","salt", false );
 
 	      Set<ConstraintViolation<User>> constraintViolations =
 	      validator.validate( car );

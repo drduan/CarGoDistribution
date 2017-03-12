@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
@@ -27,8 +28,17 @@ public class Role implements Serializable {
 	private String role; // 角色标识 程序中判断使用,如"admin"
 	private String description; // 角色描述,UI界面显示使用
 	// private Boolean available = Boolean.FALSE;  是否可用,如果不可用将不会添加给用户
-	
-	
+	@ManyToOne(targetEntity=User.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User user;
+//	public User getUser() {
+//		return user;
+//	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@OneToMany(targetEntity = Permission.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "sys_role_permission", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id"))
 	private List<Permission> permissions = new ArrayList<>();

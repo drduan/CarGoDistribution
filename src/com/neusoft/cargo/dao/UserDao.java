@@ -1,7 +1,10 @@
 package com.neusoft.cargo.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,9 +41,6 @@ public class UserDao extends AbstractHibernateDAO<User> {
 
 	}
 
-	
-	
-	
 	public User findByMail(String email) {
 
 		List<User> result = (List<User>) this.getHibernateTemplate().find("from User u where u.email=?", email);
@@ -61,35 +61,33 @@ public class UserDao extends AbstractHibernateDAO<User> {
 
 		return (User) this.getHibernateTemplate().find("from User u where u.username=?", value).get(0);
 	}
-	
 
 	public List<Car> GetCarList(User entity) {
 
-		List<Car> lc = new ArrayList<>();
 		try {
 			// this.getHibernateTemplate().saveOrUpdate(entity);
-//			this.getHibernateTemplate().findByCriteria(null);
+			// this.getHibernateTemplate().findByCriteria(null);
 			// Session session=Hibernate_Util.getSession();
-
-//			org.hibernate.Session session = this.getCurrentSession();
+			// org.hibernate.Session session = this.getCurrentSession();
 			// 2.定义查询最大记录数的hql
-//			String hql = "from User";
-			//
+			// String hql = "from User";
 			// //3.定义查询最大记录数的Query对象
-//			 Query querypage=session.createQuery(hql);
+			// Query querypage=session.createQuery(hql);
 			// //4.查询最大记录数的数据
 			// querypage.setMaxResults(page.getPagesize());
-			//
 			// //5.确定查询起点
 			// querypage.setFirstResult(page.getStartrow());
-			//
 			// //6.分页查询
 			// List<Student> list=querypage.list();
-			//
 			// //7.关闭session
 			// Hibernate_Util.closeSession();
-//			return querypage.list();
-			return (List<Car>) this.getHibernateTemplate().find("from User u where u.email=?",entity.getEmail());
+			// return querypage.list();
+			User ciUser = (User) this.getHibernateTemplate().find("from User u where u.email=?", entity.getEmail())
+					.get(0);
+
+			return ciUser.getStockDailyRecords();
+//			List<Car> lc = new ArrayList<>(ciUser.getStockDailyRecords());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
@@ -97,5 +95,22 @@ public class UserDao extends AbstractHibernateDAO<User> {
 		return null;
 
 	}
-	
+
+	public void addCarToUser(User user1, Car car) {
+		// TODO Auto-generated method stub
+		// User user = getCurrentSession().load(User.class, user1);
+		// User user = getCurrentSession().
+
+		car.setUser(user1);
+		getCurrentSession().save(car);
+
+		List<Car> sc = new ArrayList<Car>();
+		sc.add(car);
+		
+		user1.setStockDailyRecords(sc);
+
+		getCurrentSession().saveOrUpdate(user1);
+
+	}
+
 }

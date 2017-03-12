@@ -1,7 +1,7 @@
-package com.neusoft.cargo.test;
+package com.neusoft.cargo.JunitTest;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

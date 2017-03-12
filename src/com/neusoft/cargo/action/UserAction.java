@@ -2,13 +2,16 @@ package com.neusoft.cargo.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.jdbc.Null;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.apache.shiro.SecurityUtils;
@@ -18,7 +21,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -40,11 +42,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.neusoft.cargo.dao.RoleDao;
+import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.Role;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.entity.User.UserType;
+import com.neusoft.cargo.service.UserService;
 import com.neusoft.cargo.service.impl.UserServiceImpl;
 import com.neusoft.cargo.util.Md5Util;
 
@@ -52,24 +55,35 @@ import com.neusoft.cargo.util.Md5Util;
 @RequestMapping("/User")
 public class UserAction extends BaseAction {
 
+	// @Autowired
+	// private UserServiceImpl userService;
+
 	@Autowired
-	private UserServiceImpl userService;
+	private UserService userService;
 	@Autowired
 	private RoleDao roleDao;
 	Logger logger = Logger.getLogger(UserAction.class);
 
-	//http://localhost:8080/User/profile
+	// http://localhost:8080/User/profile
+
+	@RequestMapping(value="home.do")
 	
-	@RequiresRoles(value="user")
-	@RequestMapping(value="profile.do")
+	public String userhome()
+
+	{
+		return "views/layout/user/index";
+	}
+	
+	
+	@RequiresRoles(value = "user")
+	@RequestMapping(value = "profile.do")
 	public String profile(Model model)
 
-	
 	{
 		Subject subject = SecurityUtils.getSubject();
-//		logger.error("messageuser"+subject.hasRole("user"));
+		// logger.error("messageuser"+subject.hasRole("user"));
 
-		model.addAttribute("avater","https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
+		model.addAttribute("avater", "https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
 		return "views/layout/user/profile";
 	}
 
@@ -78,26 +92,30 @@ public class UserAction extends BaseAction {
 
 		return "views/layout/register_step1";
 	}
-
+	
+	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(User userValidate, boolean rememberMe,Model model) {
+	public String login(User userValidate, boolean rememberMe, Model model) {
 		ensureUserIsLoggedOut();
 
+		int ii= 1;
+		logger.error("log  in "+ii);
 		userValidate.setPassword(Md5Util.md5Encode(userValidate.getPassword()));
 
 		UsernamePasswordToken token = new UsernamePasswordToken(userValidate.getEmail(), userValidate.getPassword());
-		
+
 		token.setRememberMe(rememberMe);
 		try {
 			SecurityUtils.getSubject().login(token);
 			SecurityUtils.getSubject().getSession();
-			SecurityUtils.getSubject().getSession().setAttribute("avater","https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
-			
-			logger.error(SecurityUtils.getSubject().hasRole("user"));
-			
-			logger.info("User [" + token.getPrincipal() + "] logged in successfully.");
+			SecurityUtils.getSubject().getSession().setAttribute("avater",
+					"https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
+
+			logger.error("User [" + token.getPrincipal() + "]" + SecurityUtils.getSubject().hasRole("user")
+					+ "success loged");
+
 		} catch (UnknownAccountException e) {
-			logger.error("UnknownAccountException");
+			return "views/layout/UnknownAccountException";
 		} catch (IncorrectCredentialsException e) {
 			logger.error("IncorrectCredentialsException");
 		} catch (LockedAccountException e) {
@@ -109,7 +127,17 @@ public class UserAction extends BaseAction {
 		} finally {
 			token.clear();
 		}
-		return "redirect:/home.do";
+
+		UserType uType = (UserType) SecurityUtils.getSubject().getSession().getAttribute("usertype");
+		if (uType == null) {
+			return "";
+		}
+		if (uType.equals(UserType.DRIVER)) {
+			return "redirect:/User/home.do";
+		} else if (uType.equals(UserType.OWNER)){
+			return "redirect:/admins/home.do";
+		}
+	
 	}
 
 	// Logout the user fully before continuing.
@@ -118,7 +146,6 @@ public class UserAction extends BaseAction {
 			// Get the user if one is logged in.
 			Subject currentUser = SecurityUtils.getSubject();
 			if (currentUser == null) {
-				logger.log(Priority.DEBUG, "current user == null");
 				return;
 			}
 			// Log the user out and kill their session if possible.
@@ -162,7 +189,6 @@ public class UserAction extends BaseAction {
 		return "redirect:/";
 	}
 
-	
 	@RequestMapping(method = RequestMethod.POST, value = "owner_register.do")
 	public String OwnerRegister(User user, String userType, HttpServletRequest req, HttpSession session) {
 		session.setAttribute("username", user.getUsername());
@@ -188,7 +214,7 @@ public class UserAction extends BaseAction {
 		return "redirect:/";
 
 	}
-	
+
 	/*
 	 * 判断用户邮箱是否已经注册 返回可以使用jsonp
 	 */
@@ -252,9 +278,7 @@ public class UserAction extends BaseAction {
 	@RequestMapping(value = "/reg_next.do", method = RequestMethod.GET)
 	public String dealUserType(@RequestParam(value = "cust_kind") int cust_kind, RedirectAttributes redirectAttrs,
 			Model model) {
-	
-		
-		
+
 		switch (cust_kind) {
 
 		case 1:
@@ -276,12 +300,10 @@ public class UserAction extends BaseAction {
 
 		if (form.equals("1")) {
 			return "views/layout/register_driver";
-		}
-		else 
-		{
+		} else {
 			return "views/layout/register_owner";
 		}
-	
+
 	}
 
 	@RequestMapping(value = "needuserrole.do")
@@ -298,4 +320,13 @@ public class UserAction extends BaseAction {
 		CommonsMultipartFile file = (CommonsMultipartFile) multipartHttpServletRequest.getFile("file");
 		FileCopyUtils.copy(file.getBytes(), uploadfile);
 	}
+
+	@ResponseBody
+	@RequestMapping("GetUserCars.json")
+	public List<Car> GetUserCars(Car car) {
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+		List<Car> lc = userService.GetCarList(user);
+		return lc;
+	}
+
 }

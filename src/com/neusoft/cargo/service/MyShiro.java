@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.neusoft.cargo.dao.UserDao;
 import com.neusoft.cargo.entity.Role;
 import com.neusoft.cargo.entity.User;
+import com.neusoft.cargo.entity.User.UserType;
 
 import javassist.compiler.ast.NewExpr;
 
@@ -62,6 +63,14 @@ public class MyShiro extends AuthorizingRealm {
 			// 用户的角色集合
 			Set<String> sr = new HashSet<String>();
 			sr.add("user");
+			if (user.getUsertype().equals(UserType.OWNER)) {
+				info.addRole("admin");
+				info.addRole("user");
+			}
+			else if( user.getUsertype().equals(UserType.DRIVER))
+			{
+				info.addRole("user");
+			}
 			info.setRoles(sr);
 			
 		
@@ -107,6 +116,7 @@ public class MyShiro extends AuthorizingRealm {
 			// Set<Role> lRoles = user.getRoleList();
 			// 若存在，将此用户存放到登录认证info中
 			SecurityUtils.getSubject().getSession().setAttribute("user", user);
+			SecurityUtils.getSubject().getSession().setAttribute("usertype", user.getUsertype());
 			return new SimpleAuthenticationInfo(user.getEmail(), user.getPassword(), getName());
 
 		}
