@@ -11,51 +11,54 @@ import org.apache.log4j.Priority;
 import org.springframework.stereotype.Service;
 
 import com.neusoft.cargo.dao.CarDao;
+import com.neusoft.cargo.dao.CargoResourceDao;
 import com.neusoft.cargo.dao.UserDao;
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.CargoResource;
 import com.neusoft.cargo.entity.User;
+import com.neusoft.cargo.service.CargoResourceService;
 import com.neusoft.cargo.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class CargoResourceServiceImpl implements CargoResourceService {
 	@Resource
 	// private DepretedUserDao userDao;
 	private UserDao userDao;
 	@Resource
-	private CarDao carDao;
+//	private CarDao carDao;
+	private CargoResourceDao cargoResourceDao;
 
 	private Logger logger = Logger.getLogger(UserServiceImpl.class);
 
-	public List<User> findAll() {
-		return userDao.findAll();
+	public List<CargoResource> findAll() {
+		return cargoResourceDao.findAll();
 	}
 
-	public void save(User person) {
+	public void save(CargoResource person) {
 
 		logger.info("message" + "执行User Save" + person.getId());
 
 		logger.log(Priority.DEBUG, person.toString() + "person ID" + person.getId());
 		try {
-			userDao.save(person);
+			cargoResourceDao.save(person);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public void remove(int id) {
-		User person = find(id);
-		if (person != null) {
-			// em.remove(person);
-		}
-	}
+//	public void remove(int id) {
+//		User person = userDao.find(id);
+//		if (person != null) {
+//			// em.remove(person);
+//		}
+//	}
 
-	public User find(int id) {
-		// return em.find(User.class, id);
-		// return userDao.findById(id);
-		return userDao.findOne(id);
-	}
+//	public CargoResource find(int id) {
+//		// return em.find(User.class, id);
+//		// return userDao.findById(id);
+//		return cargoResourceDao.findOne(id);
+//	}
 
 	public User findBymail(String email) {
 
@@ -68,18 +71,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<CargoResource> GetCargoResourceList(User user) {
+	public void remove(int id) {
 		// TODO Auto-generated method stub
-//		return null;
-		return userDao.GetCargoResourceList(user);
+		
 	}
+
 	@Override
-	public void addCarToUser(User user, Car car) {
+	public Car find(int id) {
 		// TODO Auto-generated method stub
-
-		userDao.addCarToUser(user, car);
+		return null;
 	}
 
-
+//	@Override
+//	public void addCarToUser(User user, CargoResource car) {
+//		// TODO Auto-generated method stub
+//
+//		cargoResourceDao.addCarToUser(user, car);
+//	}
 
 }

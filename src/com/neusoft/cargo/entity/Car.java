@@ -3,6 +3,7 @@ package com.neusoft.cargo.entity;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import javafx.beans.DefaultProperty;
 
 @Entity
 @Table(name = "sys_car", uniqueConstraints = { @UniqueConstraint(columnNames = "id")})
@@ -25,17 +28,41 @@ public class Car implements Serializable {
 	@JoinColumn(name="user_id")
 	private User user;
 	// “车辆类型”
+	
 	private String CarType;
 
 	// 号牌号码
 	private String CarNumber;
 
+//负载
 
+//	@Column(name = "Capicity",columnDefinition = "double(10,2) default '1.00'")
+//	private Double  Capicity;
+	private String  Capicity;
+
+	private String   phone;
+	
 	
 	
 //	public User getUser() {
 //		return this.user;
 //	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String  getCapicity() {
+		return Capicity;
+	}
+
+	public void setCapicity(String  capicity) {
+		Capicity = capicity;
+	}
 
 	public void setUser(User stock) {
 		this.user = stock;

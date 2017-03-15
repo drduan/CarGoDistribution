@@ -8,8 +8,8 @@
 <meta http-equiv="cache-control" content="no-cache">
 <title>空车配货平台首页-I</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="_CarGoDistribution/../static/css/bootstrap.min.css" rel="stylesheet" />
-<link href="_CarGoDistribution/../static/css/font-awesome.min.css" rel="stylesheet" />
+<link href="_CarGoDistribution/../../static/css/bootstrap.min.css" rel="stylesheet" />
+<link href="_CarGoDistribution/../../static/css/font-awesome.min.css" rel="stylesheet" />
 
 
 
@@ -32,7 +32,7 @@
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="container-fluid">
-					<jsp:include page="../include/head.jsp"></jsp:include>
+					<jsp:include page="head.jsp"></jsp:include>
 					<nav class="navbar .nav-divider" role="navigation"
 						style="background: #dddddd">
 						<div class="nav"
@@ -170,11 +170,10 @@
 		</div>
 	</div>
 
-	<jsp:include page="../include/foot.jsp"></jsp:include>
 	<!-- 各种模态框 -->
 
 
-	<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
 </body>
 </html>

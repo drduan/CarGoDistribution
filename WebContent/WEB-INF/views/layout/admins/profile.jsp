@@ -17,10 +17,8 @@
 <link href="../static/css/easyui.css" rel="stylesheet" />
 <link href="../static/css/icon.css">
 <link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css" rel="stylesheet" type="text/css">
-
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/jquery.easyui.min.js"></script>
-
 <script src="../static/js/bootstrap.min.js"></script>
 
 
@@ -36,7 +34,7 @@
 				<div class="row">
 					<div class="col-md-12">
 
-						<jsp:include page="/WEB-INF/views/include/head.jsp"></jsp:include>
+						<jsp:include page="head.jsp"></jsp:include>
 						<div
 							class="easyui-panel panel-body panel-body-noheader panel-body-noborder"
 							id="control" data-options="fit:true,border:false"
@@ -61,7 +59,7 @@
 											<span class="badge color-success"> 已认证 </span>
 										</c:if>
 										<c:if test="${not user.hasauthentication}">
-											<span class="badge color-failed"> 未认证 </span>
+											<span class="badge color-failed"><a href="../authentication.do"> 未认证</a> </span>
 										</c:if>
 
 									</h1>
@@ -80,25 +78,29 @@
 				<!--  http://www.jeasyui.com/demo/main/index.php?plugin=Tabs& -->
 				
 				<div class="row">
+				
+				
 				<div class="easyui-tabs" style="height: 500px; padding-top: 0px"
 					data-options="tabPosition:'left',headerWidth:80">
 					<div title="我的订单" style="padding: 10px;">
 						<div style="margin: 20px 0;"></div>
 						<h2>我的订单</h2>
 					</div>
-					<div title="我的汽车" style="padding: 10px;">
+					<div title="我的货源" style="padding: 10px;">
 
-<table id="dg" title="汽车管理"
+
+<table id="dg" title="我的货源"
 							style="width: 700px; height: 250px"
-							data-options="rownumbers:true,singleSelect:true,pagination:true,url:'GetUserCars.json',method:'get'">
+							data-options="rownumbers:true,singleSelect:true,pagination:true,url:'GetUserCargoResource.json',method:'get'">
 							<thead>
 								<tr>
-									<th data-options="field:'carHost',width:80">Item ID</th>
-									<th data-options="field:'CarNumber',width:100">车牌号</th>
-									<th data-options="field:'listprice',width:80,align:'right'">运费</th>
-									<th data-options="field:'CarType',width:80,align:'right'">车辆类型</th>
-									<th data-options="field:'attr1',width:240">负载量</th>
-									<th data-options="field:'status',width:60,align:'center'">联系方式</th>
+									<th data-options="field:'contact',width:80">联系人</th>
+									<th data-options="field:'Phone',width:100">联系方式</th>
+									<th data-options="field:'addDate',width:80,align:'right'">发布时间</th>
+									<th data-options="field:'departurePlace',width:80,align:'right'">出发地</th>
+									<th data-options="field:'destPlace',width:80,align:'right'">目的地</th>
+									<th data-options="field:'status',width:240">状态</th>
+									<th data-options="field:'weight',width:60,align:'center'">重量</th>
 								</tr>
 							</thead>
 						</table>
@@ -127,7 +129,6 @@
 										});
 									})
 						</script>
-
 </div>
 					<div title="车主评价" style="padding: 10px;">货主评价 3</div>
 				</div>
@@ -141,7 +142,7 @@
 
 	<!-- 分界线 -->
 
-	<div style="margin: 20px 0;">
+	<div style="margin: 20px 0;display:none" >
 		<a href="javascript:void(0)" class="easyui-linkbutton"
 			onclick="$('#w').window('open')">Open</a> <a
 			href="javascript:void(0)" class="easyui-linkbutton"
@@ -156,71 +157,7 @@
 		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="loadRemote()">LoadRemote</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
 	</div>
-	<div class="easyui-panel" title="New Topic" style="width:100%;max-width:400px;padding:30px 60px;">
-		<form id="ff" method="post" action="<%=request.getContextPath() %>/Car/InsertCarForUser.do">
-			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="CarHost" style="width:100%" data-options="label:'车主:',required:true">
-			</div>
-			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="CarNumber" style="width:100%" data-options="label:'车牌号:',required:true">
-			</div>
-			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="FreightRate" style="width:100%;height:60px" data-options="label:'运费:',required:true">
-			</div>
-			<div style="margin-bottom:20px">
-				<select class="easyui-combobox" name="CarType" label="车辆类型" style="width:100%">
-				<option value="ar">厢式货车</option>
-				<option value="bg">面包车</option>
-				<option value="ca">平板车</option>
-				<option value="zh-cht">半挂车</option>
-				<option value="cs">自卸车</option>
-				<option value="da">保温车</option>
-				<option value="nl">罐式车</option>
-				<option value="en" selected="selected">铁笼车</option>
-				<option value="et">集装箱运输车</option>
-				<option value="fi">轿车运输车</option>
-				<option value="fr">大件运输车</option>
-				<option value="de">起重车</option>
-				<option value="el">危险品车</option>
-				<option value="ht">爬梯车</option>
-				<option value="he">全挂车</option>
-				<option value="hi">加长挂车</option>
-				<option value="mww">金杯车(高顶)</option>
-				<option value="hu">金杯车(低顶)</option>
-				</select>
-			</div>
-			
-			<div style="margin-bottom:20px">
-			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">Submit</a>
-			</div>
-		</form>
-	</div>
-	<script>
-		function loadLocal(){
-			$('#ff').form('load',{
-				CarHost:'myname',
-				CarNumber:'mymail@gmail.com',
-				FreightRate:'subject',
-				CarType:'en'
-			});
-		}
-		function loadRemote(){
-			$('#ff').form('load', '#');
-		}
-		function clearForm(){
-			$('#ff').form('clear');
-		}
-		function submitForm(){
-			$('#ff').form('submit',{
-				onSubmit:function(){
-					$('#w').window('close')
-					return $(this).form('enableValidation').form('validate');
-				}
-			});
-		}
-	</script>
-		
-		
+	
 	</div>
 
 </body>

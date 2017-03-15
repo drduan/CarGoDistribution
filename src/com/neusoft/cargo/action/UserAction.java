@@ -137,6 +137,9 @@ public class UserAction extends BaseAction {
 		} else if (uType.equals(UserType.OWNER)){
 			return "redirect:/admins/home.do";
 		}
+		else {
+			return "home.do";
+		}
 	
 	}
 

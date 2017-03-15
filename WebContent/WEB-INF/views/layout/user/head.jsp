@@ -14,7 +14,7 @@
 				<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
 					class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<%=request.getContextPath()%>/home.do">欢迎来到空车配货网站！</a>
+			<a class="navbar-brand" href="<%=request.getContextPath()%>/User/home.do">欢迎来到空车配货网站！</a>
 		</div>
 		
 

@@ -1,0 +1,26 @@
+ul,input{padding:0px;}
+li{list-style:none outside;}
+.clear{zoom:1;}
+.clear:after{display: block; clear: both; height:0px; visibility: hidden; content: "";}
+.select-box{ background-color: #fafafa; width: 400px; position: relative; float: left; border-width: 1px; border-style: solid; 
+			 border-color: #ccc #eee #eee #ccc ; height:30px;
+}
+.select-box input{ width: 99%; padding-left:1%; height: 30px; border: none;background:url(img/select_bg.png) no-repeat right top;
+				   font-size:14px;
+}
+.select-box input.se{background-position:right bottom;}
+
+.select-option{ position: absolute; width: 400px; background-color: #fafafa; border: 1px solid #ccc; border-top: none;
+				top: 31px; left: -1px; display: none;
+}
+.select-option ul{padding: 0 2%;}
+.select-option ul li{padding-bottom:2%;margin-top: 2%;}
+.select-option ul li.city-hot{border-bottom: 1px solid #ccc;}
+.select-option ul li a{color: #666; text-decoration: none; white-space: nowrap;float: left; margin-right: 2%; padding:1% 2%;}
+.select-option ul li a:hover{color: white; background-color:#00C9AA;}
+.select-option ul li.city-hot a{color:red;}
+.select-option ul li.city-hot a:hover{color:white;}
+
+
+
+

@@ -33,15 +33,14 @@ import net.sf.oval.constraint.NotEmpty;
 
 // 用户为guest 存着基础信息
 @Entity
-@Table(name = "sys_user", uniqueConstraints = { @UniqueConstraint(columnNames = "id"),
-})
+@Table(name = "sys_user", uniqueConstraints = { @UniqueConstraint(columnNames = "id"), })
 public class User implements Serializable {
 
 	public User() {
 	}
 
 	public User(String username, String password, String phone, String email, String ID_NUM, String TRUE_NAME,
-			String salt,boolean authentication) {
+			String salt, boolean authentication) {
 
 		this.password = password;
 		this.phone = phone;
@@ -52,13 +51,11 @@ public class User implements Serializable {
 		this.hasauthentication = authentication;
 	}
 
-	
 	/*
 	 * 是否经过验证
 	 */
-	private boolean hasauthentication ;
-	
-	
+	private boolean hasauthentication;
+
 	public boolean isHasauthentication() {
 		return hasauthentication;
 	}
@@ -66,7 +63,6 @@ public class User implements Serializable {
 	public void setHasauthentication(boolean hasauthentication) {
 		this.hasauthentication = hasauthentication;
 	}
-
 
 	/**
 	 * 
@@ -110,23 +106,22 @@ public class User implements Serializable {
 	@Column(name = "create_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate = new Date();
-	
-	@OneToMany(targetEntity=Role.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="user")
+
+	@OneToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Role> roles = new HashSet<>(); // 一个用户具有多个角色
-	
-	
+
 	/*
-     * cascade：为级联操作，里面有级联保存，级联删除等，all为所有 
-     * fetch：加载类型，有lazy和eager二种，
-     *   eager为急加载，意为立即加载，在类加载时就加载，lazy为慢加载，第一次调用的时候再加载，由于数据量太大，onetomany一般为lazy
-     * mappedBy：这个为manytoone中的对象名，这个不要变哦
-     * Set<role>：这个类型有两种，一种为list另一种为set
-     */
-	@OneToMany(targetEntity=Car.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY,mappedBy="user")
+	 * cascade：为级联操作，里面有级联保存，级联删除等，all为所有 fetch：加载类型，有lazy和eager二种，
+	 * eager为急加载，意为立即加载，在类加载时就加载，lazy为慢加载，第一次调用的时候再加载，由于数据量太大，onetomany一般为lazy
+	 * mappedBy：这个为manytoone中的对象名，这个不要变哦 Set<role>：这个类型有两种，一种为list另一种为set
+	 */
+	@OneToMany(targetEntity = Car.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Car> stockDailyRecords = new ArrayList<Car>();
-	
-	
-	//cascade属性的可能值有
+
+	@OneToMany(targetEntity = CargoResource.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	private List<CargoResource> CargoResources = new ArrayList<CargoResource>();
+
+	// cascade属性的可能值有
 	// all: 所有情况下均进行关联操作，即save-update和delete。
 	// none: 所有情况下均不进行关联操作。这是默认值。
 	// save-update: 在执行save/update/saveOrUpdate时进行关联操作。
@@ -134,8 +129,33 @@ public class User implements Serializable {
 	// all-delete-orphan:
 	// 当一个节点在对象图中成为孤儿节点时，删除该节点。比如在一个一对多的关系中，Student包含多个book，当在对象关系中删除一个book时，此book即成为孤儿节点。
 	// 像你的问题，设置成save-update就可以了
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	// @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 	
+	public List<CargoResource> getCargoResources() {
+		return CargoResources;
+	}
+
+	public void setCargoResources(List<CargoResource> cargoResources) {
+		CargoResources = cargoResources;
+	}
+
 	public List<Car> getStockDailyRecords() {
 		return this.stockDailyRecords;
 	}
@@ -143,9 +163,6 @@ public class User implements Serializable {
 	public void setStockDailyRecords(List<Car> stockDailyRecords) {
 		this.stockDailyRecords = stockDailyRecords;
 	}
-	
-	
-	
 
 	public Set<Role> getRoleList() {
 		return roles;
@@ -249,7 +266,6 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	
 	public void setLocked(Boolean locked) {
 		this.locked = locked;
 	}

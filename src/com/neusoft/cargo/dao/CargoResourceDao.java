@@ -14,8 +14,8 @@ import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.CargoResource;
 import com.neusoft.cargo.entity.User;
 
-@Repository("UserDao")
-public class UserDao extends AbstractHibernateDAO<User> {
+@Repository("CargoResourceDao")
+public class CargoResourceDao extends AbstractHibernateDAO<CargoResource> {
 
 	private static final Log log = LogFactory.getLog(UserDao.class);
 	// property constants
@@ -27,11 +27,11 @@ public class UserDao extends AbstractHibernateDAO<User> {
 	public static final String CLOSING_BALANCE = "closingBalance";
 	public static final String LAST_UPDATE_USE_ID = "lastUpdateUseId";
 
-	public UserDao() {
-		setClazz(User.class);
+	public CargoResourceDao() {
+		setClazz(CargoResource.class);
 	}
 
-	public void save(User entity) {
+	public void save(CargoResource entity) {
 		log.error("\"message save");
 		try {
 			this.getHibernateTemplate().saveOrUpdate(entity);
@@ -97,41 +97,19 @@ public class UserDao extends AbstractHibernateDAO<User> {
 		return null;
 
 	}
-	
-	
-	
-	public List<CargoResource> GetCargoResourceList(User entity) {
 
-		try {
-			
-			User ciUser = (User) this.getHibernateTemplate().find("from User u where u.email=?", entity.getEmail())
-					.get(0);
-
-			return ciUser.getCargoResources();
-//			List<Car> lc = new ArrayList<>(ciUser.getStockDailyRecords());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		}
-		return null;
-
-	}
-	
-	
-	
-	
-
-	public void addCarToUser(User user1, Car car) {
+	public void addCarToUser(User user1, CargoResource car) {
 		// TODO Auto-generated method stub
+		// User user = getCurrentSession().load(User.class, user1);
+		// User user = getCurrentSession().
 
 		car.setUser(user1);
 		getCurrentSession().save(car);
 
-		List<Car> sc = new ArrayList<Car>();
-		sc.add(car);
+//		List<CargoResource> sc = new ArrayList<Car>();
+//		sc.add(car);
 		
-		user1.setStockDailyRecords(sc);
+//		user1.setStockDailyRecords(sc);
 
 		getCurrentSession().saveOrUpdate(user1);
 

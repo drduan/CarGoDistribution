@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.neusoft.cargo.entity.Car;
+import com.neusoft.cargo.entity.CargoResource;
 import com.neusoft.cargo.entity.User;
 
 /**
@@ -26,6 +27,8 @@ public interface UserService {
 	public User find(int id);
 
 	List<Car> GetCarList(User user);
+	
+	List<CargoResource> GetCargoResourceList(User user);
 
 	public void addCarToUser(User user, Car car);
 	

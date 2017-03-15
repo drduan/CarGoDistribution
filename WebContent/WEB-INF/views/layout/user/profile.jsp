@@ -61,7 +61,7 @@
 											<span class="badge color-success"> 已认证 </span>
 										</c:if>
 										<c:if test="${not user.hasauthentication}">
-											<span class="badge color-failed"> 未认证 </span>
+											<span class="badge color-failed"> <a href="../authentication.do">未认证</a> </span>
 										</c:if>
 
 									</h1>
@@ -93,12 +93,13 @@
 							data-options="rownumbers:true,singleSelect:true,pagination:true,url:'GetUserCars.json',method:'get'">
 							<thead>
 								<tr>
-									<th data-options="field:'carHost',width:80">Item ID</th>
-									<th data-options="field:'CarNumber',width:100">车牌号</th>
-									<th data-options="field:'listprice',width:80,align:'right'">运费</th>
-									<th data-options="field:'CarType',width:80,align:'right'">车辆类型</th>
-									<th data-options="field:'attr1',width:240">负载量</th>
-									<th data-options="field:'status',width:60,align:'center'">联系方式</th>
+									<th data-options="field:'carHost',width:80">联系人</th>
+									<th data-options="field:'carNumber',width:100">车牌号</th>
+									<th data-options="field:'freightRates',width:80,align:'right'">运费</th>
+									<th data-options="field:'Capicity',width:80,align:'right'">负载</th>
+									<th data-options="field:'carType',width:80,align:'right'">车辆类型</th>
+									<th data-options="field:'capicity',width:240">负载量</th>
+									<th data-options="field:'phone',width:60,align:'center'">联系方式</th>
 								</tr>
 							</thead>
 						</table>
@@ -141,7 +142,7 @@
 
 	<!-- 分界线 -->
 
-	<div style="margin: 20px 0;">
+	<div style="margin: 20px 0;display: none">
 		<a href="javascript:void(0)" class="easyui-linkbutton"
 			onclick="$('#w').window('open')">Open</a> <a
 			href="javascript:void(0)" class="easyui-linkbutton"
@@ -166,6 +167,10 @@
 			</div>
 			<div style="margin-bottom:20px">
 				<input class="easyui-textbox" name="FreightRate" style="width:100%;height:60px" data-options="label:'运费:',required:true">
+			</div>
+			
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="Capicity" style="width:100%;height:60px" data-options="label:'负载(T):',required:true">
 			</div>
 			<div style="margin-bottom:20px">
 				<select class="easyui-combobox" name="CarType" label="车辆类型" style="width:100%">
@@ -198,10 +203,11 @@
 	<script>
 		function loadLocal(){
 			$('#ff').form('load',{
-				CarHost:'myname',
-				CarNumber:'mymail@gmail.com',
-				FreightRate:'subject',
-				CarType:'en'
+				CarHost:'王五',
+				CarNumber:'京Z88888',
+				FreightRate:'12.3',
+				CarType:'en',
+				Capicity: '11.23'
 			});
 		}
 		function loadRemote(){
