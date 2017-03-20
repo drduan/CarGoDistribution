@@ -17,12 +17,11 @@ import com.neusoft.cargo.entity.User;
 @Service
 public interface CarService {
 
-	 public List<Car> findAll();
-	 
-	    public void save(Car person);
-	 
-	    public void remove(int id);
-	 
-	    
-	    public Car find(int id);
+	public List<Car> findAll();
+
+	public void save(Car person);
+
+	public void remove(int id);
+
+	public Car find(int id);
 }

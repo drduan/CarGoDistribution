@@ -91,7 +91,8 @@ public class BaseAction {
 	public String authentication()
 	{
 		
-		return "/views/lauout/uploadFileToAuth";
+		
+		return "/views/layout/uploadFileToAuth";
 //		User user = (User)SecurityUtils.getSubject().getSession().getAttribute("user");
 //		user.setHasauthentication(true);
 //		us.save(user);

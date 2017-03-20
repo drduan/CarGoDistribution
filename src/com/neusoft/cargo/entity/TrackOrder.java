@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-//@Entity
-@Table()
+@Entity
+@Table
 public class TrackOrder  implements Serializable{
 
 	
@@ -26,8 +25,16 @@ public class TrackOrder  implements Serializable{
 	
 	private String uuid;
 	
+	// 运输状态
+	private String  mstatus;
 	
 	
+	public String getMstatus() {
+		return mstatus;
+	}
+	public void setMstatus(String mstatus) {
+		this.mstatus = mstatus;
+	}
 	public CargoResource getcResource() {
 		return cResource;
 	}
