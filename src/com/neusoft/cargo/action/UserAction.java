@@ -53,7 +53,7 @@ import com.neusoft.cargo.util.Md5Util;
 
 @Controller("UserAction")
 @RequestMapping("/User")
-public class UserAction extends BaseAction {
+public class UserAction extends Base {
 
 	// @Autowired
 	// private UserServiceImpl userService;
@@ -66,15 +66,14 @@ public class UserAction extends BaseAction {
 
 	// http://localhost:8080/User/profile
 
-	@RequestMapping(value="home.do")
-	
+	@RequestMapping(value = "home.do")
+
 	public String userhome()
 
 	{
 		return "views/layout/user/index";
 	}
-	
-	
+
 	@RequiresRoles(value = "user")
 	@RequestMapping(value = "profile.do")
 	public String profile(Model model)
@@ -92,14 +91,13 @@ public class UserAction extends BaseAction {
 
 		return "views/layout/register_step1";
 	}
-	
-	
+
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(User userValidate, boolean rememberMe, Model model) {
 		ensureUserIsLoggedOut();
 
-		int ii= 1;
-		logger.error("log  in "+ii);
+		int ii = 1;
+		logger.error("log  in " + ii);
 		userValidate.setPassword(Md5Util.md5Encode(userValidate.getPassword()));
 
 		UsernamePasswordToken token = new UsernamePasswordToken(userValidate.getEmail(), userValidate.getPassword());
@@ -133,14 +131,13 @@ public class UserAction extends BaseAction {
 			return "";
 		}
 		if (uType.equals(UserType.DRIVER)) {
-			return "redirect:/User/home.do";
-		} else if (uType.equals(UserType.OWNER)){
+			return "redirect:/home.do";
+		} else if (uType.equals(UserType.OWNER)) {
 			return "redirect:/admins/home.do";
-		}
-		else {
+		} else {
 			return "home.do";
 		}
-	
+
 	}
 
 	// Logout the user fully before continuing.
@@ -319,6 +316,7 @@ public class UserAction extends BaseAction {
 
 	public void upload(HttpRequest request) throws IOException {
 		File uploadfile = new File("");
+
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 		CommonsMultipartFile file = (CommonsMultipartFile) multipartHttpServletRequest.getFile("file");
 		FileCopyUtils.copy(file.getBytes(), uploadfile);
@@ -330,6 +328,20 @@ public class UserAction extends BaseAction {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		List<Car> lc = userService.GetCarList(user);
 		return lc;
+	}
+
+	/*
+	 * 根据参数 cargoresource 的id 寻找id信息
+	 */
+	@ResponseBody
+	@RequestMapping("TakeOrder.json")
+	public String TakeOrder(long cargoresourceid) {
+		// User user = (User)
+		// SecurityUtils.getSubject().getSession().getAttribute("user");
+		// List<Car> lc = userService.GetCarList(user);
+		// return lc;
+
+		return null;
 	}
 
 }

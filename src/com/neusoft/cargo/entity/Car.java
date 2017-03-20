@@ -36,16 +36,14 @@ public class Car implements Serializable {
 
 //负载
 
-//	@Column(name = "Capicity",columnDefinition = "double(10,2) default '1.00'")
-//	private Double  Capicity;
 	private String  Capicity;
 
 	private String   phone;
 	
 	
 	
-//	public User getUser() {
-//		return this.user;
+	// public User getUser() {
+	//		return this.user;
 //	}
 
 	public String getPhone() {

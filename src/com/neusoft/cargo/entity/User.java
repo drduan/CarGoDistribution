@@ -103,8 +103,8 @@ public class User implements Serializable {
 	// 的数值所对应的原始内容，但是由于经过了加盐，插入的字符串扰乱了真正的密码，使得获得真实密码的概率大大降低。
 	private String salt;
 	private Boolean locked = Boolean.FALSE;
-	@Column(name = "create_date")
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date",nullable=true,columnDefinition="timestamp default current_timestamp")
 	private Date createDate = new Date();
 
 	@OneToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")

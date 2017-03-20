@@ -1,8 +1,6 @@
 package com.neusoft.cargo.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -10,14 +8,12 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.springframework.stereotype.Service;
 
-import com.neusoft.cargo.dao.CarDao;
 import com.neusoft.cargo.dao.CargoResourceDao;
 import com.neusoft.cargo.dao.UserDao;
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.CargoResource;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.service.CargoResourceService;
-import com.neusoft.cargo.service.UserService;
 
 @Service
 public class CargoResourceServiceImpl implements CargoResourceService {
@@ -77,11 +73,18 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 	}
 
 	@Override
-	public Car find(int id) {
+	public CargoResource find(int id) {
 		// TODO Auto-generated method stub
-		return null;
+//		return null;
+		return cargoResourceDao.findOne(id);
 	}
 
+	
+	public List<CargoResource> getAll()
+	{
+		return cargoResourceDao.findAll();
+	}
+	
 //	@Override
 //	public void addCarToUser(User user, CargoResource car) {
 //		// TODO Auto-generated method stub

@@ -2,6 +2,7 @@ package com.neusoft.cargo.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,24 +14,42 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.neusoft.cargo.entity.CargoResource;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.entity.User.UserType;
+import com.neusoft.cargo.service.CargoResourceService;
 import com.neusoft.cargo.service.UserService;
 
 import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 
-@Controller
+
+
+@Controller("BaseAction")
 public class BaseAction {
 	private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(BaseAction.class);
 
 	@Autowired
 	public UserService us;
+	
+	@Autowired
+	public CargoResourceService cargoResourceService;
+	
+	
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
-	public String index() {
+	public String index(Model model) {
+		
+		
+		List<CargoResource>  cargoResources = cargoResourceService.getAll();
+		model.addAttribute("resource",cargoResources);
+		
+		
+		
 		return "views/layout/index";
 	}
 	
@@ -59,7 +78,13 @@ public class BaseAction {
 	@RequestMapping(value="user.do")
 	public String user(){
 		
-		return "views/lauout/user/index.jsp";
+		return "views/layout/user/index.jsp";
+	}
+	
+	@RequestMapping(value="manager.do")
+	public String manager(){
+		
+		return "views/layout/manager/manager";
 	}
 	
 	@RequestMapping(value="authentication.do")

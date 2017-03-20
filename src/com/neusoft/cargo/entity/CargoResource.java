@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -92,6 +93,7 @@ public class CargoResource implements Serializable {
 		this.status = status;
 	}
 	private String destPlace;
+	@Column(nullable=true,columnDefinition="timestamp default current_timestamp")
 	private Date addDate;
 	private String contact;
 	private String Phone;

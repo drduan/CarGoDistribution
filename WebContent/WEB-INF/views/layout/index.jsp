@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!doctype html>
-<html lang="en">
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <title>空车配货平台首页-I</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="_CarGoDistribution/../static/css/bootstrap.min.css" rel="stylesheet" />
-<link href="_CarGoDistribution/../static/css/font-awesome.min.css" rel="stylesheet" />
+<link href="_CarGoDistribution/../static/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link href="_CarGoDistribution/../static/css/font-awesome.min.css"
+	rel="stylesheet" />
 
 
 
@@ -64,104 +64,43 @@
 				</div>
 				<div class="col-md-12">
 					<div class="jumbotron">
-						<h2>Hello, world!</h2>
-						<p>This is a template for a simple marketing or informational
-							website. It includes a large callout called the hero unit and
-							three supporting pieces of content. Use it as a starting point to
-							create something more unique.</p>
+						<h2>空车配货网</h2>
+						<p>中国物通网是中国专业的物流信息网，是中国物流信息最全面、社会需求面最广、
+						实用性最强的物流行业网站，免费提供物流信息发布及货运信息查询、物流查询服务的一站式发货平台。找物流公司、找货源、发货配货就上中国物通网。</p>
 						<p>
 							<a class="btn btn-primary btn-large" href="#">Learn more</a>
 						</p>
 					</div>
 					<div class="row">
-						<div class="col-md-6">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>起点</th>
-										<th>终点</th>
-										<th>重量</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td>TB - Monthly</td>
-										<td>01/04/2012</td>
-										<td>Default</td>
-									</tr>
-									<tr class="active">
-										<td>1</td>
-										<td>TB - Monthly</td>
-										<td>01/04/2012</td>
-										<td>Approved</td>
-									</tr>
-									<tr class="success">
-										<td>2</td>
-										<td>TB - Monthly</td>
-										<td>02/04/2012</td>
-										<td>Declined</td>
-									</tr>
-									<tr class="warning">
-										<td>3</td>
-										<td>TB - Monthly</td>
-										<td>03/04/2012</td>
-										<td>Pending</td>
-									</tr>
-									<tr class="danger">
-										<td>4</td>
-										<td>TB - Monthly</td>
-										<td>04/04/2012</td>
-										<td>Call in to confirm</td>
-									</tr>
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+							<table class="table" title="附近的货源">
+
+								<tbody title="附近的货源">
+							<div  class="row">附近的货源</div>
+									<c:forEach var="resource" items="${resource}">
+										
+										<tr>
+											<td><img class="img-circle" width="130" height="130"
+												alt="alt" src="static/images/orange.png"> <br> <b>${resource.contact}</b></td>
+											<td>
+												<h1 style="color: #333; font-size: 14px; font-weight: 700">从
+													${resource.departurePlace}  到 ${resource.destPlace}</h1> <span class="price" style="font-size: 18px">$
+													500</span><br> <span class="help-block"
+												style="font-size: 100%">1212</span>
+
+											</td>
+											<td>发布时间： 01/04/2012</td>
+											<td>
+												<button  onClick="window.location=('bookresource.do?idname=${resource.id}')" type="button" class="btn btn-default">下单</button>
+											</td>
+										</tr>
+										</c:forEach>
+									
 								</tbody>
 							</table>
 						</div>
-						<div class="col-md-6">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>起点</th>
-										<th>终点</th>
-										<th>负载</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td>TB - Monthly</td>
-										<td>01/04/2012</td>
-										<td>Default</td>
-									</tr>
-									<tr class="active">
-										<td>1</td>
-										<td>TB - Monthly</td>
-										<td>01/04/2012</td>
-										<td>Approved</td>
-									</tr>
-									<tr class="success">
-										<td>2</td>
-										<td>TB - Monthly</td>
-										<td>02/04/2012</td>
-										<td>Declined</td>
-									</tr>
-									<tr class="warning">
-										<td>3</td>
-										<td>TB - Monthly</td>
-										<td>03/04/2012</td>
-										<td>Pending</td>
-									</tr>
-									<tr class="danger">
-										<td>4</td>
-										<td>TB - Monthly</td>
-										<td>04/04/2012</td>
-										<td>Call in to confirm</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+						<div class="col-md-3"></div>
 					</div>
 				</div>
 			</div>

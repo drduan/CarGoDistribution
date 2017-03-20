@@ -174,24 +174,24 @@
 			</div>
 			<div style="margin-bottom:20px">
 				<select class="easyui-combobox" name="CarType" label="车辆类型" style="width:100%">
-				<option value="ar">厢式货车</option>
-				<option value="bg">面包车</option>
-				<option value="ca">平板车</option>
-				<option value="zh-cht">半挂车</option>
-				<option value="cs">自卸车</option>
-				<option value="da">保温车</option>
-				<option value="nl">罐式车</option>
-				<option value="en" selected="selected">铁笼车</option>
-				<option value="et">集装箱运输车</option>
-				<option value="fi">轿车运输车</option>
-				<option value="fr">大件运输车</option>
-				<option value="de">起重车</option>
-				<option value="el">危险品车</option>
-				<option value="ht">爬梯车</option>
-				<option value="he">全挂车</option>
-				<option value="hi">加长挂车</option>
-				<option value="mww">金杯车(高顶)</option>
-				<option value="hu">金杯车(低顶)</option>
+				<option value="厢式货车" selected="selected">>厢式货车</option>
+				<option value="面包车">面包车</option>
+				<option value="平板车">平板车</option>
+				<option value="半挂车">半挂车</option>
+				<option value="自卸车">自卸车</option>
+				<option value="保温车">保温车</option>
+				<option value="罐式车">罐式车</option>
+				<option value="铁笼车" >铁笼车</option>
+				<option value="集装箱运输车">集装箱运输车</option>
+				<option value="轿车运输车">轿车运输车</option>
+				<option value="大件运输车">大件运输车</option>
+				<option value="起重车">起重车</option>
+				<option value="危险品车">危险品车</option>
+				<option value="爬梯车">爬梯车</option>
+				<option value="全挂车">全挂车</option>
+				<option value="加长挂车">加长挂车</option>
+				<option value="金杯车(高顶)">金杯车(高顶)</option>
+				<option value="金杯车(低顶)">金杯车(低顶)</option>
 				</select>
 			</div>
 			
