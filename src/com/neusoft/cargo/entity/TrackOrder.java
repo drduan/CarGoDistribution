@@ -1,31 +1,59 @@
 package com.neusoft.cargo.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-@Entity
-@Table
+//@Entity
+//@Table(name="trackorder")
 public class TrackOrder  implements Serializable{
 
 	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="OrderId")
 	private long id;
 	
+	@Enumerated(EnumType.STRING)
+	private OrderType orderType;
 	
-//	private UUID uuid;
-	
+	public OrderType getOrderType() {
+		return orderType;
+	}
+	public void setOrderType(OrderType orderType) {
+		this.orderType = orderType;
+	}
 	private String uuid;
 	
-	// 运输状态
+	
+	  /**注册时间**/
+    private Timestamp createTime = new Timestamp(System.currentTimeMillis());
+   
+	
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 	private String  mstatus;
 	
 	
@@ -61,6 +89,30 @@ public class TrackOrder  implements Serializable{
 	private  Car car;
 	
 	
+	/*
+	 * 后加的字段
+	 */
+
+//	private User owner;
+//
+	
+//	@ManyToOne
+//	private User driver;
+	
+//	 @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},fetch=FetchType.EAGER,optional=true)  
+//     @JoinColumn(name="ownerid",referencedColumnName="userid",insertable=false,updatable=false)
+//	public User getOwner() {
+//		return owner;
+//	}
+//	public void setOwner(User owner) {
+//		this.owner = owner;
+//	}
+//	public User getDriver() {
+//		return driver;
+//	}
+//	public void setDriver(User driver) {
+//		this.driver = driver;
+//	}
 	
 	
 	

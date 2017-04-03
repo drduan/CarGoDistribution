@@ -1,10 +1,7 @@
 package com.neusoft.cargo.dao;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,33 +15,23 @@ import com.neusoft.cargo.entity.User;
 public class UserDao extends AbstractHibernateDAO<User> {
 
 	private static final Log log = LogFactory.getLog(UserDao.class);
-	// property constants
-	public static final String OPENING_BALENCE = "openingBalence";
-	public static final String RECEIVE = "receive";
-	public static final String TRANSFER = "transfer";
-	public static final String TRANSFER_TO_COMMENT = "transferToComment";
-	public static final String DAY_BRAND_RATE = "dayBrandRate";
-	public static final String CLOSING_BALANCE = "closingBalance";
-	public static final String LAST_UPDATE_USE_ID = "lastUpdateUseId";
 
 	public UserDao() {
 		setClazz(User.class);
 	}
 
 	public void save(User entity) {
-		log.error("\"message save");
 		try {
 			this.getHibernateTemplate().saveOrUpdate(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
 
 	}
 
 	public User findByMail(String email) {
 
-		//，并且以_ci（大小写不敏感）、_cs（大小写敏感）
+		// ，并且以_ci（大小写不敏感）、_cs（大小写敏感）
 		List<User> result = (List<User>) this.getHibernateTemplate().find("from User u where u.email=?", email);
 		if (result.isEmpty()) {
 
@@ -57,12 +44,10 @@ public class UserDao extends AbstractHibernateDAO<User> {
 
 	}
 
-	public User getUniqueByProperty(String paramName, String value) {
-		// TODO Auto-generated method stub
-		// log.error("paramName"+paramName+"value"+value);
-
-		return (User) this.getHibernateTemplate().find("from User u where u.username=?", value).get(0);
-	}
+	// public User getUniqueByProperty(String paramName, String value) {
+	// return (User) this.getHibernateTemplate().find("from User u where
+	// u.username=?", value).get(0);
+	// }
 
 	public List<Car> GetCarList(User entity) {
 
@@ -87,52 +72,37 @@ public class UserDao extends AbstractHibernateDAO<User> {
 			User ciUser = (User) this.getHibernateTemplate().find("from User u where u.email=?", entity.getEmail())
 					.get(0);
 
-			return ciUser.getStockDailyRecords();
-//			List<Car> lc = new ArrayList<>(ciUser.getStockDailyRecords());
+			return ciUser.getCars();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
 		return null;
 
 	}
-	
-	
-	
+
 	public List<CargoResource> GetCargoResourceList(User entity) {
 
 		try {
-			
+
 			User ciUser = (User) this.getHibernateTemplate().find("from User u where u.email=?", entity.getEmail())
 					.get(0);
 
 			return ciUser.getCargoResources();
-//			List<Car> lc = new ArrayList<>(ciUser.getStockDailyRecords());
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
 		return null;
 
 	}
-	
-	
-	
-	
 
 	public void addCarToUser(User user1, Car car) {
-		// TODO Auto-generated method stub
-
 		car.setUser(user1);
 		getCurrentSession().save(car);
-
 		List<Car> sc = new ArrayList<Car>();
 		sc.add(car);
-		
-		user1.setStockDailyRecords(sc);
-
+		user1.setCars(sc);
 		getCurrentSession().saveOrUpdate(user1);
 
 	}

@@ -2,49 +2,53 @@ package com.neusoft.cargo.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
-import javafx.beans.DefaultProperty;
-
-@Entity
-@Table(name = "sys_car", uniqueConstraints = { @UniqueConstraint(columnNames = "id")})
+@Entity(name="car")
 public class Car implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long carid;
+	/*
+	 * 判断车辆是否可以使用，否则显示“运输中”
+	 */
+	private boolean carStatus;
 
-	@ManyToOne(targetEntity=User.class,cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id")
+	public boolean isCarStatus() {
+		return carStatus;
+	}
+
+	public void setCarStatus(boolean carStatus) {
+		this.carStatus = carStatus;
+	}
+
+	@ManyToOne
 	private User user;
-	// “车辆类型”
-	
+	public User getUser() {
+		User user1  = new User();
+		user1.setUsername( user.getUsername());
+		user1.setId(user.getId());
+		user1.setCreateDate(user.getCreateDate());
+		user1.setEmail(user.getEmail());
+		return user1;
+	}
+
 	private String CarType;
 
 	// 号牌号码
+	// license plate number
 	private String CarNumber;
 
-//负载
+	// 负载
+	//operating load
+	private String Capicity;
 
-	private String  Capicity;
-
-	private String   phone;
-	
-	
-	
-	// public User getUser() {
-	//		return this.user;
-//	}
+	private String phone;
 
 	public String getPhone() {
 		return phone;
@@ -54,24 +58,24 @@ public class Car implements Serializable {
 		this.phone = phone;
 	}
 
-	public String  getCapicity() {
+	public String getCapicity() {
 		return Capicity;
 	}
 
-	public void setCapicity(String  capicity) {
+	public void setCapicity(String capicity) {
 		Capicity = capicity;
 	}
 
-	public void setUser(User stock) {
-		this.user = stock;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public long getId() {
-		return id;
+		return carid;
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		this.carid = id;
 	}
 
 	public String getCarType() {
@@ -110,9 +114,4 @@ public class Car implements Serializable {
 
 	private double FreightRates;
 
-	@Override
-	public String toString() {
-		
-		return "Car \t "+"CarHost"+CarHost+"\t CarNumber"+CarNumber+"\t CarType"+CarType;
-	}
 }

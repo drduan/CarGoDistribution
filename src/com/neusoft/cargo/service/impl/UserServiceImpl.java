@@ -1,8 +1,6 @@
 package com.neusoft.cargo.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -44,16 +42,13 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	public void remove(int id) {
+	public void remove(long id) {
 		User person = find(id);
 		if (person != null) {
-			// em.remove(person);
 		}
 	}
 
-	public User find(int id) {
-		// return em.find(User.class, id);
-		// return userDao.findById(id);
+	public User find(long id) {
 		return userDao.findOne(id);
 	}
 
@@ -69,17 +64,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<CargoResource> GetCargoResourceList(User user) {
-		// TODO Auto-generated method stub
-//		return null;
 		return userDao.GetCargoResourceList(user);
 	}
+
 	@Override
 	public void addCarToUser(User user, Car car) {
-		// TODO Auto-generated method stub
-
 		userDao.addCarToUser(user, car);
 	}
-
-
 
 }

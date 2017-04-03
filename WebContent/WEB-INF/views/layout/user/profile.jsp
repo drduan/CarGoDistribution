@@ -174,7 +174,7 @@
 			</div>
 			<div style="margin-bottom:20px">
 				<select class="easyui-combobox" name="CarType" label="车辆类型" style="width:100%">
-				<option value="厢式货车" selected="selected">>厢式货车</option>
+				<option value="厢式货车" selected="selected">厢式货车</option>
 				<option value="面包车">面包车</option>
 				<option value="平板车">平板车</option>
 				<option value="半挂车">半挂车</option>

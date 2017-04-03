@@ -20,11 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.neusoft.cargo.dao.UserDao;
-import com.neusoft.cargo.entity.Role;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.entity.User.UserType;
-
-import javassist.compiler.ast.NewExpr;
 
 @Service
 @Transactional
@@ -33,6 +30,7 @@ public class MyShiro extends AuthorizingRealm {
 
 	@Resource
 	private UserDao userDao;
+	
 	private Logger logger = Logger.getLogger(MyShiro.class);
 
 	public MyShiro() {
@@ -44,19 +42,12 @@ public class MyShiro extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-		// 获取登录时输入的用户名
 		logger.debug("开始\t PrincipalCollection \t认证 ");
 		String loginName = (String) principalCollection.getPrimaryPrincipal();
-		// User admin = userDao.getUniqueByProperty("username", loginName);
 		User user = userDao.findByMail(loginName);
-	
-		
-		//
 		// List<Role> lr = new ArrayList<Role>();
 		// lr.add(new Role("admin"));
-		//
 		// user.setRoleList(lr);
-
 		if (user != null) {
 			// 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -73,7 +64,6 @@ public class MyShiro extends AuthorizingRealm {
 			}
 			info.setRoles(sr);
 			
-		
 			// info.setRoles(user.getRolesName());
 			// 用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
 			// Set <Role> roleList = user.getRoleList();

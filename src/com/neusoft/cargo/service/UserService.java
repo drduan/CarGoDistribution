@@ -20,11 +20,11 @@ public interface UserService {
 
 	public List<User> findAll();
 
-	public void save(User person);
+	public void save(User user);
 
-	public void remove(int id);
+	public void remove(long id);
 
-	public User find(int id);
+	public User find(long id);
 
 	List<Car> GetCarList(User user);
 	

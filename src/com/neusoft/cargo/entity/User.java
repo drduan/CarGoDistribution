@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,23 +16,59 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import net.sf.oval.constraint.NotEmpty;
 
+//'#########################################################################
+//'#                            CHANGE LOG
+//'#########################################################################
+//'# Author      : 段旭东
+//'# Auditor     : jane.gu[Double Checker] /审计员
+//'# Modified    : 2009-1-12 16:00
+//'# Task No     : 90033 [MYZHAOPINA注册时检查用户EMAIL是否可用BUG]
+//'# Requirement : [需求人-技术部 赵永江]
+//'# Purpose     : 进行用户EMAIL检测提交时增加当前时间参数
+//'# Scope       : My.zhaopin.com
+//'# Risk        : [修改带来的潜在风险]
+//'# Approved by : [ruud.zhao]
+//'########################################################################
+//
+//
+//
 // 用户为guest 存着基础信息
-@Entity
-@Table(name = "sys_user", uniqueConstraints = { @UniqueConstraint(columnNames = "id"), })
+// 
+/*
+	可以增加一个账号属性
+	    '0' : '登录成功!',
+        '11' : '密码至少应包含 6 个字符！',
+        '13' : '您的IP已经被列为黑名单！',
+        '14' : '您的邮箱已经被列为黑名单！',
+        '15' : '您的邮箱域名已经被列为黑名单',
+        '21' : '登录过于频繁！',
+        '22' : '账号不存在，请确认后重新输入',
+        '23' : '您输入的密码与账号不匹配！',
+        '30' : '未注册的Email地址！',
+        '33' : '您的账户已经被冻结！',
+        '34' : '您的账户已经被注销！',
+        '35' : '您的账户已经被锁定！',
+        '36' : '您的IP已经被锁定！',
+        '37' : '用户名密码输入超过3次需要弹出验证码输入框!',//您的操作过于频繁，请输入验证码
+        '38' : '请输入正确的验证码！',
+        '51' : '手机登录失败！',
+        //前端自定义错误信息 code  errormsg
+        '$001' : '请输入账号！',
+        '$002' : '登录名至少应包含 5 个字符！',
+        '$003' : '请输入密码！',
+        '$004' : '密码至少应包含 6 个字符！',
+        '$005' : '请输入验证码！'
+ */
+@Entity(name="User")
 public class User implements Serializable {
 
 	public User() {
@@ -74,6 +109,7 @@ public class User implements Serializable {
 	// SEQUENCE 根据底层数据库的序列来生成主键，条件是数据库支持序列
 	// Table 使用一个特定的数据库表格来保存主键
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "userid")
 	private Long id;
 
 	public String getEmail() {
@@ -104,22 +140,34 @@ public class User implements Serializable {
 	private String salt;
 	private Boolean locked = Boolean.FALSE;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date",nullable=true,columnDefinition="timestamp default current_timestamp")
+	@Column(name = "create_date", nullable = true, columnDefinition = "timestamp default current_timestamp")
 	private Date createDate = new Date();
 
-	@OneToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	private Set<Role> roles = new HashSet<>(); // 一个用户具有多个角色
-
+	
 	/*
 	 * cascade：为级联操作，里面有级联保存，级联删除等，all为所有 fetch：加载类型，有lazy和eager二种，
 	 * eager为急加载，意为立即加载，在类加载时就加载，lazy为慢加载，第一次调用的时候再加载，由于数据量太大，onetomany一般为lazy
 	 * mappedBy：这个为manytoone中的对象名，这个不要变哦 Set<role>：这个类型有两种，一种为list另一种为set
 	 */
-	@OneToMany(targetEntity = Car.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	private List<Car> stockDailyRecords = new ArrayList<Car>();
+	@OneToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Role> roles = new HashSet<>(); // 一个用户具有多个角色
 
-	@OneToMany(targetEntity = CargoResource.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Car> cars = new ArrayList<Car>();
+
+	@OneToMany(fetch=FetchType.EAGER,mappedBy = "_user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CargoResource> CargoResources = new ArrayList<CargoResource>();
+
+	public void addCar(Car phone) {
+		cars.add(phone);
+		phone.setUser(this);
+	}
+
+	public void removeCar(Car phone) {
+		cars.remove(phone);
+		phone.setUser(null);
+	}
 
 	// cascade属性的可能值有
 	// all: 所有情况下均进行关联操作，即save-update和delete。
@@ -147,7 +195,6 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 
-	
 	public List<CargoResource> getCargoResources() {
 		return CargoResources;
 	}
@@ -156,20 +203,20 @@ public class User implements Serializable {
 		CargoResources = cargoResources;
 	}
 
-	public List<Car> getStockDailyRecords() {
-		return this.stockDailyRecords;
-	}
-
-	public void setStockDailyRecords(List<Car> stockDailyRecords) {
-		this.stockDailyRecords = stockDailyRecords;
-	}
-
 	public Set<Role> getRoleList() {
 		return roles;
 	}
+//
+//	public void setRoleList(Set<Role> roleList) {
+//		this.roles = roleList;
+//	}
 
-	public void setRoleList(Set<Role> roleList) {
-		this.roles = roleList;
+	public List<Car> getCars() {
+		return cars;
+	}
+
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
 	}
 
 	@Transient
@@ -289,6 +336,17 @@ public class User implements Serializable {
 	public int hashCode() {
 		return id != null ? id.hashCode() : 0;
 	}
+
+	// @OneToMany(cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="driver")
+	// private Set<TrackOrder> orderItems;
+	//
+	// public Set<TrackOrder> getOrderItems() {
+	// return orderItems;
+	// }
+	//
+	// public void setOrderItems(Set<TrackOrder> orderItems) {
+	// this.orderItems = orderItems;
+	// }
 
 	@Override
 	public String toString() {

@@ -1,10 +1,6 @@
 package com.neusoft.cargo.dao;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,31 +27,30 @@ public class CargoResourceDao extends AbstractHibernateDAO<CargoResource> {
 		setClazz(CargoResource.class);
 	}
 
-	public void save(CargoResource entity) {
-		log.error("\"message save");
+	public void save(CargoResource cargoResource) {
 		try {
-			this.getHibernateTemplate().saveOrUpdate(entity);
+			this.getHibernateTemplate().saveOrUpdate(cargoResource);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
 
 	}
 
-//	public User findByMail(String email) {
-//
-//		//，并且以_ci（大小写不敏感）、_cs（大小写敏感）
-//		List<User> result = (List<User>) this.getHibernateTemplate().find("from User u where u.email=?", email);
-//		if (result.isEmpty()) {
-//
-//			return null;
-//
-//		} else {
-//
-//			return result.get(0);
-//		}
-//
-//	}
+	// public User findByMail(String email) {
+	//
+	// //，并且以_ci（大小写不敏感）、_cs（大小写敏感）
+	// List<User> result = (List<User>) this.getHibernateTemplate().find("from
+	// User u where u.email=?", email);
+	// if (result.isEmpty()) {
+	//
+	// return null;
+	//
+	// } else {
+	//
+	// return result.get(0);
+	// }
+	//
+	// }
 
 	public User getUniqueByProperty(String paramName, String value) {
 		// TODO Auto-generated method stub
@@ -87,8 +82,8 @@ public class CargoResourceDao extends AbstractHibernateDAO<CargoResource> {
 			User ciUser = (User) this.getHibernateTemplate().find("from User u where u.email=?", entity.getEmail())
 					.get(0);
 
-			return ciUser.getStockDailyRecords();
-//			List<Car> lc = new ArrayList<>(ciUser.getStockDailyRecords());
+			return ciUser.getCars();
+			// List<Car> lc = new ArrayList<>(ciUser.getStockDailyRecords());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -98,19 +93,9 @@ public class CargoResourceDao extends AbstractHibernateDAO<CargoResource> {
 
 	}
 
-	public void addCarToUser(User user1, CargoResource car) {
-		// TODO Auto-generated method stub
-		// User user = getCurrentSession().load(User.class, user1);
-		// User user = getCurrentSession().
-
-		car.setUser(user1);
-		getCurrentSession().save(car);
-
-//		List<CargoResource> sc = new ArrayList<Car>();
-//		sc.add(car);
-		
-//		user1.setStockDailyRecords(sc);
-
+	public void addCargoResourceToUser(User user1, CargoResource cargoresource) {
+		cargoresource.set_user(user1);
+		getCurrentSession().save(cargoresource);
 		getCurrentSession().saveOrUpdate(user1);
 
 	}

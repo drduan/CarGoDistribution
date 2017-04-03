@@ -57,7 +57,7 @@
 				<shiro:authenticated>
 
 
-					<li><label> <a href="<%=request.getContextPath()%>/User/logout.do">注销</a></label></li>
+					<li><label> <a href="<%=request.getContextPath()%>/logout.do">注销</a></label></li>
 
 					<li class="opts__item message has-unread hidden-sm"><a
 						id="dLabel" class="dropdown-toggle-message"

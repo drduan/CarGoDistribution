@@ -96,8 +96,7 @@ public class UserAction extends Base {
 	public String login(User userValidate, boolean rememberMe, Model model) {
 		ensureUserIsLoggedOut();
 
-		int ii = 1;
-		logger.error("log  in " + ii);
+		
 		userValidate.setPassword(Md5Util.md5Encode(userValidate.getPassword()));
 
 		UsernamePasswordToken token = new UsernamePasswordToken(userValidate.getEmail(), userValidate.getPassword());
@@ -172,9 +171,9 @@ public class UserAction extends Base {
 		session.setMaxInactiveInterval(6000);
 		user.setUsertype(UserType.DRIVER);
 		// Role role = new Role("user", "user");
-		List<Role> roles = roleDao.findAll();
+		//List<Role> roles = roleDao.findAll();
 		// Set<Role> roleList = new HashSet<>();
-		Set<Role> roleList = new HashSet<>(roles);
+		//Set<Role> roleList = new HashSet<>(roles);
 		// for (Role r : roles) {
 		// if (r.getDescription().equals("user")) {
 		// roleList.add(r);
@@ -327,6 +326,8 @@ public class UserAction extends Base {
 	public List<Car> GetUserCars(Car car) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		List<Car> lc = userService.GetCarList(user);
+		
+		logger.error("message"+lc.get(0).getUser().getEmail());
 		return lc;
 	}
 

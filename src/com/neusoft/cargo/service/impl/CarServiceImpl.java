@@ -14,10 +14,9 @@ import com.neusoft.cargo.service.CarService;
 public class CarServiceImpl implements CarService {
 
 	@Resource
-	// private DepretedUserDao userDao;
-	private CarDao userDao;
+	private CarDao carDao;
 
-	private Logger logger = Logger.getLogger(UserServiceImpl.class);
+	private Logger logger = Logger.getLogger(CarServiceImpl.class);
 
 	@Override
 	public List<Car> findAll() {
@@ -28,7 +27,7 @@ public class CarServiceImpl implements CarService {
 	public void save(Car car) {
 		// TODO Auto-generated method stub
 
-		userDao.save(car);
+		carDao.save(car);
 
 	}
 
@@ -41,6 +40,6 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public Car find(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return carDao.findOne(id);
 	}
 }

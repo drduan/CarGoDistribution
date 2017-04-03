@@ -18,10 +18,8 @@ import com.neusoft.cargo.service.CargoResourceService;
 @Service
 public class CargoResourceServiceImpl implements CargoResourceService {
 	@Resource
-	// private DepretedUserDao userDao;
 	private UserDao userDao;
 	@Resource
-//	private CarDao carDao;
 	private CargoResourceDao cargoResourceDao;
 
 	private Logger logger = Logger.getLogger(UserServiceImpl.class);
@@ -30,13 +28,13 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 		return cargoResourceDao.findAll();
 	}
 
-	public void save(CargoResource person) {
+	public void save(CargoResource cargoResource) {
 
-		logger.info("message" + "执行User Save" + person.getId());
+//		logger.info("message" + "执行User Save" + cargoResource.getCarresourceid());
 
-		logger.log(Priority.DEBUG, person.toString() + "person ID" + person.getId());
+//		logger.log(Priority.DEBUG, person.toString() + "person ID" + person.getId());
 		try {
-			cargoResourceDao.save(person);
+			cargoResourceDao.save(cargoResource);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,11 +48,7 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 //		}
 //	}
 
-//	public CargoResource find(int id) {
-//		// return em.find(User.class, id);
-//		// return userDao.findById(id);
-//		return cargoResourceDao.findOne(id);
-//	}
+
 
 	public User findBymail(String email) {
 
@@ -75,7 +69,6 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 	@Override
 	public CargoResource find(int id) {
 		// TODO Auto-generated method stub
-//		return null;
 		return cargoResourceDao.findOne(id);
 	}
 
@@ -84,12 +77,6 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 	{
 		return cargoResourceDao.findAll();
 	}
-	
-//	@Override
-//	public void addCarToUser(User user, CargoResource car) {
-//		// TODO Auto-generated method stub
-//
-//		cargoResourceDao.addCarToUser(user, car);
-//	}
+
 
 }

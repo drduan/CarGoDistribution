@@ -9,7 +9,7 @@ public interface CargoResourceService {
 
 	public List<CargoResource> findAll();
 
-	public void save(CargoResource person);
+	public void save(CargoResource cargoResource);
 
 	public void remove(int id);
 

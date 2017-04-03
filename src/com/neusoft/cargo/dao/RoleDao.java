@@ -81,7 +81,7 @@ public class RoleDao extends BaseHibernateDAO{
 	 */
 	public List<Role> findAll () {
 		
-		String sql = " from Role";
+		String sql = " from role";
 		Query<Role> query =  getSession().createQuery(sql);
 		return query.list();
 		

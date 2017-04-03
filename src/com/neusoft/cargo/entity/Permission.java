@@ -16,8 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "sys_permission")
+//@Entity
+//@Table(name = "sys_permission")
 public class Permission {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

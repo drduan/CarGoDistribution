@@ -25,7 +25,7 @@
 		$(function() {
 			$("#submitNext").click(function() {
 				var val = $('input:radio[name="car"]:checked').val();
-				var rid = ${cargoResource.id};
+				var rid = ${cargoResource.carresourceid};
 				if (val == null) {
 					alert("什么也没选中!");
 					return false;
@@ -48,8 +48,13 @@
 						},
 						success : function(data, textStatus, jqXHR) {
 							if(data=='success')
+								
 								{
-								 location.href = "paying.do";//location.href实现客户端页面的跳转  
+								
+								alert("已通知车主，请等待审核通过！");
+								$('#submitNext').attr('disabled',"true");
+								/* <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+								 */ //location.href = "paying.do";//location.href实现客户端页面的跳转  
 								}
 						},
 						error : function(xhr, textStatus) {
@@ -72,6 +77,11 @@
 				<div class="row">
 					<div class="col-md-1"></div>
 					<div class="col-md-10">
+					
+						<div class="row">
+						<jsp:include page="user/head.jsp"></jsp:include>
+						</div>
+						
 						<div class="row">
 							<div class="col-md-12">
 								<h3>确认订单</h3>
@@ -144,11 +154,11 @@
 								</table>
 								<div>
 									<tr class="success">
-										<button id="submitNext" class="btn btn-default">提交订单</button>
+										<button id="submitNext" class="btn btn-default">提交预约申请</button>
 										<!-- 需要检测是否选择车辆 -->
 										<!-- 席位已锁定，请在10 分钟内进行支付，完成网上购票。 支付剩余时间： -->
 										<!--网上支付 -->
-										<button class="btn btn-default">返回</button>
+										<button class="btn btn-default" href="\">返回</button>
 									</tr>
 								</div>
 								<div class="row">
@@ -163,6 +173,31 @@
 		</div>
 	</div>
 
-
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" 
+						aria-hidden="true">×
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					支付进行中
+				</h4>
+			</div>
+			<div class="modal-body">
+				按下 ESC 按钮退出。
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" 
+						data-dismiss="modal">关闭
+				</button>
+				<button type="button" class="btn btn-primary">
+					支付完成
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
 </html>

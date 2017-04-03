@@ -9,8 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "sys_operation")
+//@Entity
+//@Table(name = "sys_operation")
 public class Operation   implements Serializable{
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
