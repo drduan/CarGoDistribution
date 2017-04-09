@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.CargoResource;
+import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.entity.User;
 
 /**
@@ -31,5 +32,8 @@ public interface UserService {
 	List<CargoResource> GetCargoResourceList(User user);
 
 	public void addCarToUser(User user, Car car);
+	
+	public List<TrackOrder> getOrder(User user);
+	
 	
 }

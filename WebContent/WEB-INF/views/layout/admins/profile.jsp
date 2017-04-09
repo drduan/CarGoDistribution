@@ -13,10 +13,9 @@
 <title>个人主页</title>
 
 <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
-<link href="../static/css/font-awesome.min.css" rel="stylesheet" />
 <link href="../static/css/easyui.css" rel="stylesheet" />
-<link href="../static/css/icon.css">
 <link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css" rel="stylesheet" type="text/css">
+<link href="../static/css/icon.css">
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/jquery.easyui.min.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
@@ -84,7 +83,44 @@
 					data-options="tabPosition:'left',headerWidth:80">
 					<div title="我的订单" style="padding: 10px;">
 						<div style="margin: 20px 0;"></div>
-						<h2>我的订单</h2>
+						<table id="dg" title="我的订单"
+							style="width: 700px; height: 250px"
+							data-options="rownumbers:true,singleSelect:true,pagination:true,url:'GetOwnerOrder.json',method:'get'">
+							<thead>
+								<tr>
+									<th data-options="field:'createTime',width:80">联系人</th>
+									<th data-options="field:'mstatus',width:100">车牌号</th>
+									<th data-options="field:'uuid',width:80,align:'right'">运费</th>
+										</tr>
+							</thead>
+						</table>
+						<script type="text/javascript">
+							$(
+									function() {
+										var pager = $('#dg').datagrid()
+												.datagrid('getPager'); // get the pager of datagrid
+										pager.pagination({
+											buttons : [ {
+												iconCls : 'icon-search',
+												handler : function() {
+													alert('search');
+												}
+											}, {
+												iconCls : 'icon-add',
+												handler : function() {
+													$('#w').window('open')
+												}
+											}, {
+												iconCls : 'icon-edit',
+												handler : function() {
+													alert('edit');
+												}
+											} ]
+										});
+									})
+						</script>
+						
+						
 					</div>
 					<div title="我的货源" style="padding: 10px;">
 

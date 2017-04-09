@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.CargoResource;
+import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.entity.User;
 
 @Repository("UserDao")
@@ -105,6 +106,12 @@ public class UserDao extends AbstractHibernateDAO<User> {
 		user1.setCars(sc);
 		getCurrentSession().saveOrUpdate(user1);
 
+	}
+
+	public List<TrackOrder> getOrderList(User user) {
+		User ciUser = (User) this.getHibernateTemplate().find("from User u where u.email=?", user.getEmail()).get(0);
+
+		return null;
 	}
 
 }

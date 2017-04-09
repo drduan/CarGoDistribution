@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
-<title>欢迎注册-中国货运物流信息平台</title>
+<title>个人信息设置</title>
 </head>
+<body>
+
 <script type="text/javascript">
 	function refreshCode(imgObj) {
 		if (!imgObj) {
@@ -96,51 +98,7 @@
 	}
 </script>
 
-<script type="text/javascript">
-//$("#select_id").change(function(){//code...}); //为Select添加事件，当选择其中一项时触发 
-	//var checkText=$("#select_id").find("option:selected").text(); //获取Select选择的Text 
-	//var checkValue=$("#select_id").val(); //获取Select选择的Value 
-	//var checkIndex=$("#select_id ").get(0).selectedIndex; //获取Select选择的索引值 
-	//var maxIndex=$("#select_id option:last").attr("index"); //获取Select最大的索引值
-	
-	/**
-	根据option进行绑定事件
-	*/
-/*
-	$(document).ready(
-	function () {
-$("#usertype").change(
-		function()
-		{
-			var checkValue = $("#usertype").val();
-			switch(checkValue)
-			{
-			case "OWNER":
-				$("#OWNER").show();
-				$("#DRIVER").hide();
-			
-				break;
-			case "DRIVER":
-				$("#OWNER").hide();
-				$("#DRIVER").show();
-			
-				break;
-			case "GUEST":
-				$("#OWNER").hide();
-				$("#DRIVER").hide();
-				break;
-			}
-		//	confirm("文本")
-		//	prompt("文本","默认值")
-		}
-		)	
-	});
-*/
-
-</script>
-
-<body >
-	<div class="container-fluid">
+<div class="container-fluid">
 		<jsp:include page="../include/head.jsp"></jsp:include>
 		<div class="row">
 			<div class="col-md-12">
@@ -148,18 +106,11 @@ $("#usertype").change(
 					<div class="col-md-4"></div>
 					<div class="col-md-4">
 						<form method="post"
-							action="${pageContext.request.contextPath}/User/register.do" onsubmit="return checkuser()" accept-charset="UTF-8">
+							action="${pageContext.request.contextPath}/User/settings.do" onsubmit="return checkuser()" accept-charset="UTF-8">
 							<ul class="list-unstyled">
-								<li>
-								<select id="usertype" class="form-control">
-										<option value="GUEST">游客</option>
-										<option value="DRIVER">车主</option>
-										<option value="OWNER">货主</option>
-								</select>
-								<br/>
-								</li>
+								
 								<li> <label>登陆邮箱</label><br/> 
-								<input type="email" name="email" autofocus="autofocus" onchange="checkemailexist()" />
+								<input disabled="disabled" type="email" name="email" autofocus="autofocus" onchange="" />
 								</li>
 								<li> <label>会员登录名</label><br/> <input type="text" name="username" placeholder="输入3位以上英文"/>
 								</li>
@@ -219,5 +170,7 @@ $("#usertype").change(
 </div>
 
 	<script type="text/javascript" src="../static/js/bootstrap.min.js"></script>	
+	
+
 </body>
 </html>

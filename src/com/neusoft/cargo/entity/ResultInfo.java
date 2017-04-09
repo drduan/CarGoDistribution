@@ -4,5 +4,4 @@ public class ResultInfo {
 
 	
 	
-//	public static String d = "{\"":""}";
 }

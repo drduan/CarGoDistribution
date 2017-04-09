@@ -12,13 +12,13 @@ import com.neusoft.cargo.dao.CarDao;
 import com.neusoft.cargo.dao.UserDao;
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.CargoResource;
+import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 	@Resource
-	// private DepretedUserDao userDao;
 	private UserDao userDao;
 	@Resource
 	private CarDao carDao;
@@ -70,6 +70,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addCarToUser(User user, Car car) {
 		userDao.addCarToUser(user, car);
+	}
+	
+	public  List<TrackOrder> getOrder( User user) {
+		return userDao.getOrderList(user);
 	}
 
 }

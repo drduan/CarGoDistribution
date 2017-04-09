@@ -9,7 +9,6 @@ import com.neusoft.cargo.entity.CargoResource;
 public class CarDao extends AbstractHibernateDAO<Car> {
 
 
-	// 这个
 	public CarDao() {
 		setClazz(Car.class);
 	}
@@ -17,8 +16,6 @@ public class CarDao extends AbstractHibernateDAO<Car> {
 	
 	public void save(Car entity) {
 		try {
-//			this.getHibernateTemplate().saveOrUpdate(entity);
-
 			this.getHibernateTemplate().save(entity);
 		} catch (Exception e) {
 			e.printStackTrace();

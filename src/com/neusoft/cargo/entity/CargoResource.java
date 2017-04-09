@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -135,6 +136,19 @@ public class CargoResource implements Serializable {
 
 	@ManyToOne
 	private User _user;
+	
+	@OneToOne(mappedBy = "cResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private TrackOrder order;
+	
+	
+
+	public TrackOrder getOrder() {
+		return order;
+	}
+
+	public void setOrder(TrackOrder order) {
+		this.order = order;
+	}
 
 	public long getCarresourceid() {
 		return carresourceid;

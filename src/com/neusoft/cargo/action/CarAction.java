@@ -14,14 +14,10 @@ import com.neusoft.cargo.service.UserService;
 @RequestMapping("/Car")
 public class CarAction extends BaseAction {
 
-//	@Autowired
-//	private UserServiceImpl userService;
 
 	@Autowired
 	private UserService userService;
 	
-//	@Autowired
-//	private CarServiceImpl carService;
 	
 	
 	@Autowired

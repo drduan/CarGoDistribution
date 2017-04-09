@@ -4,18 +4,36 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="static/css/bootstrap.min.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
 <title>身份验证</title>
 </head>
 <body>
+<div class="container-fluid">
+		<jsp:include page="../include/head.jsp"></jsp:include>
+		<div class="row">
+			<div class="col-md-12">
 
+	<form action="upload.do" method="post" enctype="multipart/form-data">
+		<!--  货主 车主写一个吧 选择的时候  选择 车主认证还是货主认证 -->
 
-	<form action>
+		真实名字 <p>
+		<input type="text" name="t_name"/><p>
+		身份证号 <p>
+		<input type="text" name="t_id"/><p>
+		上传身份证 正反面 （上传企业营业执照）<p>
 
-
-		<h2>
-			<a href="authenticationstatus.do">提交</a>
+		<input type="file" name="file">
+		<input type="file" name="file">
+			<h2>
+			
+			<input type="submit" value="提交"/>
 		</h2>
 	</form>
-
+</div>
+</div>
+</div>
+<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
 </body>
 </html>

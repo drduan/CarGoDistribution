@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -38,11 +39,7 @@ import net.sf.oval.constraint.NotEmpty;
 //'# Risk        : [修改带来的潜在风险]
 //'# Approved by : [ruud.zhao]
 //'########################################################################
-//
-//
-//
-// 用户为guest 存着基础信息
-// 
+
 /*
 	可以增加一个账号属性
 	    '0' : '登录成功!',
@@ -124,7 +121,6 @@ public class User implements Serializable {
 	@Column(unique = true)
 	private String username;
 	@NotNull
-	@Size(min = 11, max = 15)
 	private String phone;
 	@NotNull
 	private String password;
@@ -155,6 +151,30 @@ public class User implements Serializable {
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Car> cars = new ArrayList<Car>();
+
+	
+	@OneToMany(mappedBy = "toperson", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Message> ToMessages = new ArrayList<Message>();
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private  UserAuthInfo userAuthInfo;
+	
+
+	public UserAuthInfo getUserAuthInfo() {
+		return userAuthInfo;
+	}
+
+	public void setUserAuthInfo(UserAuthInfo userAuthInfo) {
+		this.userAuthInfo = userAuthInfo;
+	}
+
+	public List<Message> getToMessages() {
+		return ToMessages;
+	}
+
+	public void setToMessages(List<Message> toMessages) {
+		ToMessages = toMessages;
+	}
 
 	@OneToMany(fetch=FetchType.EAGER,mappedBy = "_user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CargoResource> CargoResources = new ArrayList<CargoResource>();
@@ -206,10 +226,6 @@ public class User implements Serializable {
 	public Set<Role> getRoleList() {
 		return roles;
 	}
-//
-//	public void setRoleList(Set<Role> roleList) {
-//		this.roles = roleList;
-//	}
 
 	public List<Car> getCars() {
 		return cars;
@@ -247,7 +263,6 @@ public class User implements Serializable {
 		return locked;
 	}
 
-	@Size(min = 15, max = 18)
 	private String ID_NUM;
 
 	public String getID_NUM() {
@@ -316,6 +331,8 @@ public class User implements Serializable {
 	public void setLocked(Boolean locked) {
 		this.locked = locked;
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object o) {
@@ -328,7 +345,6 @@ public class User implements Serializable {
 
 		if (id != null ? !id.equals(user.id) : user.id != null)
 			return false;
-
 		return true;
 	}
 
@@ -336,17 +352,6 @@ public class User implements Serializable {
 	public int hashCode() {
 		return id != null ? id.hashCode() : 0;
 	}
-
-	// @OneToMany(cascade={CascadeType.REFRESH,CascadeType.MERGE,CascadeType.REMOVE,CascadeType.PERSIST},fetch=FetchType.LAZY,mappedBy="driver")
-	// private Set<TrackOrder> orderItems;
-	//
-	// public Set<TrackOrder> getOrderItems() {
-	// return orderItems;
-	// }
-	//
-	// public void setOrderItems(Set<TrackOrder> orderItems) {
-	// this.orderItems = orderItems;
-	// }
 
 	@Override
 	public String toString() {

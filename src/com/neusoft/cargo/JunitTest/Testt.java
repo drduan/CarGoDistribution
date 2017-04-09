@@ -68,7 +68,7 @@ public class Testt extends AbstractTransactionalJUnit4SpringContextTests {
 		
 		Set<Car> stockDailyRecords = new HashSet<>(0);
 		stockDailyRecords.add(car);
-		user.setStockDailyRecords(stockDailyRecords);
+//		user.setStockDailyRecords(stockDailyRecords);
 	
 		userDao.save(user);
 

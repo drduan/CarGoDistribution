@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
-<title>空车配货平台首页-I</title>
+<title>空车配货平台首页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="_CarGoDistribution/../static/css/bootstrap.min.css"
 	rel="stylesheet" />
@@ -34,34 +34,7 @@
 			<div class="col-md-10">
 				<div class="container-fluid">
 					<jsp:include page="../include/head.jsp"></jsp:include>
-					<nav class="navbar .nav-divider" role="navigation"
-						style="background: #dddddd">
-						<div class="nav"
-							style="border-bottom: solid #ddddd 1px; padding-left: 0px; font-size: 12px">
-							<a class="first01" style="color: red">分站</a> <a href="#"
-								target="_blank">北京</a> <a href="#" target="_blank">上海</a> <a
-								href="#" target="_blank">广东</a> <a href="#" target="_blank">浙江</a>
-							<a href="#" target="_blank">江苏</a> <a href="#" target="_blank">天津</a>
-							<a href="#" target="_blank">重庆</a> <a href="#" target="_blank">山西</a>
-							<a href="#" target="_blank">山东</a> <a href="#" target="_blank">河南</a>
-							<a href="#" target="_blank">四川</a> <a href="#" target="_blank">湖北</a>
-							<a href="#" target="_blank">福建</a> <a href="#" target="_blank">陕西</a>
-							<a href="#" target="_blank">湖南</a> <a href="#" target="_blank">云南</a>
-							<a href="#" target="_blank">广西</a> <a href="#" target="_blank">安徽</a>
-							<a href="#" target="_blank">河北</a> <a href="#" target="_blank">海南</a>
-							<a href="#" target="_blank">辽宁</a> <a href="#" target="_blank">青海</a>
-							<a href="#" target="_blank">吉林</a> <a href="#" target="_blank">甘肃</a>
-							<a href="#" target="_blank">江西</a> <a href="#" target="_blank">黑龙江</a>
-							<a href="#" target="_blank">内蒙古</a> <a href="#" target="_blank">宁夏</a>
-							<a href="#" target="_blank">贵州</a> <span><a
-								data-toggle="collapse" data-target="#demo">更多</a>
-								<div id="demo" class="collapse out">
-									<a href="#" target="_blank">香港</a> <a href="#" target="_blank">新疆</a>
-									<a href="#" target="_blank">台湾</a> <a href="#" target="_blank">西藏</a>
-									<a href="#" target="_blank">澳门</a>
-								</div> </span>
-						</div>
-					</nav>
+					
 				</div>
 				<div class="col-md-12">
 					<div class="jumbotron">
@@ -97,12 +70,12 @@
 											<td><shiro:authenticated>
 													<button name="pre_submit"
 														onClick="window.location=('bookresource.do?idname=${resource.carresourceid}')"
-														type="button" class="btn btn-default">下单</button>
+														type="button" class="btn btn-default">预约订单</button>
 
 												</shiro:authenticated> <shiro:notAuthenticated>
 
 													<button id="modal-302051" href="#modal-container-302051"
-														type="button" class="btn btn-default" data-toggle="modal">下单</button>
+														type="button" class="btn btn-default" data-toggle="modal">预约订单</button>
 
 												</shiro:notAuthenticated></td>
 										</tr>

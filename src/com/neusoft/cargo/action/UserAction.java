@@ -2,18 +2,15 @@ package com.neusoft.cargo.action;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.jdbc.Null;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.ExpiredCredentialsException;
@@ -45,26 +42,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import com.neusoft.cargo.dao.RoleDao;
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.Role;
+import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.entity.User;
+import com.neusoft.cargo.entity.UserAuthInfo;
 import com.neusoft.cargo.entity.User.UserType;
+import com.neusoft.cargo.model.Order;
 import com.neusoft.cargo.service.UserService;
-import com.neusoft.cargo.service.impl.UserServiceImpl;
 import com.neusoft.cargo.util.Md5Util;
 
 @Controller("UserAction")
 @RequestMapping("/User")
 public class UserAction extends Base {
 
-	// @Autowired
-	// private UserServiceImpl userService;
-
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private RoleDao roleDao;
 	Logger logger = Logger.getLogger(UserAction.class);
-
-	// http://localhost:8080/User/profile
 
 	@RequestMapping(value = "home.do")
 
@@ -80,9 +74,19 @@ public class UserAction extends Base {
 
 	{
 		Subject subject = SecurityUtils.getSubject();
-		// logger.error("messageuser"+subject.hasRole("user"));
-
 		model.addAttribute("avater", "https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+		model.addAttribute("carsource", userService.GetCarList(user));
+		List<TrackOrder> orders = new ArrayList<TrackOrder>();
+		for (Car iterable_element : userService.GetCarList(user)) {
+
+			if (iterable_element.getTock() != null) {
+				orders.add(iterable_element.getTock());
+			}
+
+		}
+		model.addAttribute("orders", orders);
+
 		return "views/layout/user/profile";
 	}
 
@@ -96,7 +100,6 @@ public class UserAction extends Base {
 	public String login(User userValidate, boolean rememberMe, Model model) {
 		ensureUserIsLoggedOut();
 
-		
 		userValidate.setPassword(Md5Util.md5Encode(userValidate.getPassword()));
 
 		UsernamePasswordToken token = new UsernamePasswordToken(userValidate.getEmail(), userValidate.getPassword());
@@ -108,19 +111,16 @@ public class UserAction extends Base {
 			SecurityUtils.getSubject().getSession().setAttribute("avater",
 					"https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
 
-			logger.error("User [" + token.getPrincipal() + "]" + SecurityUtils.getSubject().hasRole("user")
-					+ "success loged");
-
 		} catch (UnknownAccountException e) {
 			return "views/layout/UnknownAccountException";
 		} catch (IncorrectCredentialsException e) {
-			logger.error("IncorrectCredentialsException");
+			return "views/layout/WrongPwdException";
 		} catch (LockedAccountException e) {
-			logger.error("LockedAccountException");
+			// logger.error("LockedAccountException");
 		} catch (ExcessiveAttemptsException e) {
-			logger.error("ExcessiveAttemptsException");
+			// logger.error("ExcessiveAttemptsException");
 		} catch (ExpiredCredentialsException e) {
-			logger.error("ExpiredCredentialsException");
+			// logger.error("ExpiredCredentialsException");
 		} finally {
 			token.clear();
 		}
@@ -171,9 +171,9 @@ public class UserAction extends Base {
 		session.setMaxInactiveInterval(6000);
 		user.setUsertype(UserType.DRIVER);
 		// Role role = new Role("user", "user");
-		//List<Role> roles = roleDao.findAll();
+		// List<Role> roles = roleDao.findAll();
 		// Set<Role> roleList = new HashSet<>();
-		//Set<Role> roleList = new HashSet<>(roles);
+		// Set<Role> roleList = new HashSet<>(roles);
 		// for (Role r : roles) {
 		// if (r.getDescription().equals("user")) {
 		// roleList.add(r);
@@ -220,11 +220,6 @@ public class UserAction extends Base {
 	@RequestMapping(value = "/ifuserexist.do")
 	@ResponseBody
 	public String ifuserexist(HttpSession session, @RequestParam(value = "username") String username) {
-
-		// if(false)
-		// {
-		//
-		// }
 		return "true";
 	}
 
@@ -239,37 +234,39 @@ public class UserAction extends Base {
 		return "" + string.equals(validationCode.toLowerCase());
 	}
 
-	/*
-	 * 
-	 * 处理上传文件
-	 */
-	@RequestMapping(value = "/upload.do")
-	public String upload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
-			ModelMap model) {
-		if (file.isEmpty()) {
-			return "error";
-		}
-		// CommonsMultipartFile[] files
-		System.out.println("开始");
-		String path = request.getSession().getServletContext().getRealPath("upload");
-		String fileName = file.getOriginalFilename();
-		// String fileName = new Date().getTime()+".jpg";
-		System.out.println(path);
-		File targetFile = new File(path, fileName);
-		if (!targetFile.exists()) {
-			targetFile.mkdirs();
-		}
-
-		// 保存
-		try {
-			file.transferTo(targetFile);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		model.addAttribute("fileUrl", request.getContextPath() + "/upload/" + fileName);
-
-		return "result";
-	}
+//	/*
+//	 * 
+//	 * 处理上传文件
+//	 */
+//	@RequestMapping(value = "/upload.do")
+//	public String upload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
+//			ModelMap model) {
+//		if (file.isEmpty()) {
+//			return "error";
+//		}
+//
+//		UserAuthInfo userinfo = new UserAuthInfo();
+//		userinfo.setUser(getUser());
+//
+//		String path = request.getSession().getServletContext().getRealPath("upload");
+//		String fileName = file.getOriginalFilename();
+//		// String fileName = new Date().getTime()+".jpg";
+//		System.out.println(path);
+//		File targetFile = new File(path, fileName);
+//		if (!targetFile.exists()) {
+//			targetFile.mkdirs();
+//		}
+//
+//		// 保存
+//		try {
+//			file.transferTo(targetFile);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		model.addAttribute("fileUrl", request.getContextPath() + "/upload/" + fileName);
+//
+//		return "result";
+//	}
 
 	/*
 	 * 	
@@ -289,7 +286,6 @@ public class UserAction extends Base {
 		default:
 			break;
 		}
-		//
 		return "redirect:/User/redirect_reg_next.do";// 默认为forward模式
 	}
 
@@ -305,17 +301,8 @@ public class UserAction extends Base {
 
 	}
 
-	@RequestMapping(value = "needuserrole.do")
-	@ResponseBody
-	@RequiresRoles(value = "user")
-	public String NeedUserRole() {
-
-		return "hahah";
-	}
-
 	public void upload(HttpRequest request) throws IOException {
 		File uploadfile = new File("");
-
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 		CommonsMultipartFile file = (CommonsMultipartFile) multipartHttpServletRequest.getFile("file");
 		FileCopyUtils.copy(file.getBytes(), uploadfile);
@@ -326,8 +313,6 @@ public class UserAction extends Base {
 	public List<Car> GetUserCars(Car car) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
 		List<Car> lc = userService.GetCarList(user);
-		
-		logger.error("message"+lc.get(0).getUser().getEmail());
 		return lc;
 	}
 
@@ -337,10 +322,39 @@ public class UserAction extends Base {
 	@ResponseBody
 	@RequestMapping("TakeOrder.json")
 	public String TakeOrder(long cargoresourceid) {
-		// User user = (User)
-		// SecurityUtils.getSubject().getSession().getAttribute("user");
-		// List<Car> lc = userService.GetCarList(user);
-		// return lc;
+
+		return null;
+	}
+
+	@RequestMapping("settings.do")
+	public String Settings() {
+		return "views/layout/settings";
+	}
+
+	@RequestMapping(value = "settings.do", method = RequestMethod.POST)
+	public String PostSettings(User user) {
+		User user1 = getUser();
+		userService.save(user1);
+		return "redirect:/";
+	}
+
+	@ResponseBody
+	@RequestMapping("GetUserOrders.json")
+	public List<Order> GetUserOrders(long cargoresourceid) {
+		List<Order> ark = new ArrayList<>();
+		User user = userService.find(getUser().getId());
+		for (Car iterable_element : user.getCars()) {
+			Order order = new Order();
+			order.setUuid(iterable_element.getTock().getUuid());
+			order.setCreateTime(iterable_element.getTock().getCreateTime());
+			order.setGoodName(iterable_element.getTock().getcResource().getGoodName());
+			order.setDepartPlace(iterable_element.getTock().getcResource().getDeparturePlace());
+			order.setDestPlace(iterable_element.getTock().getcResource().getDestPlace());
+			order.setMstatus(iterable_element.getTock().getMstatus());
+			order.setContact(iterable_element.getTock().getCar().getUser().getUsername());
+			order.setPhone(iterable_element.getTock().getCar().getUser().getPhone());
+			ark.add(order);
+		}
 
 		return null;
 	}

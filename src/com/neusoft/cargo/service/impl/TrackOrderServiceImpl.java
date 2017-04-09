@@ -12,10 +12,8 @@ public class TrackOrderServiceImpl implements TrackOrderService{
 	@Resource
 	private TrackOrderDao trackOrderDao;
 
-	// TrackOrderDao
 	@Override
 	public void save(TrackOrder car) {
-		// TODO Auto-generated method stub
 
 		trackOrderDao.save(car);
 

@@ -12,22 +12,267 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>个人主页</title>
 
+<link rel="stylesheet" type="text/css"
+	href="../static/css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="../static/css/default.css">
+
 <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
 <link href="../static/css/font-awesome.min.css" rel="stylesheet" />
+<!-- -->
 <link href="../static/css/easyui.css" rel="stylesheet" />
 <link href="../static/css/icon.css">
-<link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css" rel="stylesheet" type="text/css">
+<link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css"
+	rel="stylesheet" type="text/css">
+
+
+
+
+<style type="text/css">
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	/*height: 100%;*/
+	font-family: 'Raleway';
+}
+
+ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.icon {
+	position: relative;
+	width: 32px;
+	height: 32px;
+	display: block;
+	fill: rgba(51, 51, 51, 0.5);
+	margin-right: 20px;
+	-webkit-transition: all .2s ease-out;
+	transition: all .2s ease-out;
+}
+
+.icon.active {
+	fill: #E74C3C;
+}
+
+.icon.big {
+	width: 64px;
+	height: 64px;
+	fill: rgba(51, 51, 51, 0.5);
+}
+
+#wrapper {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 700px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: left;
+	-webkit-justify-content: left;
+	-ms-flex-pack: left;
+	justify-content: left;
+	overflow: hidden;
+}
+
+#left-side {
+	height: 70%;
+	width: 25%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+}
+
+#left-side ul li {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	line-height: 34px;
+	color: rgba(51, 51, 51, 0.5);
+	font-weight: 500;
+	cursor: pointer;
+	-webkit-transition: all .2s ease-out;
+	transition: all .2s ease-out;
+}
+
+#left-side ul li:hover {
+	color: #333333;
+	-webkit-transition: all .2s ease-out;
+	transition: all .2s ease-out;
+}
+
+#left-side ul li:hover>.icon {
+	fill: #333;
+}
+
+#left-side ul li.active {
+	color: #333333;
+}
+
+#left-side ul li.active:hover>.icon {
+	fill: #E74C3C;
+}
+
+#border {
+	height: 288px;
+	width: 1px;
+	background-color: rgba(51, 51, 51, 0.2);
+}
+
+#border #line.one {
+	width: 5px;
+	height: 54px;
+	background-color: #E74C3C;
+	margin-left: -2px;
+	margin-top: 35px;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+
+#border #line.two {
+	width: 5px;
+	height: 54px;
+	background-color: #E74C3C;
+	margin-left: -2px;
+	margin-top: 89px;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+
+#border #line.three {
+	width: 5px;
+	height: 54px;
+	background-color: #E74C3C;
+	margin-left: -2px;
+	margin-top: 143px;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+
+#border #line.four {
+	width: 5px;
+	height: 54px;
+	background-color: #E74C3C;
+	margin-left: -2px;
+	margin-top: 197px;
+	-webkit-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+}
+
+#right-side {
+	height: 300px;
+	width: 75%;
+	overflow: hidden;
+}
+
+#right-side #first, #right-side #second, #right-side #third, #right-side #fourth
+	{
+	position: absolute;
+	height: 300px;
+	width: 75%;
+	-webkit-transition: all .6s ease-in-out;
+	transition: all .6s ease-in-out;
+	margin-top: -350px;
+	opacity: 0;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center; -webkit-box-pack : center; -webkit-justify-content
+	: center; -ms-flex-pack : center; justify-content : center;
+	-webkit-box-orient : vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-orient: vertical;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-orient: vertical;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-orient: vertical;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-orient: vertical;
+}
+
+#right-side #first h1, #right-side #second h1, #right-side #third h1,
+	#right-side #fourth h1 {
+	font-weight: 800;
+	color: #333;
+}
+
+#right-side #first p, #right-side #second p, #right-side #third p,
+	#right-side #fourth p {
+	color: #333;
+	font-weight: 500;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+#right-side #first.active, #right-side #second.active, #right-side #third.active,
+	#right-side #fourth.active {
+	margin-top: 0px;
+	opacity: 1;
+	-webkit-transition: all .6s ease-in-out;
+	transition: all .6s ease-in-out;
+}
+</style>
 
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/jquery.easyui.min.js"></script>
-
 <script src="../static/js/bootstrap.min.js"></script>
-
 
 
 </head>
 
 <body>
+
+
 
 	<div class="container-fluid">
 		<div class="row">
@@ -39,8 +284,7 @@
 						<jsp:include page="/WEB-INF/views/include/head.jsp"></jsp:include>
 						<div
 							class="easyui-panel panel-body panel-body-noheader panel-body-noborder"
-							id="control" data-options="fit:true,border:false"
-							title="">
+							id="control" data-options="fit:true,border:false" title="">
 							<div class="theme-user-info-panel">
 								<div class="left">
 									<img src="${avater}" width="86" height="86">
@@ -61,7 +305,9 @@
 											<span class="badge color-success"> 已认证 </span>
 										</c:if>
 										<c:if test="${not user.hasauthentication}">
-											<span class="badge color-failed"> <a href="../authentication.do">未认证</a> </span>
+											<span class="badge color-failed"> <a
+												href="../authentication.do">未认证</a>
+											</span>
 										</c:if>
 
 									</h1>
@@ -76,157 +322,209 @@
 						</div>
 					</div>
 				</div>
-			
-				<!--  http://www.jeasyui.com/demo/main/index.php?plugin=Tabs& -->
-				
+
+
+				<!-- ICONS -->
 				<div class="row">
-				<div class="easyui-tabs" style="height: 500px; padding-top: 0px"
-					data-options="tabPosition:'left',headerWidth:80">
-					<div title="我的订单" style="padding: 10px;">
-						<div style="margin: 20px 0;"></div>
-						<h2>我的订单</h2>
+					<div id="wrapper">
+						<div id="left-side">
+							<ul>
+								<li class="choose active">
+									<div class="icon active"></div> 我的车源
+								</li>
+								<li class="pay">
+									<div class="icon"></div> 我的订单
+								</li>
+								<li class="wrap">
+									<div class="icon"></div> 我的订单
+								</li>
+								<li class="ship">
+									<div class="icon"></div> 我的订单
+								</li>
+							</ul>
+						</div>
+
+						<div id="border">
+							<div id="line" class="one"></div>
+						</div>
+
+						<div id="right-side">
+							<div id="first" class="active">
+
+								<c:if test="${empty carsource}">
+									<div class="row">没有车辆</div>
+								</c:if>
+								<c:if test="${not  empty carsource}">
+									<table class="table table-hover table-condensed table-bordered">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>车辆状态</th>
+												<th>车牌号</th>
+												<th>联系方式</th>
+													<th>车主</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<c:forEach var="carsource" items="${carsource}">
+												<tr class="danger">
+													<td>${carsource.carid}</td>
+													<td>${carsource.carStatus}</td>
+													<td>${carsource.carNumber}</td>
+													<td>${carsource.phone}</td>
+													<td>${carsource.carHost}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</c:if>
+							</div>
+							<div id="second">
+								<div class="icon big"></div>
+
+
+								<c:if test="${empty orders}">
+									<div class="row">没有车辆</div>
+								</c:if>
+								<c:if test="${not  empty orders}">
+									<table class="table table-hover table-condensed table-bordered">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>订单状态</th>
+												<th>订单号</th>
+												<th>联系方式</th>
+												<th>货主</th>
+												<th>联系方式</th>
+												<th>货主</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<c:forEach var="orders" items="${orders}">
+												<tr class="danger">
+												<td>${orders.id	}</td>
+												<td>${orders.uuid	}</td>
+												<td>${orders.createTime	}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</c:if>
+							</div>
+							<div id="third">
+								<div class="icon big"></div>
+
+								<h1>We will wrap it</h1>
+
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									Donec at viverra est, eu finibus mauris. Quisque tempus
+									vestibulum fringilla. Morbi tortor eros, sollicitudin eu arcu
+									sit amet, aliquet sagittis dolor.</p>
+
+							</div>
+							<div id="fourth">
+								<div class="icon big"></div>
+
+								<h1>Ship it</h1>
+
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									Donec at viverra est, eu finibus mauris. Quisque tempus
+									vestibulum fringilla. Morbi tortor eros, sollicitudin eu arcu
+									sit amet, aliquet sagittis dolor.</p>
+
+							</div>
+						</div>
 					</div>
-					<div title="我的汽车" style="padding: 10px;">
-
-<table id="dg" title="汽车管理"
-							style="width: 700px; height: 250px"
-							data-options="rownumbers:true,singleSelect:true,pagination:true,url:'GetUserCars.json',method:'get'">
-							<thead>
-								<tr>
-									<th data-options="field:'carHost',width:80">联系人</th>
-									<th data-options="field:'carNumber',width:100">车牌号</th>
-									<th data-options="field:'freightRates',width:80,align:'right'">运费</th>
-									<th data-options="field:'Capicity',width:80,align:'right'">负载</th>
-									<th data-options="field:'carType',width:80,align:'right'">车辆类型</th>
-									<th data-options="field:'capicity',width:240">负载量</th>
-									<th data-options="field:'phone',width:60,align:'center'">联系方式</th>
-								</tr>
-							</thead>
-						</table>
-						<script type="text/javascript">
-							$(
-									function() {
-										var pager = $('#dg').datagrid()
-												.datagrid('getPager'); // get the pager of datagrid
-										pager.pagination({
-											buttons : [ {
-												iconCls : 'icon-search',
-												handler : function() {
-													alert('search');
-												}
-											}, {
-												iconCls : 'icon-add',
-												handler : function() {
-													$('#w').window('open')
-												}
-											}, {
-												iconCls : 'icon-edit',
-												handler : function() {
-													alert('edit');
-												}
-											} ]
-										});
-									})
-						</script>
-
-</div>
-					<div title="货主评价" style="padding: 10px;">货主评价 3</div>
 				</div>
-				</div>
-			
+
+				<script>
+					$('.choose').click(function() {
+						$('.choose').addClass('active');
+						$('.choose > .icon').addClass('active');
+						$('.pay').removeClass('active');
+						$('.wrap').removeClass('active');
+						$('.ship').removeClass('active');
+						$('.pay > .icon').removeClass('active');
+						$('.wrap > .icon').removeClass('active');
+						$('.ship > .icon').removeClass('active');
+						$('#line').addClass('one');
+						$('#line').removeClass('two');
+						$('#line').removeClass('three');
+						$('#line').removeClass('four');
+					});
+					$('.pay').click(function() {
+						$('.pay').addClass('active');
+						$('.pay > .icon').addClass('active');
+						$('.choose').removeClass('active');
+						$('.wrap').removeClass('active');
+						$('.ship').removeClass('active');
+						$('.choose > .icon').removeClass('active');
+						$('.wrap > .icon').removeClass('active');
+						$('.ship > .icon').removeClass('active');
+						$('#line').addClass('two');
+						$('#line').removeClass('one');
+						$('#line').removeClass('three');
+						$('#line').removeClass('four');
+					});
+					$('.wrap').click(function() {
+						$('.wrap').addClass('active');
+						$('.wrap > .icon').addClass('active');
+						$('.pay').removeClass('active');
+						$('.choose').removeClass('active');
+						$('.ship').removeClass('active');
+						$('.pay > .icon').removeClass('active');
+						$('.choose > .icon').removeClass('active');
+						$('.ship > .icon').removeClass('active');
+						$('#line').addClass('three');
+						$('#line').removeClass('two');
+						$('#line').removeClass('one');
+						$('#line').removeClass('four');
+					});
+					$('.ship').click(function() {
+						$('.ship').addClass('active');
+						$('.ship > .icon').addClass('active');
+						$('.pay').removeClass('active');
+						$('.wrap').removeClass('active');
+						$('.choose').removeClass('active');
+						$('.pay > .icon').removeClass('active');
+						$('.wrap > .icon').removeClass('active');
+						$('.choose > .icon').removeClass('active');
+						$('#line').addClass('four');
+						$('#line').removeClass('two');
+						$('#line').removeClass('three');
+						$('#line').removeClass('one');
+					});
+					$('.choose').click(function() {
+						$('#first').addClass('active');
+						$('#second').removeClass('active');
+						$('#third').removeClass('active');
+						$('#fourth').removeClass('active');
+					});
+					$('.pay').click(function() {
+						$('#first').removeClass('active');
+						$('#second').addClass('active');
+						$('#third').removeClass('active');
+						$('#fourth').removeClass('active');
+					});
+					$('.wrap').click(function() {
+						$('#first').removeClass('active');
+						$('#second').removeClass('active');
+						$('#third').addClass('active');
+						$('#fourth').removeClass('active');
+					});
+					$('.ship').click(function() {
+						$('#first').removeClass('active');
+						$('#second').removeClass('active');
+						$('#third').removeClass('active');
+						$('#fourth').addClass('active');
+					});
+				</script>
+
 			</div>
 			<div class="col-md-1"></div>
 		</div>
-
-	</div>
-
-	<!-- 分界线 -->
-
-	<div style="margin: 20px 0;display: none">
-		<a href="javascript:void(0)" class="easyui-linkbutton"
-			onclick="$('#w').window('open')">Open</a> <a
-			href="javascript:void(0)" class="easyui-linkbutton"
-			onclick="$('#w').window('close')">Close</a>
-	</div>
-	<div id="w" class="easyui-window" title="Modal Window"
-		data-options="modal:true,closed:true,iconCls:'icon-save'"
-		style="width: 500px; height: 500px; padding: 10px;">
-		
-	<div style="margin:20px 0;">
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="loadLocal()">LoadLocal</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="loadRemote()">LoadRemote</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
-	</div>
-	<div class="easyui-panel" title="New Topic" style="width:100%;max-width:400px;padding:30px 60px;">
-		<form id="ff" method="post" action="<%=request.getContextPath() %>/Car/InsertCarForUser.do">
-			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="CarHost" style="width:100%" data-options="label:'车主:',required:true">
-			</div>
-			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="CarNumber" style="width:100%" data-options="label:'车牌号:',required:true">
-			</div>
-			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="FreightRate" style="width:100%;height:60px" data-options="label:'运费:',required:true">
-			</div>
-			
-			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="Capicity" style="width:100%;height:60px" data-options="label:'负载(T):',required:true">
-			</div>
-			<div style="margin-bottom:20px">
-				<select class="easyui-combobox" name="CarType" label="车辆类型" style="width:100%">
-				<option value="厢式货车" selected="selected">厢式货车</option>
-				<option value="面包车">面包车</option>
-				<option value="平板车">平板车</option>
-				<option value="半挂车">半挂车</option>
-				<option value="自卸车">自卸车</option>
-				<option value="保温车">保温车</option>
-				<option value="罐式车">罐式车</option>
-				<option value="铁笼车" >铁笼车</option>
-				<option value="集装箱运输车">集装箱运输车</option>
-				<option value="轿车运输车">轿车运输车</option>
-				<option value="大件运输车">大件运输车</option>
-				<option value="起重车">起重车</option>
-				<option value="危险品车">危险品车</option>
-				<option value="爬梯车">爬梯车</option>
-				<option value="全挂车">全挂车</option>
-				<option value="加长挂车">加长挂车</option>
-				<option value="金杯车(高顶)">金杯车(高顶)</option>
-				<option value="金杯车(低顶)">金杯车(低顶)</option>
-				</select>
-			</div>
-			
-			<div style="margin-bottom:20px">
-			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">Submit</a>
-			</div>
-		</form>
-	</div>
-	<script>
-		function loadLocal(){
-			$('#ff').form('load',{
-				CarHost:'王五',
-				CarNumber:'京Z88888',
-				FreightRate:'12.3',
-				CarType:'en',
-				Capicity: '11.23'
-			});
-		}
-		function loadRemote(){
-			$('#ff').form('load', '#');
-		}
-		function clearForm(){
-			$('#ff').form('clear');
-		}
-		function submitForm(){
-			$('#ff').form('submit',{
-				onSubmit:function(){
-					$('#w').window('close')
-					return $(this).form('enableValidation').form('validate');
-				}
-			});
-		}
-	</script>
-		
-		
 	</div>
 
 </body>

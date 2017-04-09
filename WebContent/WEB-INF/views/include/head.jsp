@@ -14,18 +14,13 @@
 				<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
 					class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<%=request.getContextPath()%>/home.do">欢迎来到空车配货网站！</a>
+			<a class="navbar-brand" href="<%=request.getContextPath()%>/home.do">欢迎来到空车配货网站</a>
 		</div>
 		
 
 		<div class="collapse navbar-collapse "
 			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="https://www.pgyer.com/1pFJ"><i class="fa fa-android"></i>App下载</a></li>
-				<li><a href="#">帮助</a></li>
-
-			</ul>
-
+		
 			<ul class="nav navbar-nav navbar-right">
 
 
@@ -41,7 +36,7 @@
 
 
 
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
+					<li class="dropdown" style="display: none"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> 菜单<strong class="caret"></strong></a>
 						<ul class="dropdown-menu">
 							<li><a href="#">Action</a></li>
@@ -59,7 +54,7 @@
 
 					<li><label> <a href="<%=request.getContextPath()%>/logout.do">注销</a></label></li>
 
-					<li class="opts__item message has-unread hidden-sm"><a
+					<li class="opts__item message has-unread "><a
 						id="dLabel" class="dropdown-toggle-message"
 						href="#">
 						
@@ -75,11 +70,11 @@
 						href="#" aria-expanded="true"> </a>
 						<ul class="dropdown-menu dropdown-menu-right">
 							<li><a href="<%=request.getContextPath()%>/User/profile.do">我的主页</a></li>
-							<li><a href="/user/settings">账号设置</a></li>
+							<li><a href="<%=request.getContextPath()%>/User/settings.do">账号设置</a></li>
 							<li><a
-								href="/api/user/logout?_=d1495be86a2aa7814b3545ae3ed764b1">退出</a></li>
+								href="<%=request.getContextPath()%>/logout.do">退出</a></li>
 							<li class="divider"></li>
-							<li><a href="https://board.segmentfault.com/">建议反馈</a></li>
+							<li><a href="#">建议反馈</a></li>
 						</ul>
 				</shiro:authenticated>
 			</ul>
@@ -97,7 +92,7 @@
 
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
-					<h4 class="modal-title" id="myModalLabel">登录框</h4>
+					<h4 class="modal-title" id="myModalLabel">登录</h4>
 				</div>
 				<div class="modal-body">
 					<form role="form" action="User/login.do" method="post">
@@ -115,10 +110,10 @@
 						<div class="checkbox">
 
 							<label> <input type="checkbox" name="rememberMe" />
-								Check me out
+								记住我
 							</label>
 						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="submit" class="btn btn-default">登录</button>
 					</form>
 				</div>
 				<div class="modal-footer"></div>

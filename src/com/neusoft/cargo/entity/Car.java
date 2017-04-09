@@ -2,13 +2,16 @@ package com.neusoft.cargo.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
-@Entity(name="car")
+@Entity(name = "car")
 public class Car implements Serializable {
 
 	@Id
@@ -27,11 +30,32 @@ public class Car implements Serializable {
 		this.carStatus = carStatus;
 	}
 
+	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private TrackOrder tock;
+	
+	
+	public long getCarid() {
+		return carid;
+	}
+
+	public void setCarid(long carid) {
+		this.carid = carid;
+	}
+
+	public TrackOrder getTock() {
+		return tock;
+	}
+
+	public void setTock(TrackOrder tock) {
+		this.tock = tock;
+	}
+
 	@ManyToOne
 	private User user;
+
 	public User getUser() {
-		User user1  = new User();
-		user1.setUsername( user.getUsername());
+		User user1 = new User();
+		user1.setUsername(user.getUsername());
 		user1.setId(user.getId());
 		user1.setCreateDate(user.getCreateDate());
 		user1.setEmail(user.getEmail());
@@ -45,7 +69,7 @@ public class Car implements Serializable {
 	private String CarNumber;
 
 	// 负载
-	//operating load
+	// operating load
 	private String Capicity;
 
 	private String phone;
