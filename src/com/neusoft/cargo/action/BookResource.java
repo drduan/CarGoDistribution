@@ -58,7 +58,10 @@ public class BookResource extends Base {
 		// false表示不可送达
 		Car car2 = carService.find(cid);
 		CargoResource car = cargoResourceService.find(rid);
-
+		if (!car.isStatus() ||!car2.isCarStatus()) {
+			return "failed";
+		}
+		
 		// 设置资源状态 不可用
 		car2.setCarStatus(false);
 		car.setStatus(false);
@@ -72,9 +75,8 @@ public class BookResource extends Base {
 
 		Message message = new Message();
 		message.setContent("有新的预约 前去查看" + tOrder.getUuid());
-		message.setTo(userservice.find(car2.getUser().getId()));
+		message.setToperson(userservice.find(car.get_user().getId()));
 		msgService.save(message);
-
 		return "success";
 
 	}

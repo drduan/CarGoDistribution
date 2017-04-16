@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.aspectj.weaver.reflect.IReflectionWorld;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,25 +14,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.neusoft.cargo.entity.CargoResource;
-import com.neusoft.cargo.entity.TrackOrder;
+import com.neusoft.cargo.entity.Message;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.model.Order;
 import com.neusoft.cargo.service.CargoResourceService;
+import com.neusoft.cargo.service.MessageService;
 import com.neusoft.cargo.service.UserService;
 
 @Controller("AdminAction")
 @RequestMapping("/admins")
-public class AdminAction extends Base{
+public class AdminAction extends Base {
 
 	private Logger logger = Logger.getLogger(AdminAction.class);
 	@Autowired
 	private UserService userservice;
 	@Autowired
 	private CargoResourceService carResourceService;
+
+	@Autowired
+	private MessageService messageservice;
+
 	@RequestMapping(value = "home.do")
 	public String Home(Model model) {
-		logger.info("message"+getUser().getToMessages().size());
-		return "views/layout/admins/index";
+		int messagecount = 0;
+		List<Message> lmsg = messageservice.findAll();
+		for (Message message : lmsg) {
+
+			if (message.getToperson().equals(getUser())) {
+				messagecount ++;
+			}
+		}
+		model.addAttribute("messagecount", messagecount);
+		return "views/layout/admins/profile";
 	}
 
 	@RequestMapping(value = "adminprofile.do")
@@ -53,7 +65,7 @@ public class AdminAction extends Base{
 
 	@RequestMapping(value = "publishgoods.do", method = RequestMethod.GET)
 	public String publishgoods() {
-		
+
 		return "views/layout/admins/publishgoods";
 	}
 
@@ -74,7 +86,6 @@ public class AdminAction extends Base{
 		return result;
 	}
 
-
 	@ResponseBody
 	@RequestMapping("GetOwnerOrder.json")
 	public List<Order> GetUserOrder() {
@@ -84,7 +95,7 @@ public class AdminAction extends Base{
 		for (CargoResource iterable_element : user2.getCargoResources()) {
 			if (iterable_element.getOrder() != null) {
 				Order order = new Order();
-				order.setUuid( iterable_element.getOrder().getUuid());
+				order.setUuid(iterable_element.getOrder().getUuid());
 				order.setCreateTime(iterable_element.getOrder().getCreateTime());
 				order.setGoodName(iterable_element.getGoodName());
 				order.setDepartPlace(iterable_element.getDeparturePlace());

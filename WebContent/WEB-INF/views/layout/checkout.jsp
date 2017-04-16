@@ -22,6 +22,18 @@
 </head>
 <body>
 	<script type="text/javascript">
+	
+	$(document).ready(function () {
+		$('col-md-4 carlist').click(function (e) {
+			alert("");
+		//e.preventDefault();
+		$('col-md-4 carlist').removeClass('active');
+		$(this).addClass('active');
+
+		});
+
+		});
+	
 		$(function() {
 			$("#submitNext").click(function() {
 				var val = $('input:radio[name="car"]:checked').val();
@@ -53,8 +65,14 @@
 								
 								alert("已通知车主，请等待审核通过！");
 								$('#submitNext').attr('disabled',"true");
+								
 								/* <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 								 */ //location.href = "paying.do";//location.href实现客户端页面的跳转  
+								}
+							else
+								{
+								alert("该货源或车源已经在运输中");
+								$('#submitNext').attr('disabled',"true");
 								}
 						},
 						error : function(xhr, textStatus) {
@@ -88,7 +106,7 @@
 								<div class="row">
 
 									<c:forEach var="carsource" items="${carsource}">
-										<div class="col-md-4">
+										<div  class="col-md-4 carlist" id="${carsource.id}">
 											<div class="thumbnail">
 												<div class="caption">
 													<h3>${carsource.carHost}</h3>
@@ -108,7 +126,7 @@
 									<div class="col-md-4">
 											<div class="thumbnail" style="text-align:center">
 												<div class="caption" style="padding-top: 70px;font-size: 72px">
-													<b><a href="#" >+</a></b>
+													<b><a href="User/addcar.do" >+</a></b>
 												</div>
 											</div>
 										</div>

@@ -1,5 +1,6 @@
 package com.neusoft.cargo.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -41,15 +42,6 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 
 	}
 
-//	public void remove(int id) {
-//		User person = userDao.find(id);
-//		if (person != null) {
-//			// em.remove(person);
-//		}
-//	}
-
-
-
 	public User findBymail(String email) {
 
 		// User u_result = userDao.findByName(name);
@@ -75,6 +67,8 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 	
 	public List<CargoResource> getAll()
 	{
+		
+		
 		return cargoResourceDao.findAll();
 	}
 

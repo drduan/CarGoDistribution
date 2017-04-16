@@ -15,6 +15,7 @@
 					class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="<%=request.getContextPath()%>/home.do">欢迎来到空车配货网站</a>
+			<a class="" href="<%=request.getContextPath()%>/User/addcar.do">添加车辆</a>
 		</div>
 		
 
@@ -28,8 +29,7 @@
 					<li><a href="<%=request.getContextPath()%>/User/register.do">
 							注册</a></li>
 					<li><a id="modal-302051" href="#modal-container-302051"
-						role="button" class="btn" data-toggle="modal"><i
-							class="fa fa-user"></i>登录</a></li>
+						role="button" class="btn" data-toggle="modal">登录</a></li>
 
 
 
@@ -54,16 +54,10 @@
 
 					<li><label> <a href="<%=request.getContextPath()%>/logout.do">注销</a></label></li>
 
-					<li class="opts__item message has-unread "><a
-						id="dLabel" class="dropdown-toggle-message"
-						href="#">
-						
-						<span class="sr-only">
-						
-						消息</span>
-						<span
-							id="messageCount" class="fa fa-bell-o">15</span></a></li>
-					<li class="dropdown hoverDropdown"
+					<li class="opts__item message has-unread ">
+						<a href="<%=request.getContextPath()%>/sysmsglist.do">
+						<span id="messageCount" class="fa fa-bell-o" > ${messagecount}</span></a></li>
+						<li class="dropdown hoverDropdown"
 						style="width: 30px; height: 30px; margin-right: 15px"><a
 						class="dropdownBtn user-avatar" data-toggle="dropdown"
 						style="background-image: url('${avater}'); width: 30px; height: 30px"

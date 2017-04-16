@@ -29,8 +29,9 @@ public abstract class AbstractHibernateDAO<T extends Serializable> {
 		return (T) getCurrentSession().get(clazz, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
-		return getCurrentSession().createQuery("from " + clazz.getName()).list();
+		return getCurrentSession().createQuery("from " + clazz.getName()).getResultList();
 	}
 
 	/*
@@ -48,8 +49,16 @@ public abstract class AbstractHibernateDAO<T extends Serializable> {
 //		}
 //	}
 
-	public T update(final T entity) {
-		return (T) getCurrentSession().merge(entity);
+	public boolean update(final T entity) {
+		
+		try{
+			getCurrentSession().merge(entity);
+		}catch (Exception e) {
+			return false;
+			// TODO: handle exception
+		}
+		return true;
+	
 	}
 
 	public void delete(final T entity) {

@@ -22,6 +22,14 @@ public class Message implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	public User getToperson() {
+		return toperson;
+	}
+
+	public void setToperson(User toperson) {
+		this.toperson = toperson;
+	}
+
 	private String fromperson = "System";
 
 	private boolean status;
@@ -50,14 +58,7 @@ public class Message implements Serializable {
 	// 限制 140个字
 	private String Content;
 
-	public User getTo() {
-		return toperson;
-	}
-
-	public void setTo(User toperson) {
-		this.toperson = toperson;
-	}
-
+	
 	public Date getAdd_date() {
 		return add_date;
 	}

@@ -291,10 +291,9 @@ ul, li {
 								</div>
 								<div class="right">
 									<ul>
-										<li class="text-success">￥6,200.00<span>收益总额</span></li>
-										<li class="text-info">33<span>我的信用</span></li>
-
-										<li class="text-warning">9820<span>我的积分</span></li>
+										<li class="text-success">￥0<span>收益总额</span></li>
+										<li class="text-info">100<span>我的信用</span></li>
+										<li class="text-warning">0<span>我的积分</span></li>
 										<li>优秀<span>信誉评级</span></li>
 									</ul>
 								</div>

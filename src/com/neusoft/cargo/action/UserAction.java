@@ -25,14 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,12 +39,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import com.neusoft.cargo.dao.RoleDao;
 import com.neusoft.cargo.entity.Car;
+import com.neusoft.cargo.entity.Message;
 import com.neusoft.cargo.entity.Role;
 import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.entity.User;
-import com.neusoft.cargo.entity.UserAuthInfo;
 import com.neusoft.cargo.entity.User.UserType;
 import com.neusoft.cargo.model.Order;
+import com.neusoft.cargo.service.MessageService;
 import com.neusoft.cargo.service.UserService;
 import com.neusoft.cargo.util.Md5Util;
 
@@ -58,14 +57,32 @@ public class UserAction extends Base {
 	private UserService userService;
 	@Autowired
 	private RoleDao roleDao;
+	@Autowired
+	private MessageService messageservice;
 	Logger logger = Logger.getLogger(UserAction.class);
 
 	@RequestMapping(value = "home.do")
 
-	public String userhome()
+	public String userhome(Model model)
 
 	{
+		List<Message> lmsg = messageservice.findAll();
+		int messagecount = 0;
+		for (Message message : lmsg) {
+
+			if (message.getToperson().equals(getUser())) {
+				messagecount ++;
+			}
+		}
+		model.addAttribute("messagecount", messagecount);
+
 		return "views/layout/user/index";
+	}
+	
+	@RequestMapping(value="addcar.do")
+	public String addCar(Model model)
+	{
+		return "views/layout/user/addcar";
 	}
 
 	@RequiresRoles(value = "user")
@@ -234,39 +251,42 @@ public class UserAction extends Base {
 		return "" + string.equals(validationCode.toLowerCase());
 	}
 
-//	/*
-//	 * 
-//	 * 处理上传文件
-//	 */
-//	@RequestMapping(value = "/upload.do")
-//	public String upload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
-//			ModelMap model) {
-//		if (file.isEmpty()) {
-//			return "error";
-//		}
-//
-//		UserAuthInfo userinfo = new UserAuthInfo();
-//		userinfo.setUser(getUser());
-//
-//		String path = request.getSession().getServletContext().getRealPath("upload");
-//		String fileName = file.getOriginalFilename();
-//		// String fileName = new Date().getTime()+".jpg";
-//		System.out.println(path);
-//		File targetFile = new File(path, fileName);
-//		if (!targetFile.exists()) {
-//			targetFile.mkdirs();
-//		}
-//
-//		// 保存
-//		try {
-//			file.transferTo(targetFile);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		model.addAttribute("fileUrl", request.getContextPath() + "/upload/" + fileName);
-//
-//		return "result";
-//	}
+	// /*
+	// *
+	// * 处理上传文件
+	// */
+	// @RequestMapping(value = "/upload.do")
+	// public String upload(@RequestParam(value = "file", required = false)
+	// MultipartFile file, HttpServletRequest request,
+	// ModelMap model) {
+	// if (file.isEmpty()) {
+	// return "error";
+	// }
+	//
+	// UserAuthInfo userinfo = new UserAuthInfo();
+	// userinfo.setUser(getUser());
+	//
+	// String path =
+	// request.getSession().getServletContext().getRealPath("upload");
+	// String fileName = file.getOriginalFilename();
+	// // String fileName = new Date().getTime()+".jpg";
+	// System.out.println(path);
+	// File targetFile = new File(path, fileName);
+	// if (!targetFile.exists()) {
+	// targetFile.mkdirs();
+	// }
+	//
+	// // 保存
+	// try {
+	// file.transferTo(targetFile);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// model.addAttribute("fileUrl", request.getContextPath() + "/upload/" +
+	// fileName);
+	//
+	// return "result";
+	// }
 
 	/*
 	 * 	

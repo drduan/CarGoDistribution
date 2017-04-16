@@ -17,5 +17,6 @@ public interface MessageService {
 
 	public Message find(int id);
 
-	public List<Message> getAll();
+	public boolean updateMsgAsRead(int id);
+
 }

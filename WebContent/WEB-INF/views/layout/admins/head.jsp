@@ -16,12 +16,14 @@
 		</button>
 		<a class="navbar-brand"
 			href="<%=request.getContextPath()%>/admins/home.do">欢迎来到空车配货网站</a>
+			
 	</div>
 
 
 	<div class="collapse navbar-collapse "
 		id="bs-example-navbar-collapse-1">
-		
+		<a
+						href="<%=request.getContextPath()%>/admins/publishgoods.do">发布货源</a>
 
 		<ul class="nav navbar-nav navbar-right">
 
@@ -41,8 +43,6 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> 菜单<strong class="caret"></strong></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
 						<li><a href="#">Something else here</a></li>
 						<li class="divider"></li>
 						<li><a href="#">Separated link</a></li>
@@ -69,7 +69,7 @@
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li><a
 							href="<%=request.getContextPath()%>/admins/adminprofile.do">我的主页</a></li>
-						<li><a href="/user/settings.do">账号设置</a></li>
+						<li><a href="settings.do">账号设置</a></li>
 						<li><a
 							href="/User/logout.do">退出</a></li>
 						<li class="divider"></li>

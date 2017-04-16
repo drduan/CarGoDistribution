@@ -19,7 +19,7 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public List<Message> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return msgdao.findAll();
 	}
 
 	@Override
@@ -42,9 +42,12 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> getAll() {
+	public boolean updateMsgAsRead(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		Message message = msgdao.findOne(id);
+		message.setStatus(true);
+		return msgdao.update(message);
 	}
+
 
 }

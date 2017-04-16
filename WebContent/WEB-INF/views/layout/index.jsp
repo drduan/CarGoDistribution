@@ -40,7 +40,7 @@
 					<div class="jumbotron">
 						<h2>空车配货网</h2>
 						<p>中国物通网是中国专业的物流信息网，是中国物流信息最全面、社会需求面最广、
-							实用性最强的物流行业网站，免费提供物流信息发布及货运信息查询、物流查询服务的一站式发货平台。找物流公司、找货源、发货配货就上中国物通网。</p>
+							实用性最强的物流行业网站，免费提供物流信息发布及货运信息查询、物流查询服务的一站式发货平台。</p>
 					</div>
 					<div class="row">
 						<div class="col-md-1"></div>
@@ -63,7 +63,7 @@
 												<h1 style="color: #333; font-size: 14px; font-weight: 700">从
 													${resource.departurePlace} 到 ${resource.destPlace}</h1> <span
 												class="price" style="font-size: 18px">$ 500</span><br>
-												<span class="help-block" style="font-size: 100%">1212</span>
+												<span class="help-block" style="font-size: 80%">${resource.weight} Kg;${resource.capacity} m^2</span>
 
 											</td>
 											<td>发布时间： 01/04/2012</td>

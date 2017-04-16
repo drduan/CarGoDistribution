@@ -54,7 +54,7 @@
 
 					<li><label> <a href="<%=request.getContextPath()%>/logout.do">注销</a></label></li>
 
-					<li class="opts__item message has-unread hidden-sm"><a
+					<li class="opts__item message has-unread"><a
 						id="dLabel" class="dropdown-toggle-message"
 						href="#">
 						
@@ -62,7 +62,7 @@
 						
 						消息</span>
 						<span
-							id="messageCount" class="fa fa-bell-o">15</span></a></li>
+							id="messageCount" class="fa fa-bell-o">{messagecount}</span></a></li>
 					<li class="dropdown hoverDropdown"
 						style="width: 30px; height: 30px; margin-right: 15px"><a
 						class="dropdownBtn user-avatar" data-toggle="dropdown"
