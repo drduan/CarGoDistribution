@@ -40,16 +40,23 @@
 				<c:forEach var="msglist" items="${msglist}">
 		
 		<c:if test="${msglist.status}">
+		<div class="alert alert-success alert-dismissable">
 			<p /> 
-					消息内容:${msglist.content}  
+				
+					消息内容:<a href="admins/adminprofile.do">${msglist.content}  </a> 
+					
 					<p />
 					<a class="markasread" href="#" >已读</a>
+					
+					</div>
 		</c:if>
 		<c:if test="${!msglist.status}">
+		<div class="alert alert-dismissable alert-warning">
 			<p /> 
-					消息内容:${msglist.content}  
+					消息内容:<a href="">${msglist.content}  </a>
 					<p />
 					<a class="markasread" href="markasread.do?id=${msglist.id}" >标为已读</a>
+	</div>
 		</c:if>
 				
 					

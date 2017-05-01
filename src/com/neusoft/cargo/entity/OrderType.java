@@ -10,7 +10,8 @@ public enum OrderType {
 	 * 
 	 */
 
-	PENDING("pending"),
+	WAITINGACCESS("WAITINGACCESS"),
+	PENDING("pending"), 
 	COMPLETED("completed"),
 	RECEIVED("received"),
 	CANCEL("cancel"),

@@ -62,7 +62,7 @@
 											<td>
 												<h1 style="color: #333; font-size: 14px; font-weight: 700">从
 													${resource.departurePlace} 到 ${resource.destPlace}</h1> <span
-												class="price" style="font-size: 18px">$ 500</span><br>
+												class="price" style="font-size: 18px">${resource.weightFate}</span><br>
 												<span class="help-block" style="font-size: 80%">${resource.weight} Kg;${resource.capacity} m^2</span>
 
 											</td>

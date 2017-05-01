@@ -28,7 +28,6 @@
 
 	<div class="container-fluid" style="background: ddddd">
 
-		<!--  background-image: url(resources/images/index_car.png) -->
 		<div class="row">
 
 			<div class="col-md-1"></div>

@@ -34,8 +34,32 @@ public class AdminAction extends Base {
 	@Autowired
 	private MessageService messageservice;
 
+	
+	@RequestMapping(value="settings.do")
+	public String adminSet()
+	{
+		
+		return "redirect:/home.do";
+				
+	}
+	
+	
 	@RequestMapping(value = "home.do")
 	public String Home(Model model) {
+		int messagecount = 0;
+		List<Message> lmsg = messageservice.findAll();
+		for (Message message : lmsg) {
+			if (message.getToperson().getEmail() ==getUser().getEmail()) {
+				 ++messagecount;
+				 logger.info(""+message.getToperson().getEmail()+""+getUser().getEmail());
+			}
+		}
+		model.addAttribute("messagecount", messagecount);
+		return "views/layout/admins/profile";
+	}
+
+	@RequestMapping(value = "adminprofile.do")
+	public String AdminProfile(Model model) {
 		int messagecount = 0;
 		List<Message> lmsg = messageservice.findAll();
 		for (Message message : lmsg) {
@@ -45,11 +69,7 @@ public class AdminAction extends Base {
 			}
 		}
 		model.addAttribute("messagecount", messagecount);
-		return "views/layout/admins/profile";
-	}
-
-	@RequestMapping(value = "adminprofile.do")
-	public String AdminProfile(Model model) {
+		
 		List<CargoResource> cargoResources = ((User) SecurityUtils.getSubject().getSession().getAttribute("user"))
 				.getCargoResources();
 		model.addAttribute("cargoResources", cargoResources);

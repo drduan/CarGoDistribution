@@ -36,7 +36,8 @@
 	
 		$(function() {
 			$("#submitNext").click(function() {
-				var val = $('input:radio[name="car"]:checked').val();
+				var temp = $('.easyui-combobox option:selected') .val();//选中的值
+				var val = parseInt(temp);
 				var rid = ${cargoResource.carresourceid};
 				if (val == null) {
 					alert("什么也没选中!");
@@ -59,13 +60,17 @@
 							console.log('发送前')
 						},
 						success : function(data, textStatus, jqXHR) {
-							if(data=='success')
+							
+							var dataObj=eval("("+data+")");
+							  
+							if(dataObj.status=='success')
 								
 								{
 								
 								alert("已通知车主，请等待审核通过！");
 								$('#submitNext').attr('disabled',"true");
-								
+								window.open("paying.do");
+								window.location.href="successmsg.do?msg=&orderid="+dataObj.orderno+"&info="+${cargoResource.weightFate}; 
 								/* <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 								 */ //location.href = "paying.do";//location.href实现客户端页面的跳转  
 								}
@@ -95,41 +100,33 @@
 				<div class="row">
 					<div class="col-md-1"></div>
 					<div class="col-md-10">
-					
+
 						<div class="row">
-						<jsp:include page="user/head.jsp"></jsp:include>
+							<jsp:include page="user/head.jsp"></jsp:include>
 						</div>
-						
+
 						<div class="row">
 							<div class="col-md-12">
 								<h3>确认订单</h3>
 								<div class="row">
+									<label for="state">选择车源</label>
+									<select class="easyui-combobox" name="state" label="State:"
+										labelPosition="top" style="width: 100%;">
+										<c:forEach var="carsource" items="${carsource}">
+											<option value="${carsource.id}">${carsource.carHost}
+												${carsource.carNumber} ${carsource.phone}</option>
+										</c:forEach>
+									</select>
 
-									<c:forEach var="carsource" items="${carsource}">
-										<div  class="col-md-4 carlist" id="${carsource.id}">
-											<div class="thumbnail">
-												<div class="caption">
-													<h3>${carsource.carHost}</h3>
-													<p>${carsource.carNumber}</p>
-													<p>${carsource.phone}</p>
-													
-													<p>
-														<label class="btn btn-primary"> <input
-															type="radio" name="car" id="option1"
-															value="${carsource.id} "> 选项 1
-														</label>
-													</p>
-												</div>
-											</div>
-										</div>
-									</c:forEach>
+
+
 									<div class="col-md-4">
-											<div class="thumbnail" style="text-align:center">
-												<div class="caption" style="padding-top: 70px;font-size: 72px">
-													<b><a href="User/addcar.do" >+</a></b>
-												</div>
-											</div>
-										</div>
+										
+									</div>
+									<p><p><p><p><p><p><p><p><p><p><p><p><p><p><p><p>
+									
+									
+									
 									<div class="col-md-4"></div>
 									<div class="col-md-4"></div>
 								</div>
@@ -166,7 +163,7 @@
 										<tr class="warn">
 
 											<td>需要支付押金</td>
-											<td><span> ￥10000</span></td>
+											<td><span> ${cargoResource.weightFate}</span></td>
 										</tr>
 									</tbody>
 								</table>
@@ -191,31 +188,27 @@
 		</div>
 	</div>
 
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" 
-						aria-hidden="true">×
-				</button>
-				<h4 class="modal-title" id="myModalLabel">
-					支付进行中
-				</h4>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">支付进行中</h4>
+				</div>
+				<div class="modal-body">按下 ESC 按钮退出。</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary">支付完成</button>
+				</div>
 			</div>
-			<div class="modal-body">
-				按下 ESC 按钮退出。
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" 
-						data-dismiss="modal">关闭
-				</button>
-				<button type="button" class="btn btn-primary">
-					支付完成
-				</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 </body>
 </html>

@@ -90,11 +90,11 @@ public class CargoResource implements Serializable {
 		this.weight = weight;
 	}
 
-	public double getWeightFate() {
+	public String getWeightFate() {
 		return weightFate;
 	}
 
-	public void setWeightFate(double weightFate) {
+	public void setWeightFate(String weightFate) {
 		this.weightFate = weightFate;
 	}
 
@@ -120,7 +120,8 @@ public class CargoResource implements Serializable {
 	private String contact;
 	private String Phone;
 	private double weight;
-	private double weightFate;
+	//运费
+	private String weightFate;
 	private double capacity;
 	private boolean status;
 

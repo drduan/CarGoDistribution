@@ -15,15 +15,23 @@
 					class="icon-bar"></span><span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="<%=request.getContextPath()%>/home.do">欢迎来到空车配货网站</a>
-			<a class="" href="<%=request.getContextPath()%>/User/addcar.do">添加车辆</a>
+			
 		</div>
 		
 
 		<div class="collapse navbar-collapse "
 			id="bs-example-navbar-collapse-1">
 		
+		<ul class="nav navbar-nav navbar-left">
+		
+		<%if(request.getRequestURL().indexOf("profile.jsp")>=0){ %>
+		<li><a class="" href="<%=request.getContextPath()%>/User/addcar.do">添加车辆</a></li>
+		<%} %>
+		
+		</ul>
+		
 			<ul class="nav navbar-nav navbar-right">
-
+		
 
 				<shiro:notAuthenticated>
 					<li><a href="<%=request.getContextPath()%>/User/register.do">
@@ -60,7 +68,7 @@
 						<li class="dropdown hoverDropdown"
 						style="width: 30px; height: 30px; margin-right: 15px"><a
 						class="dropdownBtn user-avatar" data-toggle="dropdown"
-						style="background-image: url('${avater}'); width: 30px; height: 30px"
+						style="background-image: url('<%=request.getContextPath()%>/userfiles/avatar/${user.img}'); width: 30px; height: 30px"
 						href="#" aria-expanded="true"> </a>
 						<ul class="dropdown-menu dropdown-menu-right">
 							<li><a href="<%=request.getContextPath()%>/User/profile.do">我的主页</a></li>
@@ -106,6 +114,11 @@
 							<label> <input type="checkbox" name="rememberMe" />
 								记住我
 							</label>
+							
+							<label> <a href="forgetPwd.do">
+								忘记密码</a>
+							</label>
+							
 						</div>
 						<button type="submit" class="btn btn-default">登录</button>
 					</form>

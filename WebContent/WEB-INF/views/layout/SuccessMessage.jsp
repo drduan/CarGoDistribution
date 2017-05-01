@@ -8,8 +8,17 @@
 </head>
 <body>
 <script language="javascript">
-		alert("${message}");
+		/* alert("${msg} ${info}"); */
+		if(conform(${msg}${info})==true)
+			{
+			alert("支付成功");
+			}
+		else
+			{
+			alert("支付失败");
+			}
 		window.history.back(-1);
+		window.open("paying.do");
 	</script>
 </body>
 </html>

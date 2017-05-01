@@ -112,12 +112,6 @@ public class BaseAction extends Base {
 		return "/views/layout/uploadFileToAuth";
 	}
 
-	@RequestMapping(value = "settings.do", method = RequestMethod.POST)
-	public String authentication(Model model) {
-
-		model.addAttribute("message", "请耐心等待审核");
-		return "/views/layout/SuccessMessage";
-	}
 
 	@RequestMapping(value = "authenticationstatus.do")
 	public String authenticationstatus() {
@@ -245,5 +239,15 @@ public class BaseAction extends Base {
 		model.addAttribute("msglist", selflmsg);
 		return "views/layout/sysmsglist";
 	}
+	
+//	@RequestMapping(name="forgetPwd.do")
+//	public String forgetPwd(Model model)
+//	{
+//		
+//		
+//		return "views/layout/forgetpwd";
+//	}
+	
+	
 
 }

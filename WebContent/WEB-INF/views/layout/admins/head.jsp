@@ -11,7 +11,7 @@
 
 		<button type="button" class="navbar-toggle" data-toggle="collapse"
 			data-target="#bs-example-navbar-collapse-1">
-			<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+			<span class="sr-only"></span><span class="icon-bar"></span><span
 				class="icon-bar"></span><span class="icon-bar"></span>
 		</button>
 		<a class="navbar-brand"
@@ -22,9 +22,10 @@
 
 	<div class="collapse navbar-collapse "
 		id="bs-example-navbar-collapse-1">
-		<a
-						href="<%=request.getContextPath()%>/admins/publishgoods.do">发布货源</a>
-
+		
+		<ul class="nav navbar-nav navbar-left">
+		<li><a href="<%=request.getContextPath()%>/admins/publishgoods.do">发布货源</a></li>
+		</ul>
 		<ul class="nav navbar-nav navbar-right">
 
 
@@ -57,14 +58,14 @@
 				<li><label> <a
 						href="<%=request.getContextPath()%>/logout.do">注销</a></label></li>
 
-				<li class="opts__item message has-unread hidden-sm"><a
+				<li class="opts__item message"><a
 					id="dLabel" class="dropdown-toggle-message" href="#"> <span
 						class="sr-only"> 消息</span> <span id="messageCount"
 						class="fa fa-bell-o">${message} </span></a></li>
 				<li class="dropdown hoverDropdown"
 					style="width: 30px; height: 30px; margin-right: 15px"><a
 					class="dropdownBtn user-avatar" data-toggle="dropdown"
-					style="background-image: url('${avater}'); width: 30px; height: 30px"
+					style="background-image: url('<%=request.getContextPath()%>/userfiles/avatar/2.jpg'); width: 30px; height: 30px"
 					href="#" aria-expanded="true"> </a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li><a
@@ -72,6 +73,8 @@
 						<li><a href="settings.do">账号设置</a></li>
 						<li><a
 							href="/User/logout.do">退出</a></li>
+							<li><a
+							href="/authentication.do">账户认证</a></li>
 						<li class="divider"></li>
 						<li><a href="#">建议反馈</a></li>
 					</ul>

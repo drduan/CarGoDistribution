@@ -32,13 +32,13 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public void remove(int id) {
+	public void remove(Long id) {
 		// TODO Auto-generated method stub
-
+		carDao.delete(find(id));
 	}
 
 	@Override
-	public Car find(int id) {
+	public Car find(Long id) {
 		// TODO Auto-generated method stub
 		return carDao.findOne(id);
 	}

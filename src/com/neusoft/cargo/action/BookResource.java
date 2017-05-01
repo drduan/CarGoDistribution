@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.CargoResource;
 import com.neusoft.cargo.entity.Message;
+import com.neusoft.cargo.entity.OrderType;
 import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.service.CarService;
 import com.neusoft.cargo.service.CargoResourceService;
@@ -53,31 +55,37 @@ public class BookResource extends Base {
 
 	@ResponseBody
 	@RequestMapping(value = "bookresource.do", method = RequestMethod.POST)
-	public String postbookresource(int cid, int rid, Integer idname, Model model) {
+	public String postbookresource(long cid, int rid, Integer idname, Model model) {
 		// 判断 车和货物是否在运输中
 		// false表示不可送达
 		Car car2 = carService.find(cid);
 		CargoResource car = cargoResourceService.find(rid);
-		if (!car.isStatus() ||!car2.isCarStatus()) {
-			return "failed";
+		if (car.isStatus() ||car2.isCarStatus()) {
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("status", "faild");
+			return jsonObject.toJSONString();
 		}
 		
 		// 设置资源状态 不可用
-		car2.setCarStatus(false);
-		car.setStatus(false);
+		car2.setCarStatus(true);
+		car.setStatus(true);
 
 		UUID uuid = UUID.randomUUID();
 		TrackOrder tOrder = new TrackOrder();
 		tOrder.setCar(car2);
 		tOrder.setcResource(car);
+		tOrder.setOrderType(OrderType.WAITINGACCESS);
 		tOrder.setUuid(uuid.toString());
 		trackOrderService.save(tOrder);
-
+		
 		Message message = new Message();
-		message.setContent("有新的预约 前去查看" + tOrder.getUuid());
+		message.setContent("有新的预约 前去查看;订单号" + tOrder.getUuid());
 		message.setToperson(userservice.find(car.get_user().getId()));
 		msgService.save(message);
-		return "success";
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("status", "success");
+		jsonObject.put("orderno", tOrder.getUuid());
+		return jsonObject.toJSONString();
 
 	}
 
@@ -88,10 +96,14 @@ public class BookResource extends Base {
 
 	}
 
-	// @RequestMapping(value="/{randomcode}/nani", method=RequestMethod.POST)
-	// public String dimList(Model model, String randomcode) {
-	// System.out.println("randomcode = " + randomcode);
-	// return "nani";
-	// }
+	
+	@RequestMapping(value="paid.do",method= RequestMethod.GET)
+	public  String  paid(String orderid) {
+		TrackOrder order = trackOrderService.find(orderid);
+		order.setOrderType(OrderType.PAID);
+		trackOrderService.update(order);
+		return "redirect:/User/profile.do";
+	}
+
 
 }

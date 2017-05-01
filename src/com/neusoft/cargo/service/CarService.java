@@ -21,7 +21,7 @@ public interface CarService {
 
 	public void save(Car person);
 
-	public void remove(int id);
+	public void remove(Long id);
 
-	public Car find(int id);
+	public Car find(Long id);
 }

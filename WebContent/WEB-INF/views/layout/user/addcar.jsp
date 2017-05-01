@@ -19,13 +19,81 @@
 
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
-				<div class="container-fluid">
+				<div class="container-fluid"> 
 					<jsp:include page="../../include/head.jsp"></jsp:include>
-
+					<form class="form-horizontal" role="form" action="../Car/InsertCarForUser.do" method="get" >
+				<div class="form-group">
+					 
+					<label for="inputEmail3" class="col-sm-2 control-label">
+						车牌号
+					</label>
+					<div class="col-sm-10">
+						<input type="text" name="CarNumber" class="form-control" id="inputEmail3" />
+					</div>
 				</div>
-				<div class="col-md-12"></div>
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-2 control-label">
+						车主
+					</label>
+					<div class="col-sm-10">
+						<input type="text"  name="CarHost" class="form-control" id="inputPassword3" />
+					</div>
+				</div>
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-2 control-label">
+						运费
+					</label>
+					<div class="col-sm-10">
+						<input name="FreightRates" type="text" class="form-control" id="inputPassword3" />
+					</div>
+				</div>
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-2 control-label">
+						负载
+					</label>
+					<div class="col-sm-10">
+						<input name="Capicity" type="text" class="form-control" id="inputPassword3" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-2 control-label">
+						车辆类型
+					</label>
+					<div class="col-sm-10">
+						<input name="CarType" type="text" class="form-control" id="inputPassword3" />
+					</div>
+				</div>
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-2 control-label">
+						联系方式
+					</label>
+					<div class="col-sm-10">
+						<input name="phone" type="text" class="form-control" id="inputPassword3" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						 
+						<button type="submit" class="btn btn-default">
+							提交
+						</button>
+					</div>
+				</div>
+			</form>
+				</div>
+			</div>
+			<div class="col-md-1">
+			
 			</div>
 		</div>
+		
+		
 	</div>
 
 	<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>

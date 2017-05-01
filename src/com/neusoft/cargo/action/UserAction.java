@@ -37,6 +37,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.neusoft.cargo.dao.RoleDao;
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.Message;
@@ -46,6 +49,7 @@ import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.entity.User.UserType;
 import com.neusoft.cargo.model.Order;
 import com.neusoft.cargo.service.MessageService;
+import com.neusoft.cargo.service.TrackOrderService;
 import com.neusoft.cargo.service.UserService;
 import com.neusoft.cargo.util.Md5Util;
 
@@ -55,6 +59,9 @@ public class UserAction extends Base {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TrackOrderService orderservice;
 	@Autowired
 	private RoleDao roleDao;
 	@Autowired
@@ -87,9 +94,12 @@ public class UserAction extends Base {
 
 	@RequiresRoles(value = "user")
 	@RequestMapping(value = "profile.do")
-	public String profile(Model model)
+	public String profile(Model model, String orderid)
 
 	{
+		
+		logger.error("orderid"+orderid);
+		
 		Subject subject = SecurityUtils.getSubject();
 		model.addAttribute("avater", "https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -103,8 +113,35 @@ public class UserAction extends Base {
 
 		}
 		model.addAttribute("orders", orders);
+		if(orderid != null)
+		{
+			model.addAttribute("orderdetail", "18");
+		}
+		
 
 		return "views/layout/user/profile";
+	}
+	
+	
+	@RequiresRoles(value = "user")
+	@RequestMapping(value = "orderdetail.do")
+	@ResponseBody
+	public String orderdetail(String orderid)
+
+	{
+		logger.info("orderid"+orderid);
+		TrackOrder order = orderservice.find(orderid);
+		Order disorder = new Order();
+		disorder.setUuid(order.getUuid());
+		disorder.setCreateTime(order.getCreateTime());
+		disorder.setGoodName(order.getcResource().getGoodName());
+		disorder.setDepartPlace(order.getcResource().getDeparturePlace());
+		disorder.setDestPlace(order.getcResource().getDestPlace());
+		disorder.setMstatus(order.getMstatus());
+		disorder.setContact(order.getCar().getUser().getUsername());
+		disorder.setPhone(order.getCar().getUser().getPhone());
+		return JSON.toJSONString(disorder);
+		
 	}
 
 	@RequestMapping(value = "register.do", method = RequestMethod.GET)
@@ -352,10 +389,11 @@ public class UserAction extends Base {
 	}
 
 	@RequestMapping(value = "settings.do", method = RequestMethod.POST)
-	public String PostSettings(User user) {
+	public String PostSettings(User user,Model model) {
 		User user1 = getUser();
-		userService.save(user1);
-		return "redirect:/";
+		userService.update(user1);
+		model.addAttribute("message", "修改成功");
+		return "/views/layout/SuccessMessage";
 	}
 
 	@ResponseBody
@@ -378,5 +416,12 @@ public class UserAction extends Base {
 
 		return null;
 	}
+//	
+//	@RequestMapping("getdetailedorder.do")
+//	public String  getdetailedorder (long )
+//	{
+//		
+//		return  "";
+//	}
 
 }

@@ -19,6 +19,8 @@ import com.neusoft.cargo.entity.User;
 @Service
 public interface UserService {
 
+	
+	public boolean update(User entity);
 	public List<User> findAll();
 
 	public void save(User user);
@@ -34,6 +36,6 @@ public interface UserService {
 	public void addCarToUser(User user, Car car);
 	
 	public List<TrackOrder> getOrder(User user);
-	
+	public  boolean  delCar(User user,long carid);
 	
 }

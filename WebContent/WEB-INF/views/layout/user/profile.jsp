@@ -1,9 +1,13 @@
+<%@page import="com.neusoft.cargo.entity.TrackOrder"%>
+<%@page import="java.util.List"%>
+<%@page import="com.neusoft.cargo.entity.OrderType"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -205,9 +209,11 @@ ul, li {
 	-webkit-box-align: center;
 	-webkit-align-items: center;
 	-ms-flex-align: center;
-	align-items: center; -webkit-box-pack : center; -webkit-justify-content
-	: center; -ms-flex-pack : center; justify-content : center;
-	-webkit-box-orient : vertical;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center; -webkit-box-orient : vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	-ms-flex-direction: column;
@@ -237,6 +243,16 @@ ul, li {
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
 	justify-content: center;
+	-webkit-box-orient: vertical;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-orient: vertical;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-orient: vertical;
+	justify-content: center;
+	-webkit-box-orient: vertical;
 	-webkit-box-orient: vertical;
 }
 
@@ -272,6 +288,10 @@ ul, li {
 
 <body>
 
+	<script type="text/javascript">
+		
+	</script>
+
 
 
 	<div class="container-fluid">
@@ -287,13 +307,13 @@ ul, li {
 							id="control" data-options="fit:true,border:false" title="">
 							<div class="theme-user-info-panel">
 								<div class="left">
-									<img src="${avater}" width="86" height="86">
+									<img src="../userfiles/avatar/${user.img}" width="86"
+										height="86">
 								</div>
 								<div class="right">
 									<ul>
 										<li class="text-success">￥0<span>收益总额</span></li>
 										<li class="text-info">100<span>我的信用</span></li>
-										<li class="text-warning">0<span>我的积分</span></li>
 										<li>优秀<span>信誉评级</span></li>
 									</ul>
 								</div>
@@ -334,12 +354,14 @@ ul, li {
 								<li class="pay">
 									<div class="icon"></div> 我的订单
 								</li>
+								<!-- 
 								<li class="wrap">
 									<div class="icon"></div> 我的订单
 								</li>
 								<li class="ship">
 									<div class="icon"></div> 我的订单
 								</li>
+								 -->
 							</ul>
 						</div>
 
@@ -355,21 +377,36 @@ ul, li {
 								</c:if>
 								<c:if test="${not  empty carsource}">
 									<table class="table table-hover table-condensed table-bordered">
+										<caption>
+											<button class="btn btn-xs btn-primary pull-right"
+												id="modal-111082" role="button" type="button"
+												data-toggle="modal">删除车辆信息</button>
+										</caption>
 										<thead>
 											<tr>
+												<th>选择</th>
 												<th>ID</th>
 												<th>车辆状态</th>
 												<th>车牌号</th>
 												<th>联系方式</th>
-													<th>车主</th>
+												<th>车主</th>
 											</tr>
 										</thead>
 										<tbody>
 
 											<c:forEach var="carsource" items="${carsource}">
 												<tr class="danger">
+													<td><input type="checkbox" name="bb" value="${carsource.carid}" /></td>
 													<td>${carsource.carid}</td>
-													<td>${carsource.carStatus}</td>
+													<c:if test="${carsource.carStatus eq false}">
+
+														<td>可以使用</td>
+													</c:if>
+													<c:if test="${carsource.carStatus ne false}">
+
+														<td>正在运输中</td>
+													</c:if>
+
 													<td>${carsource.carNumber}</td>
 													<td>${carsource.phone}</td>
 													<td>${carsource.carHost}</td>
@@ -388,25 +425,46 @@ ul, li {
 								</c:if>
 								<c:if test="${not  empty orders}">
 									<table class="table table-hover table-condensed table-bordered">
+										<caption>
+											<button class="btn btn-xs btn-primary pull-right"
+												id="modal-111081" role="button" type="button"
+												data-toggle="modal">更新订单状态</button>
+										</caption>
 										<thead>
 											<tr>
+												<th>选择</th>
 												<th>ID</th>
 												<th>订单状态</th>
 												<th>订单号</th>
+												<th>联系人</th>
 												<th>联系方式</th>
-												<th>货主</th>
-												<th>联系方式</th>
-												<th>货主</th>
+												<th>订单时间</th>
 											</tr>
 										</thead>
 										<tbody>
-
+											<c:set var="paid" value="<%=OrderType.PAID%>"></c:set>
+											<c:set var="not_paid" value="<%=OrderType.NOT_PAID%>"></c:set>
 											<c:forEach var="orders" items="${orders}">
 												<tr class="danger">
-												<td>${orders.id	}</td>
-												<td>${orders.uuid	}</td>
-												<td>${orders.createTime	}</td>
+													<td><input type="checkbox" id="orderid"
+														value="${orders.uuid}" name="aa" onclick="" /></td>
+													<td>${orders.id	}</td>
+
+													<c:if test="${orders.orderType eq paid}">
+														<td><select disabled="disabled">
+																<option>已经支付，等待货主通过</option>
+														</select></td>
+													</c:if>
+													<c:if test="${orders.orderType eq not_paid}">
+														<td><select disabled="disabled">
+																<option>订单已经被取消</option></td>
+													</c:if>
+													<td>${orders.uuid}</td>
+													<td>${orders.cResource.contact}</td>
+													<td>${orders.cResource.phone}</td>
+													<td>${orders.createTime}</td>
 												</tr>
+
 											</c:forEach>
 										</tbody>
 									</table>
@@ -526,6 +584,93 @@ ul, li {
 		</div>
 	</div>
 
+
+	<div class="modal fade" id="modal-container-111081" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body" id="modal-body"></div>
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Close</button>
+					<button type="button" class="btn btn-primary">Save changes
+					</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<script type="text/javascript">
+		$("#modal-111081").click(function() {
+			var obj = document.getElementsByName("aa");
+			var len = 0;
+			var checkedobj;
+			for (var i = 0; i < obj.length; i++) {
+				if (obj[i].checked == true) {
+					checkedobj = obj[i];
+					++len;
+				}
+			}
+			if (len > 1) {
+				alert("只能编辑一项内容");
+				return;
+			}
+			if (len < 1) {
+				alert("请选择一项内容");
+				return;
+			}
+			/*else {
+				/*  htmlobj=$.ajax({url:"orderdetail.do?orderid="+checkedobj.value,dataType: "json",async:false});
+				 alert(htmlobj.responseText); */
+			/* $('#modal-container-111081').modal({
+				show : true,
+				backdrop : true
+			});*/
+
+			/*	console.log('${orders[0].uuid}');
+			}*/
+		});
+		
+		
+		$("#modal-111082").click(function() {
+			var obj = document.getElementsByName("bb");
+			var len = 0;
+			var checkedobj;
+			for (var i = 0; i < obj.length; i++) {
+				if (obj[i].checked == true) {
+					checkedobj = obj[i];
+					++len;
+				}
+			}
+			if (len > 1) {
+				alert("只能删除一项内容");
+				return;
+			}
+			if (len < 1) {
+				alert("请选择一项内容");
+				return;
+			}
+			
+			htmlobj=$.ajax({url:"../Car/delcar.do?carid="+checkedobj.value,dataType: "json",async:false});
+			 if(htmlobj.responseText == 'success')
+				 {
+				 location.reload()
+				 }
+			 else
+				 {
+				 alert("稍后重试");
+				 }
+		});
+		
+	</script>
 </body>
 
 </html>

@@ -260,7 +260,7 @@
 																	class="btn btn-primary">
 																<p
 																	style="width: 146px; text-align: center; font-size: 12px; line-height: 30px;">
-																	<a href="http://www.chinawutong.com/agreement.aspx"
+																	<a href="#"
 																		target="_blank"><font color="#333">《物通网使用条款与协议》</font></a>
 																</p>
 															</div></td>

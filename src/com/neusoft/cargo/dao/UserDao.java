@@ -114,4 +114,19 @@ public class UserDao extends AbstractHibernateDAO<User> {
 		return null;
 	}
 
+	public boolean delcar(User user,long carid) {
+		// TODO Auto-generated method stub
+		User ciUser = (User) this.getHibernateTemplate().find("from User u where u.email=?", user.getEmail()).get(0);
+		List<Car> cars = ciUser.getCars();
+		List<Car> newCars = new ArrayList<>();
+		for (Car car : cars) {
+			if (car.getId() != carid) {
+				newCars.add(car);
+			}
+		}
+		ciUser.setCars(newCars);
+		getCurrentSession().saveOrUpdate(ciUser);
+		return true;
+	}
+
 }

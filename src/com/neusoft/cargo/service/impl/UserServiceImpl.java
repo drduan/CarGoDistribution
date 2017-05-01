@@ -3,6 +3,7 @@ package com.neusoft.cargo.service.impl;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.jws.soap.SOAPBinding.Use;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
@@ -48,6 +49,11 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	public boolean update(User entity) {
+
+		return userDao.update(entity);
+	}
+
 	public User find(long id) {
 		return userDao.findOne(id);
 	}
@@ -71,9 +77,15 @@ public class UserServiceImpl implements UserService {
 	public void addCarToUser(User user, Car car) {
 		userDao.addCarToUser(user, car);
 	}
-	
-	public  List<TrackOrder> getOrder( User user) {
+
+	public List<TrackOrder> getOrder(User user) {
 		return userDao.getOrderList(user);
+	}
+
+	@Override
+	public boolean delCar(User user, long carid) {
+		// TODO Auto-generated method stub
+		return userDao.delcar(user, carid);
 	}
 
 }

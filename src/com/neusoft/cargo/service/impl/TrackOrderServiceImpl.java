@@ -19,4 +19,16 @@ public class TrackOrderServiceImpl implements TrackOrderService{
 
 	}
 
+	@Override
+	public TrackOrder find(String uuid) {
+		// TODO Auto-generated method stub
+		return trackOrderDao.findByUUID(uuid);
+	}
+
+	@Override
+	public boolean update(TrackOrder order) {
+		// TODO Auto-generated method stub
+		return trackOrderDao.update(order);
+	}
+
 }

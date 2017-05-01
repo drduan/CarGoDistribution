@@ -96,9 +96,20 @@ public class User implements Serializable {
 		this.hasauthentication = hasauthentication;
 	}
 
-	/**
-	 * 
-	 */
+
+	//
+	private String img;
+	
+	
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	// Auto 主键由程序控制

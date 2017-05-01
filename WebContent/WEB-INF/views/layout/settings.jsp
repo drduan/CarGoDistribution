@@ -4,13 +4,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-	rel="stylesheet" />
+
+<link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../static/js/jquery.imagecropper.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>个人信息设置</title>
 </head>
 <body>
-
 	<script type="text/javascript">
 	function refreshCode(imgObj) {
 		if (!imgObj) {
@@ -34,8 +35,7 @@
 		var validchar = $("input[name='validchar']").val();
 		var phone = $("input[name='phone']").val();
 		
-		 htmlobj=$.ajax({url:"<%=request.getContextPath()%>
-		/User/userexist.do",
+		 htmlobj=$.ajax({url:"<%=request.getContextPath()%>/User/userexist.do",
 				async : false,
 			}).responseText;
 			obj = JSON.parse("" + htmlobj);
@@ -96,11 +96,19 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
-					<div class="col-md-4"></div>
+					<div class="col-md-4">
+					
+					 <div class="pull-right ">
+					<img name="img0" id="img0" src="../userfiles/avatar/${user.img}" style=" background-image: url('');width: 100px; height: 100px;"/>
+					<input type="file" name="file0"  id="file0"  multiple="multiple">
+					
+					</div>
+					
+					</div>
 					<div class="col-md-4">
 						<form method="post"
 							action="${pageContext.request.contextPath}/User/settings.do"
-							onsubmit="return checkuser()" accept-charset="UTF-8">
+							onsubmit="return checkuser()" accept-charset="UTF-8" role="form" id="form-group">
 							<ul class="list-unstyled">
 
 								<li><label>登陆邮箱</label><br /> <input disabled="disabled"
@@ -112,12 +120,10 @@
 
 
 
-								<li><label>密码 </label> <br />
-								<input type="password" placeholder="请输入6-20位登录密码"
-									name="password" id="password"></li>
-								<li><label>再次输入密码</label> <br />
-								<input type="password" name="repassword" placeholder="请再次输入登录密码"
-									id="repassword"></li>
+								<li><label>密码 </label> <br /> <input type="password"
+									placeholder="请输入6-20位登录密码" name="password" id="password"></li>
+								<li><label>再次输入密码</label> <br /> <input type="password"
+									name="repassword" placeholder="请再次输入登录密码" id="repassword"></li>
 
 								<li><img id="validationCode" alt="验证码图片" title="验证码图片"
 									src="../validationCodeServlet.png" onclick="refreshCode(this)" />
@@ -131,7 +137,7 @@
 									placeholder="请输入手机号" name="phone"></li>
 
 
-								<li><input class="btn btn-block" type="submit" value="注册"></input></li>
+								<li><input class="btn btn-block" type="submit" value="修改资料"></input></li>
 							</ul>
 						</form>
 					</div>
