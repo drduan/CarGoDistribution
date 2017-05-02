@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.neusoft.cargo.entity.Car;
-import com.neusoft.cargo.entity.User;
 
 /**
  * @author xudong
@@ -24,4 +23,6 @@ public interface CarService {
 	public void remove(Long id);
 
 	public Car find(Long id);
+
+	public void update(Car car);
 }

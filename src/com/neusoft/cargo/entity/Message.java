@@ -58,7 +58,6 @@ public class Message implements Serializable {
 	// 限制 140个字
 	private String Content;
 
-	
 	public Date getAdd_date() {
 		return add_date;
 	}

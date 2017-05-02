@@ -7,7 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-@Entity(name="role")
+
+@Entity(name = "role")
 public class Role implements Serializable {
 
 	@Id
@@ -16,8 +17,8 @@ public class Role implements Serializable {
 	@Column(unique = true)
 	private String role; // 角色标识 程序中判断使用,如"admin"
 	private String description; // 角色描述,UI界面显示使用
-	// private Boolean available = Boolean.FALSE;  是否可用,如果不可用将不会添加给用户
-	
+	// private Boolean available = Boolean.FALSE; 是否可用,如果不可用将不会添加给用户
+
 	public Role() {
 	}
 

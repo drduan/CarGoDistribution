@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.neusoft.cargo.dao.CarDao;
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.service.CarService;
+
 @Service
 public class CarServiceImpl implements CarService {
 
@@ -41,5 +42,11 @@ public class CarServiceImpl implements CarService {
 	public Car find(Long id) {
 		// TODO Auto-generated method stub
 		return carDao.findOne(id);
+	}
+
+	@Override
+	public void update(Car car) {
+		// TODO Auto-generated method stub
+		carDao.update(car);
 	}
 }

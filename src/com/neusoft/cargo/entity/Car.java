@@ -32,8 +32,7 @@ public class Car implements Serializable {
 
 	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private TrackOrder tock;
-	
-	
+
 	public long getCarid() {
 		return carid;
 	}

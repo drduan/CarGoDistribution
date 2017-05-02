@@ -18,12 +18,14 @@ public class WebFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		// TODO Auto-generated method stub
-//		Users user = (Users) ((HttpServletRequest) request).getSession().getAttribute("user");
-//		if (user == null) {
-//			((HttpServletResponse)response).sendRedirect("../index.html");
-//		}
+		// Users user = (Users) ((HttpServletRequest)
+		// request).getSession().getAttribute("user");
+		// if (user == null) {
+		// ((HttpServletResponse)response).sendRedirect("../index.html");
+		// }
 		chain.doFilter(request, response);
 	}
 

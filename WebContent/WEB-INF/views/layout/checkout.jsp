@@ -109,24 +109,45 @@
 							<div class="col-md-12">
 								<h3>确认订单</h3>
 								<div class="row">
-									<label for="state">选择车源</label>
-									<select class="easyui-combobox" name="state" label="State:"
-										labelPosition="top" style="width: 100%;">
+									<label for="state">选择车源</label> <select class="easyui-combobox"
+										name="state" label="State:" labelPosition="top"
+										style="width: 100%;">
 										<c:forEach var="carsource" items="${carsource}">
-											<option value="${carsource.id}">${carsource.carHost}
-												${carsource.carNumber} ${carsource.phone}</option>
+
+
+											<c:if test="${carsource.carStatus eq true}">
+												<option disabled="disabled"  value="${carsource.id}"> 
+													联系人：${carsource.carHost}
+													车牌号：${carsource.carNumber} 
+													手机号：${carsource.phone} 
+													运输中 暂时不可选择</option>
+											</c:if>
+											<c:if test="${carsource.carStatus ne true}">
+												<option  value="${carsource.id}">${carsource.carHost}
+													${carsource.carNumber} ${carsource.phone}</option>
+											</c:if>
 										</c:forEach>
 									</select>
 
 
 
-									<div class="col-md-4">
-										
-									</div>
-									<p><p><p><p><p><p><p><p><p><p><p><p><p><p><p><p>
-									
-									
-									
+									<div class="col-md-4"></div>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
+									<p>
 									<div class="col-md-4"></div>
 									<div class="col-md-4"></div>
 								</div>
@@ -164,6 +185,19 @@
 
 											<td>需要支付押金</td>
 											<td><span> ${cargoResource.weightFate}</span></td>
+										</tr>
+
+
+
+										<tr class="warn">
+
+											<td>体积</td>
+											<td><span> ${cargoResource.weight}</span>m³</td>
+										</tr>
+										<tr class="warn">
+
+											<td>重量</td>
+											<td><span> ${cargoResource.capacity} 吨</span></td>
 										</tr>
 									</tbody>
 								</table>

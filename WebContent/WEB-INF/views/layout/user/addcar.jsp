@@ -34,7 +34,7 @@
 				<div class="form-group">
 					 
 					<label for="inputPassword3" class="col-sm-2 control-label">
-						车主
+						联系人
 					</label>
 					<div class="col-sm-10">
 						<input type="text"  name="CarHost" class="form-control" id="inputPassword3" />
@@ -52,7 +52,7 @@
 				<div class="form-group">
 					 
 					<label for="inputPassword3" class="col-sm-2 control-label">
-						负载
+						载重量
 					</label>
 					<div class="col-sm-10">
 						<input name="Capicity" type="text" class="form-control" id="inputPassword3" />

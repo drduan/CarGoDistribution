@@ -9,8 +9,7 @@ import javax.persistence.Id;
 
 //@Entity
 //@Table(name = "sys_resource")
-public class Resource implements Serializable
-{
+public class Resource implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

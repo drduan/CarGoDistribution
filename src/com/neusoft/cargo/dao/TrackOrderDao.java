@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.neusoft.cargo.entity.TrackOrder;
-import com.neusoft.cargo.entity.User;
 
 @Repository("TrackOrderDao")
 public class TrackOrderDao extends AbstractHibernateDAO<TrackOrder> {
@@ -21,11 +20,11 @@ public class TrackOrderDao extends AbstractHibernateDAO<TrackOrder> {
 		}
 
 	}
-	
-	public  TrackOrder findByUUID(String uuid) {
-		
-		
-		List<TrackOrder> result = (List<TrackOrder>) this.getHibernateTemplate().find("from trackorder u where u.uuid=?", uuid);
+
+	public TrackOrder findByUUID(String uuid) {
+
+		List<TrackOrder> result = (List<TrackOrder>) this.getHibernateTemplate()
+				.find("from trackorder u where u.uuid=?", uuid);
 		if (result.isEmpty()) {
 
 			return null;

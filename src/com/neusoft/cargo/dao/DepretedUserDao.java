@@ -5,18 +5,16 @@ import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
-import org.springframework.stereotype.Repository;
 
 import com.neusoft.cargo.entity.User;
 
-
 //@Repository("UserDao")
-public class DepretedUserDao  extends BaseHibernateDAO{
+public class DepretedUserDao extends BaseHibernateDAO {
 
 	public void save(User transientInstance) throws Exception {
 		try {
 			getSession().save(transientInstance);
-			
+
 		} catch (RuntimeException re) {
 			throw re;
 		}

@@ -59,8 +59,7 @@ public class Order {
 		this.id = id;
 	}
 
-	
-	//区别于 TrackOrder
+	// 区别于 TrackOrder
 	private String LicenseNo;
 	private String Contact;
 	private String Phone;

@@ -53,10 +53,6 @@
 
 	<loggers>
 		<!--过滤掉spring和hibernate的一些无用的debug信息 -->
-
-
-		<logger name="org.apache.shiro" level="INFO">
-		</logger>
 		<logger name="org.springframework" level="INFO" />
 		<logger name="org.apache.log4j.xml" level="info"></logger>
 		<logger name="org.hibernate" level="info"></logger>

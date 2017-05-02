@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import com.neusoft.cargo.entity.UserAuthInfo;
 
-
 @Repository("UserAuthDao")
 public class UserAuthDao extends AbstractHibernateDAO<UserAuthInfo> {
 

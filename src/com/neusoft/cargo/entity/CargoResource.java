@@ -2,7 +2,6 @@ package com.neusoft.cargo.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Time;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,11 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity(name = "cargoresource")
 public class CargoResource implements Serializable {
@@ -27,12 +23,17 @@ public class CargoResource implements Serializable {
 
 	public User get_user() {
 		User user1 = new User();
+		if (user1 == null) {
+			System.out.println("user1 equals null");
+
+		}
 		user1.setId(_user.getId());
 		user1.setUsername(_user.getUsername());
 		user1.setCreateDate(_user.getCreateDate());
 		user1.setEmail(_user.getEmail());
+		user1.setImg(_user.getImg());
 		return user1;
-		
+
 	}
 
 	public void set_user(User _user) {
@@ -120,7 +121,7 @@ public class CargoResource implements Serializable {
 	private String contact;
 	private String Phone;
 	private double weight;
-	//运费
+	// 运费
 	private String weightFate;
 	private double capacity;
 	private boolean status;
@@ -137,11 +138,9 @@ public class CargoResource implements Serializable {
 
 	@ManyToOne
 	private User _user;
-	
+
 	@OneToOne(mappedBy = "cResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private TrackOrder order;
-	
-	
 
 	public TrackOrder getOrder() {
 		return order;
@@ -158,7 +157,5 @@ public class CargoResource implements Serializable {
 	public void setCarresourceid(long carresourceid) {
 		this.carresourceid = carresourceid;
 	}
-
-
 
 }

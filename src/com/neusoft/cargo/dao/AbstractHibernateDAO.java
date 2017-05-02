@@ -37,28 +37,28 @@ public abstract class AbstractHibernateDAO<T extends Serializable> {
 	/*
 	 * save or update
 	 */
-//	public void save(final T entity) {
-//		log.debug("saving Selllog instance");
-//		try {
-//			getCurrentSession().saveOrUpdate(entity);
-//			log.debug("save successful");
-//		} catch (Exception re) {
-//			log.debug("save failed");
-//			throw re;
-//			
-//		}
-//	}
+	// public void save(final T entity) {
+	// log.debug("saving Selllog instance");
+	// try {
+	// getCurrentSession().saveOrUpdate(entity);
+	// log.debug("save successful");
+	// } catch (Exception re) {
+	// log.debug("save failed");
+	// throw re;
+	//
+	// }
+	// }
 
 	public boolean update(final T entity) {
-		
-		try{
+
+		try {
 			getCurrentSession().merge(entity);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return false;
 			// TODO: handle exception
 		}
 		return true;
-	
+
 	}
 
 	public void delete(final T entity) {
@@ -109,6 +109,7 @@ public abstract class AbstractHibernateDAO<T extends Serializable> {
 	}
 
 	private HibernateTemplate hibernateTemplate;
+
 	public HibernateTemplate getHibernateTemplate()
 
 	{

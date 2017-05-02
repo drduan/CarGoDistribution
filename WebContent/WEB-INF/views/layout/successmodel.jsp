@@ -23,7 +23,20 @@
 		}
 
 		function fun1(curObj) {
-			window.location.href = "paid.do?orderid="+getQueryString("orderid");
+			if (getQueryString("finishorderid") != null) {
+
+			
+				htmlobj = $.ajax({
+					url : "admins/payorder.do?orderid=" + getQueryString("finishorderid"),
+					async : false
+				});
+				window.location.href = "home.do";		
+				
+			} else {
+				window.location.href = "paid.do?orderid="
+						+ getQueryString("orderid");
+
+			}
 		}
 	</script>
 	<div class="container-fluid">

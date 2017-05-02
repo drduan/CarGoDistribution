@@ -45,7 +45,6 @@ public class BookResource extends Base {
 	public String bookresource(String idname, Model model) {
 		// JsonParameter
 		List<Car> cl = userservice.GetCarList(getUser());
-
 		CargoResource cargoResource = cargoResourceService.find(Integer.parseInt(idname));
 
 		model.addAttribute("cargoResource", cargoResource);
@@ -60,29 +59,32 @@ public class BookResource extends Base {
 		// false表示不可送达
 		Car car2 = carService.find(cid);
 		CargoResource car = cargoResourceService.find(rid);
-		if (car.isStatus() ||car2.isCarStatus()) {
+		if (car.isStatus() || car2.isCarStatus()) {
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("status", "faild");
 			return jsonObject.toJSONString();
 		}
-		
+
 		// 设置资源状态 不可用
 		car2.setCarStatus(true);
-		car.setStatus(true);
+		// car.setStatus(true);
 
 		UUID uuid = UUID.randomUUID();
 		TrackOrder tOrder = new TrackOrder();
 		tOrder.setCar(car2);
 		tOrder.setcResource(car);
-		tOrder.setOrderType(OrderType.WAITINGACCESS);
+		// 可以未支付
+		// tOrder.setOrderType(OrderType.WAITINGACCESS);
+		tOrder.setOrderType(OrderType.PENDING);
 		tOrder.setUuid(uuid.toString());
 		trackOrderService.save(tOrder);
-		
+
 		Message message = new Message();
 		message.setContent("有新的预约 前去查看;订单号" + tOrder.getUuid());
 		message.setToperson(userservice.find(car.get_user().getId()));
 		msgService.save(message);
 		JSONObject jsonObject = new JSONObject();
+
 		jsonObject.put("status", "success");
 		jsonObject.put("orderno", tOrder.getUuid());
 		return jsonObject.toJSONString();
@@ -96,14 +98,21 @@ public class BookResource extends Base {
 
 	}
 
-	
-	@RequestMapping(value="paid.do",method= RequestMethod.GET)
-	public  String  paid(String orderid) {
+	@RequestMapping(value = "paid.do", method = RequestMethod.GET)
+	public String paid(String orderid) {
 		TrackOrder order = trackOrderService.find(orderid);
 		order.setOrderType(OrderType.PAID);
 		trackOrderService.update(order);
 		return "redirect:/User/profile.do";
 	}
 
+	@RequestMapping("finishtrans.do")
+	@ResponseBody
+	public String finishtrans(String orderid) {
+		TrackOrder order = trackOrderService.find(orderid);
+		order.setOrderType(OrderType.COMPLETED);// 订单完成
+		trackOrderService.update(order);
+		return "success";
+	}
 
 }

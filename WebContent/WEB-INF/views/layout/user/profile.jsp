@@ -14,7 +14,7 @@
 <head>
 <!-- https://www.insdep.com -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>个人主页</title>
+<title>车主个人主页</title>
 
 <link rel="stylesheet" type="text/css"
 	href="../static/css/normalize.css" />
@@ -25,8 +25,10 @@
 <!-- -->
 <link href="../static/css/easyui.css" rel="stylesheet" />
 <link href="../static/css/icon.css">
+<!-- 
 <link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css"
 	rel="stylesheet" type="text/css">
+-->
 
 
 
@@ -213,7 +215,8 @@ ul, li {
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
-	justify-content: center; -webkit-box-orient : vertical;
+	justify-content: center;
+	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	-ms-flex-direction: column;
@@ -354,14 +357,6 @@ ul, li {
 								<li class="pay">
 									<div class="icon"></div> 我的订单
 								</li>
-								<!-- 
-								<li class="wrap">
-									<div class="icon"></div> 我的订单
-								</li>
-								<li class="ship">
-									<div class="icon"></div> 我的订单
-								</li>
-								 -->
 							</ul>
 						</div>
 
@@ -385,7 +380,6 @@ ul, li {
 										<thead>
 											<tr>
 												<th>选择</th>
-												<th>ID</th>
 												<th>车辆状态</th>
 												<th>车牌号</th>
 												<th>联系方式</th>
@@ -396,8 +390,8 @@ ul, li {
 
 											<c:forEach var="carsource" items="${carsource}">
 												<tr class="danger">
-													<td><input type="checkbox" name="bb" value="${carsource.carid}" /></td>
-													<td>${carsource.carid}</td>
+													<td><input type="checkbox" name="bb"
+														value="${carsource.carid}" /></td>
 													<c:if test="${carsource.carStatus eq false}">
 
 														<td>可以使用</td>
@@ -421,34 +415,33 @@ ul, li {
 
 
 								<c:if test="${empty orders}">
-									<div class="row">没有车辆</div>
+									<div class="row">没有订单</div>
 								</c:if>
 								<c:if test="${not  empty orders}">
 									<table class="table table-hover table-condensed table-bordered">
-										<caption>
-											<button class="btn btn-xs btn-primary pull-right"
-												id="modal-111081" role="button" type="button"
-												data-toggle="modal">更新订单状态</button>
-										</caption>
+										<caption></caption>
 										<thead>
 											<tr>
 												<th>选择</th>
-												<th>ID</th>
 												<th>订单状态</th>
 												<th>订单号</th>
 												<th>联系人</th>
 												<th>联系方式</th>
 												<th>订单时间</th>
+												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody>
+											<c:set var="pend" value="<%=OrderType.PENDING%>"></c:set>
 											<c:set var="paid" value="<%=OrderType.PAID%>"></c:set>
 											<c:set var="not_paid" value="<%=OrderType.NOT_PAID%>"></c:set>
+											<c:set var="complete" value="<%=OrderType.COMPLETED%>"></c:set>
+											<c:set var="wait" value="<%=OrderType.WAITINGACCESS%>"></c:set>
+											<c:set var="RECEIVED" value="<%=OrderType.RECEIVED%>"></c:set>
 											<c:forEach var="orders" items="${orders}">
 												<tr class="danger">
 													<td><input type="checkbox" id="orderid"
 														value="${orders.uuid}" name="aa" onclick="" /></td>
-													<td>${orders.id	}</td>
 
 													<c:if test="${orders.orderType eq paid}">
 														<td><select disabled="disabled">
@@ -459,10 +452,30 @@ ul, li {
 														<td><select disabled="disabled">
 																<option>订单已经被取消</option></td>
 													</c:if>
+													<c:if test="${orders.orderType eq pend}">
+														<td><select disabled="disabled">
+																<option>运输中，等待结束</option></td>
+													</c:if>
+													<c:if test="${orders.orderType eq complete}">
+														<td><select disabled="disabled">
+																<option>运输结束，等待货主支付</option></td>
+													</c:if>
+													<c:if test="${orders.orderType eq wait}">
+														<td><select disabled="disabled">
+																<option>已经支付，等待货主通过</option>
+														</select></td>
+													</c:if>
+													<c:if test="${orders.orderType eq RECEIVED }">
+														<td><select disabled="disabled">
+																	<option>订单结束</option></td>
+														</c:if>
+													
+
 													<td>${orders.uuid}</td>
 													<td>${orders.cResource.contact}</td>
 													<td>${orders.cResource.phone}</td>
 													<td>${orders.createTime}</td>
+													<td></td>
 												</tr>
 
 											</c:forEach>
@@ -609,37 +622,20 @@ ul, li {
 
 	</div>
 	<script type="text/javascript">
-		$("#modal-111081").click(function() {
-			var obj = document.getElementsByName("aa");
-			var len = 0;
-			var checkedobj;
-			for (var i = 0; i < obj.length; i++) {
-				if (obj[i].checked == true) {
-					checkedobj = obj[i];
-					++len;
+		$(document).ready(function() {
+			$("#finishtrans").on("click", function() {
+				data = $(this).attr("data-orderid");
+				//alert(data);
+				htmlobj = $.ajax({
+					url : "../finishtrans.do?orderid=" + data,
+					async : false
+				});
+				if (htmlobj.responseText == 'success') {
+					localation.reload();
 				}
-			}
-			if (len > 1) {
-				alert("只能编辑一项内容");
-				return;
-			}
-			if (len < 1) {
-				alert("请选择一项内容");
-				return;
-			}
-			/*else {
-				/*  htmlobj=$.ajax({url:"orderdetail.do?orderid="+checkedobj.value,dataType: "json",async:false});
-				 alert(htmlobj.responseText); */
-			/* $('#modal-container-111081').modal({
-				show : true,
-				backdrop : true
-			});*/
-
-			/*	console.log('${orders[0].uuid}');
-			}*/
+			});
 		});
-		
-		
+
 		$("#modal-111082").click(function() {
 			var obj = document.getElementsByName("bb");
 			var len = 0;
@@ -658,18 +654,18 @@ ul, li {
 				alert("请选择一项内容");
 				return;
 			}
-			
-			htmlobj=$.ajax({url:"../Car/delcar.do?carid="+checkedobj.value,dataType: "json",async:false});
-			 if(htmlobj.responseText == 'success')
-				 {
-				 location.reload()
-				 }
-			 else
-				 {
-				 alert("稍后重试");
-				 }
+
+			htmlobj = $.ajax({
+				url : "../Car/delcar.do?carid=" + checkedobj.value,
+				dataType : "json",
+				async : false
+			});
+			if (htmlobj.responseText == 'success') {
+				location.reload()
+			} else {
+				alert("稍后重试");
+			}
 		});
-		
 	</script>
 </body>
 

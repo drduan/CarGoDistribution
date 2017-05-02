@@ -36,7 +36,7 @@ public class CarAction extends Base {
 	@ResponseBody
 	@RequestMapping("delcar.do")
 	public String delcar(String carid) {
-//		userService.delCar(getUser(),Long.parseLong(carid));
+		// userService.delCar(getUser(),Long.parseLong(carid));
 		carService.remove(Long.parseLong(carid));
 		return "success";
 	}

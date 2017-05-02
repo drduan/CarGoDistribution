@@ -58,12 +58,12 @@
 
 										<tr>
 											<td><img class="img-circle" width="130" height="130"
-												alt="alt" src="static/images/orange.png"> <br> <b>${resource.contact}</b></td>
+												alt="alt" src=""> <br> <b>${resource.contact}</b></td>
 											<td>
 												<h1 style="color: #333; font-size: 14px; font-weight: 700">从
 													${resource.departurePlace} 到 ${resource.destPlace}</h1> <span
-												class="price" style="font-size: 18px">${resource.weightFate}</span><br>
-												<span class="help-block" style="font-size: 80%">${resource.weight} Kg;${resource.capacity} m^2</span>
+												class="price" style="font-size: 18px">运费：${resource.weightFate}</span><br>
+												<span class="help-block" style="font-size: 80%">重量 ${resource.weight} 吨;体积 ${resource.capacity} 立方米</span>
 
 											</td>
 											<td>发布时间： 01/04/2012</td>

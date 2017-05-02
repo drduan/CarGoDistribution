@@ -11,12 +11,11 @@ import org.springframework.stereotype.Repository;
  * 
  * @author MyEclipse Persistence Tools
  */
-//CrudRepository
+// CrudRepository
 @Repository("baseDAO")
 public class BaseHibernateDAO {
 	@Resource
 	protected SessionFactory sessionFactory;
-
 
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();

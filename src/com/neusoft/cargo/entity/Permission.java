@@ -21,15 +21,15 @@ public class Permission {
 	private Long id;
 	private String permission; // 权限标识 程序中判断使用,如"user:create"
 	private String description; // 权限描述,UI界面显示使用
-//	private Boolean available = Boolean.FALSE; 是否可用,如果不可用将不会添加给用户
+	// private Boolean available = Boolean.FALSE; 是否可用,如果不可用将不会添加给用户
 
 	@OneToOne(targetEntity = Resource.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "resource_id", referencedColumnName = "id")
 	private Resource resource;
-	
-	 @ManyToMany(targetEntity = Operation.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	    @JoinTable(name = "sys_permission_operation", joinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id") )
-	    private Set<Operation> operations = new HashSet<>();
+
+	@ManyToMany(targetEntity = Operation.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@JoinTable(name = "sys_permission_operation", joinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"))
+	private Set<Operation> operations = new HashSet<>();
 
 	public Permission() {
 	}
@@ -37,7 +37,7 @@ public class Permission {
 	public Permission(String permission, String description) {
 		this.permission = permission;
 		this.description = description;
-//		this.available = available;
+		// this.available = available;
 	}
 
 	public Long getId() {
@@ -64,13 +64,13 @@ public class Permission {
 		this.description = description;
 	}
 
-//	public Boolean getAvailable() {
-//		return available;
-//	}
-//
-//	public void setAvailable(Boolean available) {
-//		this.available = available;
-//	}
+	// public Boolean getAvailable() {
+	// return available;
+	// }
+	//
+	// public void setAvailable(Boolean available) {
+	// this.available = available;
+	// }
 
 	@Override
 	public boolean equals(Object o) {

@@ -7,7 +7,6 @@ import com.neusoft.cargo.entity.Message;
 @Repository("MessageDao")
 public class MessageDao extends AbstractHibernateDAO<Message> {
 
-	
 	public MessageDao() {
 		setClazz(Message.class);
 	}

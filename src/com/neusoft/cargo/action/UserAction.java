@@ -38,8 +38,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.neusoft.cargo.dao.RoleDao;
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.Message;
@@ -59,7 +57,7 @@ public class UserAction extends Base {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private TrackOrderService orderservice;
 	@Autowired
@@ -73,22 +71,24 @@ public class UserAction extends Base {
 	public String userhome(Model model)
 
 	{
+		if (getUser().getUsertype() == UserType.OWNER) {
+			return "redirect:/admins/home.do";
+		}
 		List<Message> lmsg = messageservice.findAll();
 		int messagecount = 0;
 		for (Message message : lmsg) {
 
 			if (message.getToperson().equals(getUser())) {
-				messagecount ++;
+				messagecount++;
 			}
 		}
 		model.addAttribute("messagecount", messagecount);
 
 		return "views/layout/user/index";
 	}
-	
-	@RequestMapping(value="addcar.do")
-	public String addCar(Model model)
-	{
+
+	@RequestMapping(value = "addcar.do")
+	public String addCar(Model model) {
 		return "views/layout/user/addcar";
 	}
 
@@ -97,9 +97,13 @@ public class UserAction extends Base {
 	public String profile(Model model, String orderid)
 
 	{
-		
-		logger.error("orderid"+orderid);
-		
+
+		if (getUser().getUsertype() == UserType.OWNER) {
+			return "redirect:/admins/home.do";
+		}
+
+		logger.error("orderid" + orderid);
+
 		Subject subject = SecurityUtils.getSubject();
 		model.addAttribute("avater", "https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -113,23 +117,20 @@ public class UserAction extends Base {
 
 		}
 		model.addAttribute("orders", orders);
-		if(orderid != null)
-		{
+		if (orderid != null) {
 			model.addAttribute("orderdetail", "18");
 		}
-		
 
 		return "views/layout/user/profile";
 	}
-	
-	
+
 	@RequiresRoles(value = "user")
 	@RequestMapping(value = "orderdetail.do")
 	@ResponseBody
 	public String orderdetail(String orderid)
 
 	{
-		logger.info("orderid"+orderid);
+		logger.info("orderid" + orderid);
 		TrackOrder order = orderservice.find(orderid);
 		Order disorder = new Order();
 		disorder.setUuid(order.getUuid());
@@ -141,7 +142,7 @@ public class UserAction extends Base {
 		disorder.setContact(order.getCar().getUser().getUsername());
 		disorder.setPhone(order.getCar().getUser().getPhone());
 		return JSON.toJSONString(disorder);
-		
+
 	}
 
 	@RequestMapping(value = "register.do", method = RequestMethod.GET)
@@ -389,7 +390,7 @@ public class UserAction extends Base {
 	}
 
 	@RequestMapping(value = "settings.do", method = RequestMethod.POST)
-	public String PostSettings(User user,Model model) {
+	public String PostSettings(User user, Model model) {
 		User user1 = getUser();
 		userService.update(user1);
 		model.addAttribute("message", "修改成功");
@@ -416,12 +417,12 @@ public class UserAction extends Base {
 
 		return null;
 	}
-//	
-//	@RequestMapping("getdetailedorder.do")
-//	public String  getdetailedorder (long )
-//	{
-//		
-//		return  "";
-//	}
+	//
+	// @RequestMapping("getdetailedorder.do")
+	// public String getdetailedorder (long )
+	// {
+	//
+	// return "";
+	// }
 
 }

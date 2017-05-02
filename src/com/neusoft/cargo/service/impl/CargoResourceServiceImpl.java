@@ -1,12 +1,10 @@
 package com.neusoft.cargo.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.springframework.stereotype.Service;
 
 import com.neusoft.cargo.dao.CargoResourceDao;
@@ -31,9 +29,11 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 
 	public void save(CargoResource cargoResource) {
 
-//		logger.info("message" + "执行User Save" + cargoResource.getCarresourceid());
+		// logger.info("message" + "执行User Save" +
+		// cargoResource.getCarresourceid());
 
-//		logger.log(Priority.DEBUG, person.toString() + "person ID" + person.getId());
+		// logger.log(Priority.DEBUG, person.toString() + "person ID" +
+		// person.getId());
 		try {
 			cargoResourceDao.save(cargoResource);
 		} catch (Exception e) {
@@ -55,22 +55,24 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 	@Override
 	public void remove(int id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public CargoResource find(int id) {
+	public CargoResource find(long id) {
 		// TODO Auto-generated method stub
 		return cargoResourceDao.findOne(id);
 	}
 
-	
-	public List<CargoResource> getAll()
-	{
-		
-		
+	public List<CargoResource> getAll() {
+
 		return cargoResourceDao.findAll();
 	}
 
+	@Override
+	public void update(CargoResource cargoResource) {
+		// TODO Auto-generated method stub
+		cargoResourceDao.update(cargoResource);
+	}
 
 }

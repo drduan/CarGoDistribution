@@ -13,9 +13,9 @@ import com.neusoft.cargo.service.MessageService;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-	
 	@Resource
 	private MessageDao msgdao;
+
 	@Override
 	public List<Message> findAll() {
 		// TODO Auto-generated method stub
@@ -26,7 +26,7 @@ public class MessageServiceImpl implements MessageService {
 	public void save(Message msg) {
 		// TODO Auto-generated method stub
 		msgdao.save(msg);
-		
+
 	}
 
 	@Override
@@ -48,6 +48,5 @@ public class MessageServiceImpl implements MessageService {
 		message.setStatus(true);
 		return msgdao.update(message);
 	}
-
 
 }

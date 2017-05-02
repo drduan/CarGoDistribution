@@ -1,7 +1,9 @@
 package com.neusoft.cargo.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+
 import com.neusoft.cargo.entity.CargoResource;
 
 @Service
@@ -13,8 +15,9 @@ public interface CargoResourceService {
 
 	public void remove(int id);
 
-	public CargoResource find(int id);
+	public void update(CargoResource cargoResource);
 
-	
+	public CargoResource find(long id);
+
 	public List<CargoResource> getAll();
 }

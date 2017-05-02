@@ -3,7 +3,6 @@ package com.neusoft.cargo.service.impl;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.jws.soap.SOAPBinding.Use;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;

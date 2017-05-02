@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import com.neusoft.cargo.dao.TrackOrderDao;
 import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.service.TrackOrderService;
+
 @Service
-public class TrackOrderServiceImpl implements TrackOrderService{
+public class TrackOrderServiceImpl implements TrackOrderService {
 	@Resource
 	private TrackOrderDao trackOrderDao;
 

@@ -59,9 +59,9 @@
 						href="<%=request.getContextPath()%>/logout.do">注销</a></label></li>
 
 				<li class="opts__item message"><a
-					id="dLabel" class="dropdown-toggle-message" href="#"> <span
+					id="dLabel" class="dropdown-toggle-message" href="../admins/msgl.do"> <span
 						class="sr-only"> 消息</span> <span id="messageCount"
-						class="fa fa-bell-o">${message} </span></a></li>
+						class="fa fa-bell-o">${messagecount} </span></a></li>
 				<li class="dropdown hoverDropdown"
 					style="width: 30px; height: 30px; margin-right: 15px"><a
 					class="dropdownBtn user-avatar" data-toggle="dropdown"

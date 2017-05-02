@@ -72,6 +72,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 				/User/ifuserexist.do = anon
 				/logout.do = logout
 				/manager.do = anon
+				/admins/msgl.do = authc
 				/*.js* = anon
 				/*.css* = anon
 				/*.png* = anon

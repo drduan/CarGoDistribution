@@ -14,15 +14,18 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class ViewsIntercaptor extends HandlerInterceptorAdapter {
 
-	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3) throws Exception {
+	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
+			throws Exception {
 
 	}
 
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object arg2, ModelAndView view) throws Exception {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object arg2, ModelAndView view)
+			throws Exception {
 
 	}
 
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
 		// 处理Permission Annotation，实现方法级权限控制
 		// HandlerMethod method = (HandlerMethod) handler;
 		// response.setCharacterEncoding("utf-8");

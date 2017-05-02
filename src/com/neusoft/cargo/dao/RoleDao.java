@@ -14,9 +14,9 @@ import org.springframework.stereotype.Repository;
 import com.neusoft.cargo.entity.Role;
 
 @Repository("RoleDao")
-public class RoleDao extends BaseHibernateDAO{
-	private JdbcTemplate jdbcTemplate ;
-//	private JdbcTemplate jdbcTemplate = JdbcTemplateUtils.jdbcTemplate();
+public class RoleDao extends BaseHibernateDAO {
+	private JdbcTemplate jdbcTemplate;
+	// private JdbcTemplate jdbcTemplate = JdbcTemplateUtils.jdbcTemplate();
 
 	public Role createRole(final Role Role) {
 		final String sql = "insert into sys_roles(role, description, available) values(?,?,?)";
@@ -28,7 +28,7 @@ public class RoleDao extends BaseHibernateDAO{
 				PreparedStatement psst = connection.prepareStatement(sql, new String[] { "id" });
 				psst.setString(1, Role.getRole());
 				psst.setString(2, Role.getDescription());
-//				psst.setBoolean(3, Role.getAvailable());
+				// psst.setBoolean(3, Role.getAvailable());
 				return psst;
 			}
 		}, keyHolder);
@@ -73,22 +73,22 @@ public class RoleDao extends BaseHibernateDAO{
 	private boolean exists(Long roleId, Long permissionId) {
 		String sql = "select count(1) from sys_roles_permissions where role_id=? and permission_id=?";
 		return jdbcTemplate.queryForObject(sql, Integer.class, roleId, permissionId) != 0;
-		
+
 	}
-	
+
 	/*
-	 *  20170221
+	 * 20170221
 	 */
-	public List<Role> findAll () {
-		
+	public List<Role> findAll() {
+
 		String sql = " from role";
-		Query<Role> query =  getSession().createQuery(sql);
+		Query<Role> query = getSession().createQuery(sql);
 		return query.list();
-		
+
 	}
-	
+
 	public boolean SaveOrUpdate(Role role) {
-		
+
 		try {
 			getSession().saveOrUpdate(role);
 			return true;
@@ -96,6 +96,6 @@ public class RoleDao extends BaseHibernateDAO{
 			return false;
 			// TODO: handle exception
 		}
-		
+
 	}
 }

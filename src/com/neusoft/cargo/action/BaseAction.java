@@ -50,15 +50,19 @@ public class BaseAction extends Base {
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
 	public String index(Model model) {
 
-	
 		model.addAttribute("messagecount", getMessageCount());
 		List<CargoResource> cargoResources = cargoResourceService.getAll();
-		model.addAttribute("resource", cargoResources);
+		List<CargoResource> wcargoResources = new ArrayList<>();
+		for (CargoResource cargoResource : cargoResources) {
+			if (!cargoResource.isStatus()) {
+				wcargoResources.add(cargoResource);
+			}
+		}
+		model.addAttribute("resource", wcargoResources);
 		return "views/layout/index";
 	}
 
-	
-	public  int getMessageCount() {
+	public int getMessageCount() {
 		List<Message> lmsg = messageservice.findAll();
 		int messagecount = 0;
 		for (Message message : lmsg) {
@@ -67,11 +71,12 @@ public class BaseAction extends Base {
 				if (!message.isStatus()) {
 					messagecount++;
 				}
-				
+
 			}
 		}
 		return messagecount;
 	}
+
 	@RequestMapping(value = "/loginform.do", method = RequestMethod.GET)
 	public String loginform() {
 		return "views/layout/login";
@@ -85,8 +90,9 @@ public class BaseAction extends Base {
 	}
 
 	@RequestMapping(value = "admin.do")
-	public String admin() {
+	public String admin(Model model) {
 
+		model.addAttribute("messagecount", getMessageCount());
 		return "views/layout/admin/index.jsp";
 	}
 
@@ -112,7 +118,6 @@ public class BaseAction extends Base {
 		return "/views/layout/uploadFileToAuth";
 	}
 
-
 	@RequestMapping(value = "authenticationstatus.do")
 	public String authenticationstatus() {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -135,14 +140,12 @@ public class BaseAction extends Base {
 	public String upload(@RequestParam(value = "file") MultipartFile[] files, HttpServletRequest request,
 			ModelMap model, @RequestParam(value = "t_name") String t_name, @RequestParam(value = "t_id") String t_id) {
 
-		
-		
 		if (files[0].isEmpty() || files[2].isEmpty()) {
 			model.addAttribute("message", "空文件");
 			return "/views/layout/SuccessMessage";
 		} else {
-			
-			logger.info("filessize"+files.length);
+
+			logger.info("filessize" + files.length);
 			String[] path = new String[2];
 
 			File filedir = new File(
@@ -185,45 +188,6 @@ public class BaseAction extends Base {
 	 * @return
 	 */
 
-	// @Autowired
-	// private HttpServletRequest request;
-	//
-	// private boolean saveFile(MultipartFile file) {
-	// // 判断文件是否为空
-	// if (!file.isEmpty()) {
-	// try {
-	// // 文件保存路径
-	// String filePath =
-	// request.getSession().getServletContext().getRealPath("/") + "upload/"
-	// + file.getOriginalFilename();
-	// // 转存文件
-	// file.transferTo(new File(filePath));
-	// return true;
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// return false;
-	// }
-
-	// public void OutputJson(Object object, String type) {
-	// PrintWriter out = null;
-	// HttpServletResponse httpServletResponse =
-	// ServletActionContext.getResponse();
-	// httpServletResponse.setContentType(type);
-	// httpServletResponse.setCharacterEncoding("utf-8");
-	// String json = null;
-	// try {
-	// out = httpServletResponse.getWriter();
-	// json = JSON.toJSONStringWithDateFormat(object, "yyyy-MM-dd HH:mm:ss");
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// logger.debug("json:" + json);
-	// out.print(json);
-	// out.close();
-	// }
-
 	@RequestMapping(name = "sysmsglist.do")
 	public String SysMsgList(Model model) {
 
@@ -239,15 +203,13 @@ public class BaseAction extends Base {
 		model.addAttribute("msglist", selflmsg);
 		return "views/layout/sysmsglist";
 	}
-	
-//	@RequestMapping(name="forgetPwd.do")
-//	public String forgetPwd(Model model)
-//	{
-//		
-//		
-//		return "views/layout/forgetpwd";
-//	}
-	
-	
+
+	@RequestMapping("forgetPwd.do")
+	public String forgetPwd(Model model) {
+
+		logger.info("开发中");
+
+		return "views/layout/forgetpwd";
+	}
 
 }

@@ -29,8 +29,8 @@ import com.neusoft.cargo.entity.User;
 @TransactionConfiguration(defaultRollback = true)
 public class Testt extends AbstractTransactionalJUnit4SpringContextTests {
 
-//	@Autowired
-//	private UserServiceImpl userserviceimpl;
+	// @Autowired
+	// private UserServiceImpl userserviceimpl;
 	@Inject
 	private RoleDao roleDao;
 
@@ -62,14 +62,14 @@ public class Testt extends AbstractTransactionalJUnit4SpringContextTests {
 		Car car = new Car();
 		User user = new User();
 		car.setCarHost("ajjbd");
-//		car.setUser(user);
+		// car.setUser(user);
 		car.setCarNumber("sadasjjd");
 		carDao.save(car);
-		
+
 		Set<Car> stockDailyRecords = new HashSet<>(0);
 		stockDailyRecords.add(car);
-//		user.setStockDailyRecords(stockDailyRecords);
-	
+		// user.setStockDailyRecords(stockDailyRecords);
+
 		userDao.save(user);
 
 		// Score user = new Score();

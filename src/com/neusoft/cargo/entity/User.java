@@ -22,7 +22,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import net.sf.oval.constraint.NotEmpty;
 
@@ -65,7 +64,7 @@ import net.sf.oval.constraint.NotEmpty;
         '$004' : '密码至少应包含 6 个字符！',
         '$005' : '请输入验证码！'
  */
-@Entity(name="User")
+@Entity(name = "User")
 public class User implements Serializable {
 
 	public User() {
@@ -96,12 +95,9 @@ public class User implements Serializable {
 		this.hasauthentication = hasauthentication;
 	}
 
-
 	//
 	private String img;
-	
-	
-	
+
 	public String getImg() {
 		return img;
 	}
@@ -150,7 +146,6 @@ public class User implements Serializable {
 	@Column(name = "create_date", nullable = true, columnDefinition = "timestamp default current_timestamp")
 	private Date createDate = new Date();
 
-	
 	/*
 	 * cascade：为级联操作，里面有级联保存，级联删除等，all为所有 fetch：加载类型，有lazy和eager二种，
 	 * eager为急加载，意为立即加载，在类加载时就加载，lazy为慢加载，第一次调用的时候再加载，由于数据量太大，onetomany一般为lazy
@@ -159,17 +154,14 @@ public class User implements Serializable {
 	@OneToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Role> roles = new HashSet<>(); // 一个用户具有多个角色
 
-	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Car> cars = new ArrayList<Car>();
 
-	
 	@OneToMany(mappedBy = "toperson", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Message> ToMessages = new ArrayList<Message>();
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private  UserAuthInfo userAuthInfo;
-	
+	private UserAuthInfo userAuthInfo;
 
 	public UserAuthInfo getUserAuthInfo() {
 		return userAuthInfo;
@@ -187,7 +179,7 @@ public class User implements Serializable {
 		ToMessages = toMessages;
 	}
 
-	@OneToMany(fetch=FetchType.EAGER,mappedBy = "_user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CargoResource> CargoResources = new ArrayList<CargoResource>();
 
 	public void addCar(Car phone) {
@@ -342,8 +334,6 @@ public class User implements Serializable {
 	public void setLocked(Boolean locked) {
 		this.locked = locked;
 	}
-	
-	
 
 	@Override
 	public boolean equals(Object o) {

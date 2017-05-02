@@ -30,7 +30,7 @@ public class MyShiro extends AuthorizingRealm {
 
 	@Resource
 	private UserDao userDao;
-	
+
 	private Logger logger = Logger.getLogger(MyShiro.class);
 
 	public MyShiro() {
@@ -57,13 +57,11 @@ public class MyShiro extends AuthorizingRealm {
 			if (user.getUsertype().equals(UserType.OWNER)) {
 				info.addRole("admin");
 				info.addRole("user");
-			}
-			else if( user.getUsertype().equals(UserType.DRIVER))
-			{
+			} else if (user.getUsertype().equals(UserType.DRIVER)) {
 				info.addRole("user");
 			}
 			info.setRoles(sr);
-			
+
 			// info.setRoles(user.getRolesName());
 			// 用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
 			// Set <Role> roleList = user.getRoleList();
@@ -74,7 +72,7 @@ public class MyShiro extends AuthorizingRealm {
 			//
 			for (String role : info.getRoles()) {
 
-				logger.error("userrole"+role.toString());
+				logger.error("userrole" + role.toString());
 			}
 			return info;
 		}
