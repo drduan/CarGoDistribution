@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 维C果糖
-  Date: 2017/1/28
-  Time: 21:12
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -56,7 +50,6 @@
 					//	dataType : 'json', //返回的数据格式：json/xml/html/script/jsonp/text
 					dataType : 'text',
 					beforeSend : function(xhr) {
-							console.log(xhr)
 							console.log('发送前')
 						},
 						success : function(data, textStatus, jqXHR) {
@@ -66,19 +59,16 @@
 							if(dataObj.status=='success')
 								
 								{
-								
 								alert("已通知车主，请等待审核通过！");
 								$('#submitNext').attr('disabled',"true");
 								window.open("paying.do");
 								window.location.href="successmsg.do?msg=&orderid="+dataObj.orderno+"&info="+${cargoResource.weightFate}; 
-								/* <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-								 */ //location.href = "paying.do";//location.href实现客户端页面的跳转  
 								}
 							else
 								{
 								alert("该货源或车源已经在运输中");
 								$('#submitNext').attr('disabled',"true");
-								}
+								}  
 						},
 						error : function(xhr, textStatus) {
 							alert('请刷新网页重试一下');
@@ -184,7 +174,7 @@
 										<tr class="warn">
 
 											<td>需要支付押金</td>
-											<td><span> ${cargoResource.weightFate}</span></td>
+											<td><span> ${cargoResource.weightFate}</span>元</td>
 										</tr>
 
 

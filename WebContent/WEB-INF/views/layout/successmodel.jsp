@@ -23,19 +23,22 @@
 		}
 
 		function fun1(curObj) {
-			if (getQueryString("finishorderid") != null) {
 
-			
+			if (getQueryString("finishorderid") != null) {
+				
+				
+				alert("finishorder");
+				alert(getQueryString("finishorderid"));
 				htmlobj = $.ajax({
-					url : "admins/payorder.do?orderid=" + getQueryString("finishorderid"),
+					url : "admins/payorder.do?orderid="
+							+ getQueryString("finishorderid"),
 					async : false
 				});
-				window.location.href = "home.do";		
-				
+				window.location.href = "home.do";
+
 			} else {
 				window.location.href = "paid.do?orderid="
 						+ getQueryString("orderid");
-
 			}
 		}
 	</script>

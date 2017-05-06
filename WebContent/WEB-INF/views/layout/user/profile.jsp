@@ -25,10 +25,9 @@
 <!-- -->
 <link href="../static/css/easyui.css" rel="stylesheet" />
 <link href="../static/css/icon.css">
-<!-- 
+
 <link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css"
 	rel="stylesheet" type="text/css">
--->
 
 
 
@@ -73,7 +72,7 @@ ul, li {
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	top: 700px;
+	top: 400px;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -281,19 +280,19 @@ ul, li {
 	transition: all .6s ease-in-out;
 }
 </style>
-
+<link href="../static/css/main.css">
+<link href="../static/css/examples.css">
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/jquery.easyui.min.js"></script>
+<script src="../static/js/jquery.barrating.js"></script>
+<script src="../static/js/examples.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
+
 
 
 </head>
 
 <body>
-
-	<script type="text/javascript">
-		
-	</script>
 
 
 
@@ -342,9 +341,11 @@ ul, li {
 
 							</div>
 						</div>
+
+
+
 					</div>
 				</div>
-
 
 				<!-- ICONS -->
 				<div class="row">
@@ -436,8 +437,7 @@ ul, li {
 											<c:set var="paid" value="<%=OrderType.PAID%>"></c:set>
 											<c:set var="not_paid" value="<%=OrderType.NOT_PAID%>"></c:set>
 											<c:set var="complete" value="<%=OrderType.COMPLETED%>"></c:set>
-											<c:set var="wait" value="<%=OrderType.WAITINGACCESS%>"></c:set>
-											<c:set var="RECEIVED" value="<%=OrderType.RECEIVED%>"></c:set>
+											<c:set var="DISPATCHED" value="<%=OrderType.DISPATCHED%>"></c:set>
 											<c:forEach var="orders" items="${orders}">
 												<tr class="danger">
 													<td><input type="checkbox" id="orderid"
@@ -465,49 +465,52 @@ ul, li {
 																<option>已经支付，等待货主通过</option>
 														</select></td>
 													</c:if>
-													<c:if test="${orders.orderType eq RECEIVED }">
+													<c:if test="${orders.orderType eq DISPATCHED}">
 														<td><select disabled="disabled">
-																	<option>订单结束</option></td>
-														</c:if>
-													
+																<option>订单结束</option></td>
+													</c:if>
+
 
 													<td>${orders.uuid}</td>
 													<td>${orders.cResource.contact}</td>
 													<td>${orders.cResource.phone}</td>
 													<td>${orders.createTime}</td>
-													<td></td>
+													<c:if test="${orders.orderType eq DISPATCHED }">
+													 <c:if test="${orders.drivercommented ne true }">
+														<td>
+															<button id="btncomment" role="button" class="btn"
+																data-toggle="modal" href="#modal-container-111081"
+																data-orderid="${orders.uuid}" class="btn ">评论订单</button>
+														</td>
+														</c:if>
+													</c:if>
+													<c:if test="${orders.orderType eq pend }">
+														<td>
+															<button id="finishtrans" class="btn"
+																data-orderid="${orders.uuid}">运输结束</button>
+														</td>
+													</c:if>
+
 												</tr>
 
 											</c:forEach>
 										</tbody>
 									</table>
 								</c:if>
-							</div>
-							<div id="third">
-								<div class="icon big"></div>
 
-								<h1>We will wrap it</h1>
 
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Donec at viverra est, eu finibus mauris. Quisque tempus
-									vestibulum fringilla. Morbi tortor eros, sollicitudin eu arcu
-									sit amet, aliquet sagittis dolor.</p>
+
 
 							</div>
-							<div id="fourth">
-								<div class="icon big"></div>
 
-								<h1>Ship it</h1>
 
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									Donec at viverra est, eu finibus mauris. Quisque tempus
-									vestibulum fringilla. Morbi tortor eros, sollicitudin eu arcu
-									sit amet, aliquet sagittis dolor.</p>
-
-							</div>
 						</div>
 					</div>
 				</div>
+
+
+
+
 
 				<script>
 					$('.choose').click(function() {
@@ -593,8 +596,10 @@ ul, li {
 				</script>
 
 			</div>
+
 			<div class="col-md-1"></div>
 		</div>
+
 	</div>
 
 
@@ -606,16 +611,27 @@ ul, li {
 
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
-					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					<h4 class="modal-title" id="myModalLabel">订单评论</h4>
 				</div>
-				<div class="modal-body" id="modal-body"></div>
-				<div class="modal-footer">
+				<div class="modal-body" id="modal-body">
+					<form action="../comment.do" method="get">
+						订单号 <input class="form-control" type="text" id="uuid"
+							name="uuid"
+							type="hidden" size="16" width="1500px"> <input
+							class="form-control" type="text" name="rate"
+							placeholder="分数" name="orderid" maxlength="2">
+						<textarea
+						name="Content" class="form-control" rows="3" placeholder="输入评论"
+							class="" cols="7" name="comment"></textarea>
 
-					<button type="button" class="btn btn-default" data-dismiss="modal">
-						Close</button>
-					<button type="button" class="btn btn-primary">Save changes
-					</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							取消</button>
+						<button type="submit" class="btn btn-primary">提交</button>
+					</form>
+
+
 				</div>
+				<div class="modal-footer"></div>
 			</div>
 
 		</div>
@@ -666,7 +682,15 @@ ul, li {
 				alert("稍后重试");
 			}
 		});
+
+		$("#btncomment").click(function() {
+			data = $(this).attr("data-orderid");
+			$("#uuid").val(data);
+			//document.getElementById('commentmodel').style.display = 'block'
+
+		});
 	</script>
+
 </body>
 
 </html>

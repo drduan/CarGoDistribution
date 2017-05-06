@@ -47,13 +47,6 @@
 					<li class="dropdown" style="display: none"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> 菜单<strong class="caret"></strong></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li class="divider"></li>
-							<li><a href="#">Separated link</a></li>
-							<li class="divider"></li>
-							<li><a href="#">One more separated link</a></li>
 						</ul></li>
 
 				</shiro:notAuthenticated>
@@ -101,12 +94,12 @@
 						<div class="form-group">
 
 							<label for="exampleInputEmail1"> 邮箱地址 </label> <input
-								name="email" type="email" class="form-control" id="email" />
+								name="email" type="email" class="form-control" id="email" required/>
 						</div>
 						<div class="form-group">
 
 							<label for="_password"> 密码 </label> <input type="password"
-								name="password" class="form-control" id="password" />
+								name="password" class="form-control" id="password" required/>
 						</div>
 
 						<div class="checkbox">
@@ -118,7 +111,9 @@
 							<label> <a href="forgetPwd.do">
 								忘记密码</a>
 							</label>
-							
+							<label> <a href="Manager/login.do">
+								管理员首页</a>
+							</label>
 						</div>
 						<button type="submit" class="btn btn-default">登录</button>
 					</form>

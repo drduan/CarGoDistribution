@@ -2,6 +2,7 @@ package com.neusoft.cargo.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name = "trackorder")
@@ -97,6 +99,36 @@ public class TrackOrder implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	@OneToMany
+	private List<Comment> comment;
+
+	public List<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
+
+	private boolean drivercommented;
+	private boolean ownercommented;
+
+	public boolean isDrivercommented() {
+		return drivercommented;
+	}
+
+	public void setDrivercommented(boolean drivercommented) {
+		this.drivercommented = drivercommented;
+	}
+
+	public boolean isOwnercommented() {
+		return ownercommented;
+	}
+
+	public void setOwnercommented(boolean ownercommented) {
+		this.ownercommented = ownercommented;
 	}
 
 }

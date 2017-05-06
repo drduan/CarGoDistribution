@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.neusoft.cargo.entity.CargoResource;
+import com.neusoft.cargo.entity.Comment;
 import com.neusoft.cargo.entity.Message;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.entity.User.UserType;
@@ -52,6 +53,7 @@ public class BaseAction extends Base {
 
 		model.addAttribute("messagecount", getMessageCount());
 		List<CargoResource> cargoResources = cargoResourceService.getAll();
+		//将没有在订单中的货物加载到页面中
 		List<CargoResource> wcargoResources = new ArrayList<>();
 		for (CargoResource cargoResource : cargoResources) {
 			if (!cargoResource.isStatus()) {
@@ -140,7 +142,7 @@ public class BaseAction extends Base {
 	public String upload(@RequestParam(value = "file") MultipartFile[] files, HttpServletRequest request,
 			ModelMap model, @RequestParam(value = "t_name") String t_name, @RequestParam(value = "t_id") String t_id) {
 
-		if (files[0].isEmpty() || files[2].isEmpty()) {
+		if (files[0].isEmpty() || files[1].isEmpty()) {
 			model.addAttribute("message", "空文件");
 			return "/views/layout/SuccessMessage";
 		} else {
@@ -170,8 +172,8 @@ public class BaseAction extends Base {
 			}
 			UserAuthInfo userAuthInfo = new UserAuthInfo();
 			userAuthInfo.setUser(getUser());
-			userAuthInfo.setAddress1(path[0]);
-			userAuthInfo.setAddress2(path[1]);
+			userAuthInfo.setAddress1(path[0].replace("/Users/xudong/Downloads/apache-tomcat-8.5.8/wtpwebapps/CarGoDistribution/", ""));
+			userAuthInfo.setAddress2(path[1].replace("/Users/xudong/Downloads/apache-tomcat-8.5.8/wtpwebapps/CarGoDistribution/", ""));
 			userAuthService.save(userAuthInfo);
 			getUser().setTRUE_NAME(t_name);
 			getUser().setID_NUM(t_id);
@@ -188,7 +190,7 @@ public class BaseAction extends Base {
 	 * @return
 	 */
 
-	@RequestMapping(name = "sysmsglist.do")
+	@RequestMapping( "sysmsglist.do")
 	public String SysMsgList(Model model) {
 
 		List<Message> lmsg = messageservice.findAll();
@@ -207,9 +209,17 @@ public class BaseAction extends Base {
 	@RequestMapping("forgetPwd.do")
 	public String forgetPwd(Model model) {
 
-		logger.info("开发中");
-
 		return "views/layout/forgetpwd";
 	}
+	
+	@RequestMapping(value="forgetPwd.do",method=RequestMethod.POST)
+	public String comment(Comment model) {
+		//return "views/layout/forgetpwd";
+		return null;
+	}
+	
+	
+	
+	
 
 }

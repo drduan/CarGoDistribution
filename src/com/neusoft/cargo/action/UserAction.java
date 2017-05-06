@@ -89,6 +89,17 @@ public class UserAction extends Base {
 
 	@RequestMapping(value = "addcar.do")
 	public String addCar(Model model) {
+
+		List<Message> lmsg = messageservice.findAll();
+		int messagecount = 0;
+		for (Message message : lmsg) {
+
+			if (message.getToperson().equals(getUser())) {
+				messagecount++;
+			}
+		}
+		model.addAttribute("messagecount", messagecount);
+
 		return "views/layout/user/addcar";
 	}
 
@@ -188,7 +199,13 @@ public class UserAction extends Base {
 			return "redirect:/home.do";
 		} else if (uType.equals(UserType.OWNER)) {
 			return "redirect:/admins/home.do";
-		} else {
+		} else if (uType.equals(UserType.MANAGER)) {
+			logger.info("message manager loged in");
+			ensureUserIsLoggedOut();
+			return "redirect:/Manager/home.do";
+		}
+
+		else {
 			return "home.do";
 		}
 

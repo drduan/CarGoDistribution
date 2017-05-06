@@ -10,8 +10,13 @@ public enum OrderType {
 	 * 
 	 */
 
-	WAITINGACCESS("WAITINGACCESS"), PENDING("pending"), COMPLETED("completed"), RECEIVED("received"), CANCEL(
-			"cancel"), NOT_PAID("not_paid"), PAID("paid"), DISPATCHED("dispatched");
+	PENDING("pending"),
+	COMPLETED("completed"), 
+	PAYRECEIVED("received"), 
+	CANCEL("cancel"), 
+	NOT_PAID("not_paid"), 
+	PAID("paid"), 
+	DISPATCHED("dispatched");
 
 	private String orderType;
 

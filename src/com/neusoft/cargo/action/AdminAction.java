@@ -190,6 +190,10 @@ public class AdminAction extends Base {
 		CargoResource cargoResource = carResourceService.find(order.getcResource().getCarresourceid());
 		cargoResource.setStatus(true);
 		carResourceService.save(cargoResource);
+		Message message = new Message();
+		message.setContent("预约申请已经通过");
+		message.setToperson(order.getCar().getUser());
+		messageservice.save(message);
 		return "success";
 
 	}
@@ -200,14 +204,14 @@ public class AdminAction extends Base {
 		return "redirect:msgl.do";
 	}
 
-	// 支付尾款 退回押金
+	// 支付尾款 退回押金 交易结束
 	@RequestMapping("payorder.do")
 	@ResponseBody
 	public String payorder(Model model, String orderid)
 
 	{
 		TrackOrder order = orderservice.find(orderid);
-		order.setOrderType(OrderType.RECEIVED);
+		order.setOrderType(OrderType.DISPATCHED);
 		orderservice.save(order);
 
 		Car car = carService.find(order.getCar().getId());

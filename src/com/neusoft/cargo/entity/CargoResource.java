@@ -20,13 +20,11 @@ public class CargoResource implements Serializable {
 	private long carresourceid;
 
 	private static final long serialVersionUID = 1L;
+	@ManyToOne
+	private User _user;
 
 	public User get_user() {
 		User user1 = new User();
-		if (user1 == null) {
-			System.out.println("user1 equals null");
-
-		}
 		user1.setId(_user.getId());
 		user1.setUsername(_user.getUsername());
 		user1.setCreateDate(_user.getCreateDate());
@@ -135,9 +133,6 @@ public class CargoResource implements Serializable {
 	public void setGoodName(String goodName) {
 		this.goodName = goodName;
 	}
-
-	@ManyToOne
-	private User _user;
 
 	@OneToOne(mappedBy = "cResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private TrackOrder order;

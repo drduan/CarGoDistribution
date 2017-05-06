@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
-<title>空车配货平台首页-I</title>
+<title>空车配货信息系统首页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="_CarGoDistribution/../../static/css/bootstrap.min.css"
 	rel="stylesheet" />

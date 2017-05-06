@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
-<title>空车配货平台首页</title>
+<title>空车配货信息系统首页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="_CarGoDistribution/../static/css/bootstrap.min.css"
 	rel="stylesheet" />
@@ -22,6 +22,7 @@
 	border: 1px solid transparent;
 }
 </style>
+<script src="../static/js/jquery.validate.min.js"></script>
 </head>
 <body>
 
@@ -57,8 +58,8 @@
 									<c:forEach var="resource" items="${resource}">
 
 										<tr>
-											<td><img class="img-circle" width="130" height="130"
-												alt="alt" src=""> <br> <b>${resource.contact}</b></td>
+											<td><img class="img-circle" width="100" height="100"
+												alt="alt" src="<%=request.getContextPath()%>/userfiles/avatar/${resource._user.img}"> <br> <b class="text-center">${resource.contact}</b></td>
 											<td>
 												<h1 style="color: #333; font-size: 14px; font-weight: 700">从
 													${resource.departurePlace} 到 ${resource.destPlace}</h1> <span

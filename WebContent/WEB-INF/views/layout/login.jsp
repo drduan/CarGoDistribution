@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登陆</title>
 <style type="text/css">
-	body{margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;}
+	body{background:#ffffff;margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;}
 	.header{width:100%;height:41px;background: url(images/login-top-bg.gif) repeat-x;}
 	.center{width:100%;height:532px;background: url(images/login_bg.jpg) repeat-x;}
 	.login_right{float:right;width:50%;height:100%;background: url(images/login-wel.gif) bottom no-repeat;}
@@ -17,22 +17,21 @@
 	.login_code{width:70px;height:20px;margin-left:30px;border:1px solid #7F9DB9;vertical-align: middle;}
 	.btn{width:60px;height:25px;border-width:0px;background-image: url(images/btn-bg2.gif);letter-spacing: 3px;margin-right:70px;cursor: pointer;}
 	.login_info img{vertical-align: middle;cursor: pointer;}
-	
 	.errInfo{display:none;color:red;}
-	
 	.logo{width:100%;height:68px;background: url(images/logo2.png) no-repeat;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/logo2.png';)}
 	.left_txt{font-family: Arial, Helvetica, sans-serif;font-size: 12px;line-height: 25px;color: #666666;}
-	
 	.bottom{width:100%;height:auto;text-align:center;font-family: Arial, Helvetica, sans-serif;font-size: 10px;color: #ABCAD3;text-decoration: none;line-height: 20px;}
 </style>
-<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+<script src="static/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script src="static/js/messages_zh.js"></script>
 </head>
 <body>
-<div style="width:100%;height:645px;position: absolute;top:50%;left:50%;margin-top:-320px;margin-left:-50%;">
+<div style=" background: #ffffff; width:100%;height:645px;position: absolute;top:50%;left:50%;margin-top:-320px;margin-left:-50%;">
 	<div class="header"></div>
-	<div class="center">
-		<div class="login_right">
-			<div style="width:100%;height:auto;margin-top:150px;">
+	<div class="center" style="background: #ffffff" >
+		<div class="login_right" style="background: #ffffff" >
+			<div style="width:100%;height:auto;margin-top:150px;background: #ffffff">
 			<form action="User/login.do" method="post" name="loginForm" >
 				<div class="login_title">
 					登录

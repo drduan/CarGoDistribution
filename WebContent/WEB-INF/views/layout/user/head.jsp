@@ -34,22 +34,6 @@
 				<li><a id="modal-302051" href="#modal-container-302051"
 					role="button" class="btn" data-toggle="modal"><i
 						class="fa fa-user"></i>登录</a></li>
-
-
-
-
-
-
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown"> 菜单<strong class="caret"></strong></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-						<li class="divider"></li>
-						<li><a href="#">One more separated link</a></li>
-					</ul></li>
-
 			</shiro:notAuthenticated>
 			<shiro:authenticated>
 
@@ -69,9 +53,8 @@
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li><a href="<%=request.getContextPath()%>/User/profile.do">我的主页</a></li>
 						<li><a href="<%=request.getContextPath()%>/User/settings.do">账号设置</a></li>
-						<li><a href="/User/logout.do">退出</a></li>
+						<li><a href="logout.do">退出</a></li>
 						<li class="divider"></li>
-						<li><a href="#">建议反馈</a></li>
 					</ul>
 			</shiro:authenticated>
 		</ul>

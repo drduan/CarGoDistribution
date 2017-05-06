@@ -96,6 +96,17 @@ public class User implements Serializable {
 	}
 
 	//
+	
+	public double rate;
+	
+	public double getRate() {
+		return rate;
+	}
+
+	public void setRate(double rate) {
+		this.rate = rate;
+	}
+
 	private String img;
 
 	public String getImg() {
@@ -296,7 +307,7 @@ public class User implements Serializable {
 	}
 
 	public static enum UserType {
-		DRIVER, OWNER
+		DRIVER, OWNER, MANAGER
 	}
 
 	public String getPassword() {

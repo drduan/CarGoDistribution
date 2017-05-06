@@ -19,16 +19,16 @@
 		<!--  货主 车主写一个吧 选择的时候  选择 车主认证还是货主认证 -->
 
 		真实名字 <p>
-		<input type="text" name="t_name"/><p>
+		<input class="form-control" type="text" name="t_name"/><p>
 		身份证号 <p>
-		<input type="text" name="t_id"/><p>
+		<input  class="form-control"  type="text" name="t_id"/><p>
 		上传身份证 正反面 （上传企业营业执照）<p>
 
-		<input type="file" name="file">
-		<input type="file" name="file">
+		<input  class="form-control"  type="file" name="file">
+		<input class="form-control"   type="file" name="file">
 			<h2>
 			
-			<input type="submit" value="提交"/>
+			<input  class="form-control" class="btn" type="submit" value="提交"/>
 		</h2>
 	</form>
 </div>

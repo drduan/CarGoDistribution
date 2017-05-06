@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="/static/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="_CarGoDistribution/../static/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="footer" style="display: none">

@@ -77,5 +77,15 @@ public class UserAuthInfo implements Serializable {
 	private String address1;
 	private String address2;
 	private String result;
+	private boolean pass;
+
+	public boolean isPass() {
+		return pass;
+	}
+
+	public void setPass(boolean pass) {
+		this.pass = pass;
+	}
+	
 
 }

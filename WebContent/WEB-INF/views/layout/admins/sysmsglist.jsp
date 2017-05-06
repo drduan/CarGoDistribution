@@ -12,7 +12,7 @@
 	rel="stylesheet" />
 	<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>a信息列表</title>
+<title>信息列表</title>
 </head>
 <body>
 
@@ -43,7 +43,7 @@
 		<div class="alert alert-success alert-dismissable">
 			<p /> 
 				
-					消息内容:<a href="admins/adminprofile.do">${msglist.content}  </a> 
+					消息内容:<a href="adminprofile.do">${msglist.content}  </a> 
 					
 					<p />
 					<a class="markasread" href="#" >已读</a>

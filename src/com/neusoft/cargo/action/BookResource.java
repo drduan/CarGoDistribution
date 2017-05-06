@@ -36,7 +36,8 @@ public class BookResource extends Base {
 	private CargoResourceService cargoResourceService;
 	@Autowired
 	private TrackOrderService trackOrderService;
-
+	@Autowired
+	private MessageService messageservice;
 	@Autowired
 	private MessageService msgService;
 
@@ -44,12 +45,28 @@ public class BookResource extends Base {
 	@RequestMapping(value = "bookresource.do", method = RequestMethod.GET)
 	public String bookresource(String idname, Model model) {
 		// JsonParameter
+		model.addAttribute("messagecount", getMessageCount());
 		List<Car> cl = userservice.GetCarList(getUser());
 		CargoResource cargoResource = cargoResourceService.find(Integer.parseInt(idname));
 
 		model.addAttribute("cargoResource", cargoResource);
 		model.addAttribute("carsource", cl);
 		return "views/layout/checkout";
+	}
+
+	public int getMessageCount() {
+		List<Message> lmsg = messageservice.findAll();
+		int messagecount = 0;
+		for (Message message : lmsg) {
+
+			if (message.getToperson().equals(getUser())) {
+				if (!message.isStatus()) {
+					messagecount++;
+				}
+
+			}
+		}
+		return messagecount;
 	}
 
 	@ResponseBody
@@ -98,6 +115,9 @@ public class BookResource extends Base {
 
 	}
 
+	/*
+	 * 车主支付完押金
+	 */
 	@RequestMapping(value = "paid.do", method = RequestMethod.GET)
 	public String paid(String orderid) {
 		TrackOrder order = trackOrderService.find(orderid);
@@ -109,6 +129,7 @@ public class BookResource extends Base {
 	@RequestMapping("finishtrans.do")
 	@ResponseBody
 	public String finishtrans(String orderid) {
+		logger.info("orderid"+orderid);
 		TrackOrder order = trackOrderService.find(orderid);
 		order.setOrderType(OrderType.COMPLETED);// 订单完成
 		trackOrderService.update(order);
