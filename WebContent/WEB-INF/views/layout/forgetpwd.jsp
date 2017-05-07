@@ -13,20 +13,31 @@
 <link href="_CarGoDistribution/../static/css/font-awesome.min.css"
 	rel="stylesheet" />
 <script src="static/js/jquery.validate.min.js"></script>
+<script src="static/js/jquery.cookie.js"></script>
 <script src="static/js/messages_zh.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-<script>
-$.validator.setDefaults({
-    submitHandler: function() {
-      alert("提交事件!");
-    }
-});
-$().ready(function() {
-    $("#commentForm").validate();
-});
-</script>
+	<script>
+		$.validator.setDefaults({
+			submitHandler : function() {
+
+				var code = $.cookie('code');
+				var inputcode = $("#inputPassword3").val();
+				alert(code+"now"+inputcode);
+				if (code == inputcode) {
+					alert("修改成功");
+					return true;
+				} else {
+					alert("修改失败");
+					return false;
+				}
+			}
+		});
+		$().ready(function() {
+			$("#commentForm").validate();
+		});
+	</script>
 
 	<div class="container-fluid">
 		<div class="row">
@@ -35,21 +46,66 @@ $().ready(function() {
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
 						<jsp:include page="../include/head.jsp"></jsp:include>
-						<form id="commentForm" class="form-horizontal" role="form">
+						<form action="forgetPwd.do" id="commentForm" class="form-horizontal" role="form">
 							<div class="form-group">
 
 								<label for="inputEmail3" class="col-sm-2 control-label">
 									邮箱 </label>
 								<div class="col-sm-10">
-									<input type="email" class="form-control" id="inputEmail3" required>
+									<input id="kakaemail" type="email" class="form-control"
+										id="inputEmail3" required>
 								</div>
+							</div>
+							<div class="form-group">
+
+								<input class="form-control" type="button" id="btn"
+									value="免费获取验证码" onclick="settime(this)" />
+								<script type="text/javascript">
+									var countdown = 60;
+									function settime(val) {
+										if (countdown == 0) {
+
+											val.removeAttribute("disabled");
+											val.value = "免费获取验证码";
+											countdown = 60;
+
+										} else if (countdown == 55) {
+											var mail = $("#kakaemail").val();
+											$.get(
+													"getmailcode.do?mail="
+															+ mail, function(
+															result) {
+
+														$.cookie('code',
+																result, {
+																	expires : 7
+																});
+													});
+											val.setAttribute("disabled", true);
+											val.value = "重新发送(" + countdown
+													+ ")";
+											countdown--;
+										} else {
+
+											val.setAttribute("disabled", true);
+											val.value = "重新发送(" + countdown
+													+ ")";
+											countdown--;
+										}
+										setTimeout(function() {
+											settime(val)
+										}, 1000);
+
+									}
+								</script>
 							</div>
 							<div class="form-group">
 
 								<label for="inputPassword3" class="col-sm-2 control-label">
 									输入验证码 </label>
 								<div class="col-sm-10">
-									<input type="password" class="form-control" id="inputPassword3" minlength="5" required>
+									<input type="text" class="form-control" id="inputPassword3"
+										minlength="5" required>
 								</div>
 							</div>
 							<div class="form-group">
@@ -57,7 +113,8 @@ $().ready(function() {
 								<label for="inputPassword3" class="col-sm-2 control-label">
 									密码 </label>
 								<div class="col-sm-10">
-									<input id="fpwd" type="password" class="form-control" minlength="5" id="inputPassword3" required>
+									<input id="fpwd" type="password" class="form-control"
+										minlength="5" id="inputPassword3" required>
 								</div>
 							</div>
 							<div class="form-group">
@@ -65,7 +122,8 @@ $().ready(function() {
 								<label for="inputPassword3" class="col-sm-2 control-label">
 									再次输入密码 </label>
 								<div class="col-sm-10">
-									<input equalTo="#fpwd" type="password" class="form-control" id="inputPassword3" required>
+									<input equalTo="#fpwd" type="password" class="form-control"
+										id="inputPassword3" required>
 								</div>
 							</div>
 							<div class="form-group">

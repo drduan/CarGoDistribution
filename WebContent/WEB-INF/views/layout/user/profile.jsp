@@ -450,7 +450,7 @@ ul, li {
 													</c:if>
 													<c:if test="${orders.orderType eq not_paid}">
 														<td><select disabled="disabled">
-																<option>订单已经被取消</option></td>
+																<option>订单未支付，已经被取消</option></td>
 													</c:if>
 													<c:if test="${orders.orderType eq pend}">
 														<td><select disabled="disabled">

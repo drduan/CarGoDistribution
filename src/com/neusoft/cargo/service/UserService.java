@@ -38,5 +38,7 @@ public interface UserService {
 	public List<TrackOrder> getOrder(User user);
 
 	public boolean delCar(User user, long carid);
+	
+	public  User findByMail(String mail);
 
 }

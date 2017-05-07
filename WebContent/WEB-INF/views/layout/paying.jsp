@@ -6,9 +6,9 @@
 <!-- 在这个页面 设计俩个按钮 支付成功 之后订单处于追踪状态 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>支付订单</title>
-<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="static/css/bootstrap.min.css">
+	<script src="static/js/jquery.min.js"></script>
+	<script src="static/js/bootstrap.min.js"></script>
 </head>
 <body>
 <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">

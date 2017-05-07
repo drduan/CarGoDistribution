@@ -83,23 +83,20 @@ public class BookResource extends Base {
 		}
 
 		// 设置资源状态 不可用
-		car2.setCarStatus(true);
+	
 		// car.setStatus(true);
 
 		UUID uuid = UUID.randomUUID();
 		TrackOrder tOrder = new TrackOrder();
 		tOrder.setCar(car2);
-		tOrder.setcResource(car);
+		tOrder.setTemp_cargo_id(rid);
+		//tOrder.setcResource(car);
 		// 可以未支付
 		// tOrder.setOrderType(OrderType.WAITINGACCESS);
-		tOrder.setOrderType(OrderType.PENDING);
+		tOrder.setOrderType(OrderType.NOT_PAID);
 		tOrder.setUuid(uuid.toString());
 		trackOrderService.save(tOrder);
-
-		Message message = new Message();
-		message.setContent("有新的预约 前去查看;订单号" + tOrder.getUuid());
-		message.setToperson(userservice.find(car.get_user().getId()));
-		msgService.save(message);
+		
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("status", "success");
@@ -121,8 +118,18 @@ public class BookResource extends Base {
 	@RequestMapping(value = "paid.do", method = RequestMethod.GET)
 	public String paid(String orderid) {
 		TrackOrder order = trackOrderService.find(orderid);
+		CargoResource cargoResource = cargoResourceService.find(order.getTemp_cargo_id());
 		order.setOrderType(OrderType.PAID);
+		order.setcResource(cargoResource);
 		trackOrderService.update(order);
+		Car car = order.getCar();
+		car.setCarStatus(true);
+		carService.save(car);
+		Message message = new Message();
+		message.setContent("有新的预约 前去查看;订单号" + order.getUuid());
+		message.setToperson(userservice.find(order.getcResource().get_user().getId()));
+		msgService.save(message);
+		
 		return "redirect:/User/profile.do";
 	}
 

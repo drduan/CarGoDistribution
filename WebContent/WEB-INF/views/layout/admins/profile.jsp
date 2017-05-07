@@ -474,9 +474,16 @@ ul, li {
 														<td>${orders.id	}</td>
 
 														<c:if test="${orders.orderType eq paid}">
+														<c:if test="${orders.cResource.status ne true}" >
 															<td><select disabled="disabled">
 																	<option>等待货主通过</option>
 															</select></td>
+															</c:if>
+															<c:if test="${orders.cResource.status eq true}" >
+															<td><select disabled="disabled">
+																	<option>订单被拒绝</option>
+															</select></td>
+															</c:if>
 														</c:if>
 														<c:if test="${orders.orderType eq WAITINGACCESS}">
 															<td><select disabled="disabled">
@@ -506,8 +513,11 @@ ul, li {
 														<td>${orders.cResource.phone}</td>
 														<td>${orders.createTime}</td>
 														<c:if test="${orders.orderType eq paid}">
+															<c:if test="${orders.cResource.status ne true}" >
+															
 															<td><button id="orderid" class="btn foo"
 																	data-orderid="${orders.uuid}">通过</button></td>
+																	</c:if>
 														</c:if>
 														<c:if test="${orders.orderType eq complete }">
 															<td><button id="payid" class="btn"

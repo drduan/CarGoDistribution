@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
@@ -16,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.neusoft.cargo.entity.CargoResource;
@@ -28,6 +30,8 @@ import com.neusoft.cargo.service.CargoResourceService;
 import com.neusoft.cargo.service.MessageService;
 import com.neusoft.cargo.service.UserAuthService;
 import com.neusoft.cargo.service.UserService;
+import com.neusoft.cargo.util.MailUtil;
+import com.neusoft.cargo.util.Md5Util;
 
 @Controller("BaseAction")
 public class BaseAction extends Base {
@@ -53,7 +57,7 @@ public class BaseAction extends Base {
 
 		model.addAttribute("messagecount", getMessageCount());
 		List<CargoResource> cargoResources = cargoResourceService.getAll();
-		//将没有在订单中的货物加载到页面中
+		// 将没有在订单中的货物加载到页面中
 		List<CargoResource> wcargoResources = new ArrayList<>();
 		for (CargoResource cargoResource : cargoResources) {
 			if (!cargoResource.isStatus()) {
@@ -172,8 +176,10 @@ public class BaseAction extends Base {
 			}
 			UserAuthInfo userAuthInfo = new UserAuthInfo();
 			userAuthInfo.setUser(getUser());
-			userAuthInfo.setAddress1(path[0].replace("/Users/xudong/Downloads/apache-tomcat-8.5.8/wtpwebapps/CarGoDistribution/", ""));
-			userAuthInfo.setAddress2(path[1].replace("/Users/xudong/Downloads/apache-tomcat-8.5.8/wtpwebapps/CarGoDistribution/", ""));
+			userAuthInfo.setAddress1(
+					path[0].replace("/Users/xudong/Downloads/apache-tomcat-8.5.8/wtpwebapps/CarGoDistribution/", ""));
+			userAuthInfo.setAddress2(
+					path[1].replace("/Users/xudong/Downloads/apache-tomcat-8.5.8/wtpwebapps/CarGoDistribution/", ""));
 			userAuthService.save(userAuthInfo);
 			getUser().setTRUE_NAME(t_name);
 			getUser().setID_NUM(t_id);
@@ -190,7 +196,7 @@ public class BaseAction extends Base {
 	 * @return
 	 */
 
-	@RequestMapping( "sysmsglist.do")
+	@RequestMapping("sysmsglist.do")
 	public String SysMsgList(Model model) {
 
 		List<Message> lmsg = messageservice.findAll();
@@ -206,20 +212,31 @@ public class BaseAction extends Base {
 		return "views/layout/sysmsglist";
 	}
 
-	@RequestMapping("forgetPwd.do")
+	@RequestMapping(value="forgetPwd.do",method=RequestMethod.GET)
 	public String forgetPwd(Model model) {
 
 		return "views/layout/forgetpwd";
 	}
 	
 	@RequestMapping(value="forgetPwd.do",method=RequestMethod.POST)
-	public String comment(Comment model) {
-		//return "views/layout/forgetpwd";
-		return null;
+	public String nextforgetPwd(Model model,@RequestParam("mail") String mail,@RequestParam("passwd") String pwd) {
+		User user = userservice.findByMail(mail);
+		user.setPassword(Md5Util.md5Encode(pwd));
+		userservice.save(user);
+		return "redirect:home.do";
 	}
 	
-	
-	
-	
+
+	@RequestMapping("getmailcode.do")
+	@ResponseBody
+	public String getmailcode(Model model,@RequestParam("mail") String mail) throws MessagingException {
+		int randomcode = (int) ((Math.random() * 9 + 1) * 100000);
+
+		MailUtil.sendEmail("smtp.163.com", mail, "系统邮件", "验证码为"+randomcode, "dxd19930902@163.com", "dxd19930902",
+				"19930902dxd");
+		
+		return String.valueOf(randomcode);
+	}
+
 
 }

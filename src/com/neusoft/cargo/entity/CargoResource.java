@@ -2,6 +2,7 @@ package com.neusoft.cargo.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name = "cargoresource")
@@ -134,14 +136,16 @@ public class CargoResource implements Serializable {
 		this.goodName = goodName;
 	}
 
-	@OneToOne(mappedBy = "cResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	private TrackOrder order;
+//	@OneToOne(mappedBy = "cResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "cResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+//	@OneToMany
+	private List<TrackOrder> order;
 
-	public TrackOrder getOrder() {
+	public List<TrackOrder> getOrder() {
 		return order;
 	}
 
-	public void setOrder(TrackOrder order) {
+	public void setOrder(List<TrackOrder> order) {
 		this.order = order;
 	}
 

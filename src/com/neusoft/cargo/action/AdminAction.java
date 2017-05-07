@@ -65,11 +65,17 @@ public class AdminAction extends Base {
 		for (CargoResource iterable_element : userservice.GetCargoResourceList(user)) {
 
 			if (iterable_element.getOrder() != null) {
-				orders.add(iterable_element.getOrder());
+//				orders.add(iterable_element.getOrder());
+				for (TrackOrder trackOrder : iterable_element.getOrder() ) {
+					logger.info("admin order size"+iterable_element.getOrder().size());
+					orders.add(trackOrder);
+				}
+				
 			}
 
 		}
 		model.addAttribute("orders", orders);
+//		logger.info("admin order size"+orders.size());
 		model.addAttribute("messagecount", messagecount);
 		return "views/layout/admins/profile";
 	}
@@ -132,29 +138,33 @@ public class AdminAction extends Base {
 		return result;
 	}
 
-	@ResponseBody
-	@RequestMapping("GetOwnerOrder.json")
-	public List<Order> GetUserOrder() {
-
-		List<Order> lTrackOrders = new ArrayList<>();
-		User user2 = userservice.find(getUser().getId());
-		for (CargoResource iterable_element : user2.getCargoResources()) {
-			if (iterable_element.getOrder() != null) {
-				Order order = new Order();
-				order.setUuid(iterable_element.getOrder().getUuid());
-				order.setCreateTime(iterable_element.getOrder().getCreateTime());
-				order.setGoodName(iterable_element.getGoodName());
-				order.setDepartPlace(iterable_element.getDeparturePlace());
-				order.setDestPlace(iterable_element.getDestPlace());
-				order.setMstatus(iterable_element.getOrder().getMstatus());
-				order.setContact(iterable_element.getOrder().getCar().getUser().getUsername());
-				order.setPhone(iterable_element.getOrder().getCar().getUser().getPhone());
-				lTrackOrders.add(order);
-			}
-		}
-		return lTrackOrders;
-
-	}
+//	@ResponseBody
+//	@RequestMapping("GetOwnerOrder.json")
+//	public List<Order> GetUserOrder() {
+//
+//		List<Order> lTrackOrders = new ArrayList<>();
+//		User user2 = userservice.find(getUser().getId());
+//		for (CargoResource iterable_element : user2.getCargoResources()) {
+//			if (iterable_element.getOrder() != null) {
+//				
+//				for (TrackOrder order : iterable_element.getOrder()) {
+//					Order ordern = new Order();
+//					ordern.setUuid(order.getUuid());
+//					ordern.setCreateTime(order.getCreateTime());
+//					ordern.setGoodName(iterable_element.getGoodName());
+//					ordern.setDepartPlace(iterable_element.getDeparturePlace());
+//					ordern.setDestPlace(iterable_element.getDestPlace());
+//					ordern.setMstatus(order.getMstatus());
+//					ordern.setContact(order.getCar().getUser().getUsername());
+//					ordern.setPhone(order.getCar().getUser().getPhone());
+//					lTrackOrders.add(ordern);
+//				}
+//				
+//			}
+//		}
+//		return lTrackOrders;
+//
+//	}
 
 	@RequestMapping("msgl.do")
 	public String msgList(Model model) {

@@ -57,12 +57,6 @@ public class UserServiceImpl implements UserService {
 		return userDao.findOne(id);
 	}
 
-	public User findBymail(String email) {
-
-		// User u_result = userDao.findByName(name);
-		return userDao.findByMail(email);
-	}
-
 	public List<Car> GetCarList(User entity) {
 		return userDao.GetCarList(entity);
 	}
@@ -85,6 +79,12 @@ public class UserServiceImpl implements UserService {
 	public boolean delCar(User user, long carid) {
 		// TODO Auto-generated method stub
 		return userDao.delcar(user, carid);
+	}
+
+	@Override
+	public User findByMail(String mail) {
+		// TODO Auto-generated method stub
+		return userDao.findByMail(mail);
 	}
 
 }

@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -24,6 +25,16 @@ public class TrackOrder implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "OrderId")
 	private long id;
+
+	private long temp_cargo_id;
+	
+	public long getTemp_cargo_id() {
+		return temp_cargo_id;
+	}
+
+	public void setTemp_cargo_id(long temp_cargo_id) {
+		this.temp_cargo_id = temp_cargo_id;
+	}
 
 	@Enumerated(EnumType.STRING)
 	private OrderType orderType;
@@ -85,8 +96,9 @@ public class TrackOrder implements Serializable {
 		this.uuid = _uuid.toString();
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "order_id")
+//	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+//	@JoinColumn(name = "order_id")
 	private CargoResource cResource;
 
 	@OneToOne(fetch = FetchType.LAZY)
