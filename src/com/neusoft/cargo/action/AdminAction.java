@@ -20,7 +20,6 @@ import com.neusoft.cargo.entity.Message;
 import com.neusoft.cargo.entity.OrderType;
 import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.entity.User;
-import com.neusoft.cargo.model.Order;
 import com.neusoft.cargo.service.CarService;
 import com.neusoft.cargo.service.CargoResourceService;
 import com.neusoft.cargo.service.MessageService;
@@ -51,12 +50,15 @@ public class AdminAction extends Base {
 	}
 
 	@RequestMapping(value = "home.do")
-	public String Home(Model model) {
+	public String Home(Model model  ) {
 		int messagecount = 0;
 		List<Message> lmsg = messageservice.findAll();
 		for (Message message : lmsg) {
 			if (message.getToperson().getId() == getUser().getId()) {
-				++messagecount;
+				if (!message.isStatus()) {
+					++messagecount;
+				}
+				
 			}
 		}
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -86,7 +88,8 @@ public class AdminAction extends Base {
 		List<Message> lmsg = messageservice.findAll();
 		for (Message message : lmsg) {
 
-			if (message.getToperson().equals(getUser())) {
+			if (message.getToperson().equals(getUser()) &&! message.isStatus()) {
+			
 				messagecount++;
 			}
 		}
@@ -181,7 +184,10 @@ public class AdminAction extends Base {
 		for (Message message : lmsg) {
 
 			if (message.getToperson().equals(getUser())) {
-				messagecount++;
+				if (!message.isStatus()) {
+					messagecount++;
+				}
+			
 			}
 		}
 		model.addAttribute("messagecount", messagecount);
@@ -195,10 +201,27 @@ public class AdminAction extends Base {
 
 		logger.info(uuid);
 		TrackOrder order = orderservice.find(uuid);
-		order.setOrderType(OrderType.PENDING); // 设置为运输中
+		order.setState(OrderType.PENDING); // 设置为运输中
 		orderservice.update(order);
 		CargoResource cargoResource = carResourceService.find(order.getcResource().getCarresourceid());
-		cargoResource.setStatus(true);
+//		cargoResource.setStatus(true);
+		cargoResource.setStatus(1);
+		for (TrackOrder iterable_element : cargoResource.getOrder()) {
+			//设置其他订单的状态
+//			if (iterable_element.getUuid()!=uuid) {
+//				iterable_element.setOrderType(OrderType.CANCEL);
+//				iterable_element.getCar().setCarStatus(false);
+//				orderservice.save(iterable_element);
+//			}
+			
+			if (!iterable_element.getState().equals(OrderType.PENDING)) {
+				
+				iterable_element.setState(OrderType.CANCEL);
+				iterable_element.getCar().setCarStatus(false);
+				orderservice.save(iterable_element);
+			}
+		
+		}
 		carResourceService.save(cargoResource);
 		Message message = new Message();
 		message.setContent("预约申请已经通过");
@@ -221,7 +244,7 @@ public class AdminAction extends Base {
 
 	{
 		TrackOrder order = orderservice.find(orderid);
-		order.setOrderType(OrderType.DISPATCHED);
+		order.setState(OrderType.DISPATCHED);
 		orderservice.save(order);
 
 		Car car = carService.find(order.getCar().getId());

@@ -37,14 +37,16 @@ public class TrackOrder implements Serializable {
 	}
 
 	@Enumerated(EnumType.STRING)
-	private OrderType orderType;
+	private OrderType state;
 
-	public OrderType getOrderType() {
-		return orderType;
+	
+
+	public OrderType getState() {
+		return state;
 	}
 
-	public void setOrderType(OrderType orderType) {
-		this.orderType = orderType;
+	public void setState(OrderType state) {
+		this.state = state;
 	}
 
 	private String uuid;
@@ -101,7 +103,8 @@ public class TrackOrder implements Serializable {
 //	@JoinColumn(name = "order_id")
 	private CargoResource cResource;
 
-	@OneToOne(fetch = FetchType.LAZY)
+//	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "car_order_id")
 	private Car car;
 

@@ -100,9 +100,7 @@
 				console.log(data.field);
 				var data = data.field;
 				var enddata = JSON.stringify(data);
-
 				/* 	htmlobj=$.ajax({url:"banner-add.do?data="+enddata,async:false}); */
-
 				$.post("banner-add.do", {
 					suggest : JSON.stringify(data)
 				}, function(result) {

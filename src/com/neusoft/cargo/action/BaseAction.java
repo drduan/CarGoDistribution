@@ -2,6 +2,7 @@ package com.neusoft.cargo.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.neusoft.cargo.entity.CargoResource;
-import com.neusoft.cargo.entity.Comment;
 import com.neusoft.cargo.entity.Message;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.entity.User.UserType;
@@ -30,6 +30,8 @@ import com.neusoft.cargo.service.CargoResourceService;
 import com.neusoft.cargo.service.MessageService;
 import com.neusoft.cargo.service.UserAuthService;
 import com.neusoft.cargo.service.UserService;
+import com.neusoft.cargo.service.impl.ComplaintServiceImpl;
+import com.neusoft.cargo.util.AddressUtils;
 import com.neusoft.cargo.util.MailUtil;
 import com.neusoft.cargo.util.Md5Util;
 
@@ -50,22 +52,54 @@ public class BaseAction extends Base {
 	public UserAuthService userAuthService;
 
 	@Autowired
+	public ComplaintServiceImpl compliantservice;
+	@Autowired
 	private MessageService messageservice;
 
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
-	public String index(Model model) {
+	public String index(Model model, String addr) {
+		String address = null;
+		if (addr != null) {
+
+			AddressUtils adu = new AddressUtils();
+			try {
+				address = adu.getAddresses("ip=" + addr, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			logger.info("client ip" + address);
+
+		}
+
+		// 辽宁省
 
 		model.addAttribute("messagecount", getMessageCount());
 		List<CargoResource> cargoResources = cargoResourceService.getAll();
 		// 将没有在订单中的货物加载到页面中
 		List<CargoResource> wcargoResources = new ArrayList<>();
 		for (CargoResource cargoResource : cargoResources) {
-			if (!cargoResource.isStatus()) {
-				wcargoResources.add(cargoResource);
+			if (cargoResource.getStatus() == 0) {
+
+				// 此段代码 为匹配用户所在方位
+				int x = cargoResource.getDeparturePlace().indexOf("省");
+				if (address != null) {
+
+					String temp = cargoResource.getDeparturePlace().substring(0, x + 1);
+
+					if (address.equals(temp)) {
+						logger.info("\"message");
+						wcargoResources.add(cargoResource);
+					}
+				} else {
+					wcargoResources.add(cargoResource);
+				}
 			}
 		}
+
 		model.addAttribute("resource", wcargoResources);
 		return "views/layout/index";
+
 	}
 
 	public int getMessageCount() {
@@ -162,6 +196,9 @@ public class BaseAction extends Base {
 
 			for (int i = 0; i < files.length; i++) {
 				if (!files[i].isEmpty()) {
+					logger.info(request.getSession().getServletContext().getRealPath("/"));
+					logger.info(request.getSession().getServletContext().getContextPath());
+					// logger.info(request.getSession().getServletContext().getResourcePaths(arg0));
 					path[i] = request.getSession().getServletContext().getRealPath("/") + "upload/"
 							+ getUser().getEmail() + "/" + files[i].getOriginalFilename();
 
@@ -185,7 +222,7 @@ public class BaseAction extends Base {
 			getUser().setID_NUM(t_id);
 			userservice.save(getUser());
 			model.addAttribute("message", "等待审核");
-			return "/views/layout/SuccessMessage";
+			return "redirect:home.do";
 		}
 	}
 
@@ -198,7 +235,7 @@ public class BaseAction extends Base {
 
 	@RequestMapping("sysmsglist.do")
 	public String SysMsgList(Model model) {
-
+		model.addAttribute("messagecount", getMessageCount());
 		List<Message> lmsg = messageservice.findAll();
 		List<Message> selflmsg = new ArrayList<Message>(0);
 		for (Message message : lmsg) {
@@ -212,31 +249,46 @@ public class BaseAction extends Base {
 		return "views/layout/sysmsglist";
 	}
 
-	@RequestMapping(value="forgetPwd.do",method=RequestMethod.GET)
+	@RequestMapping(value = "forgetPwd.do", method = RequestMethod.GET)
 	public String forgetPwd(Model model) {
 
 		return "views/layout/forgetpwd";
 	}
-	
-	@RequestMapping(value="forgetPwd.do",method=RequestMethod.POST)
-	public String nextforgetPwd(Model model,@RequestParam("mail") String mail,@RequestParam("passwd") String pwd) {
+
+	@RequestMapping(value = "forgetPwd.do", method = RequestMethod.POST)
+	public String nextforgetPwd(Model model, @RequestParam("mail") String mail, @RequestParam("passwd") String pwd) {
 		User user = userservice.findByMail(mail);
 		user.setPassword(Md5Util.md5Encode(pwd));
 		userservice.save(user);
 		return "redirect:home.do";
 	}
-	
 
 	@RequestMapping("getmailcode.do")
 	@ResponseBody
-	public String getmailcode(Model model,@RequestParam("mail") String mail) throws MessagingException {
+	public String getmailcode(Model model, @RequestParam("mail") String mail) throws MessagingException {
 		int randomcode = (int) ((Math.random() * 9 + 1) * 100000);
 
-		MailUtil.sendEmail("smtp.163.com", mail, "系统邮件", "验证码为"+randomcode, "dxd19930902@163.com", "dxd19930902",
+		MailUtil.sendEmail("smtp.163.com", mail, "系统邮件", "验证码为" + randomcode, "dxd19930902@163.com", "dxd19930902",
 				"19930902dxd");
-		
+
 		return String.valueOf(randomcode);
 	}
 
+	// 投诉接口
+	@RequestMapping(value = "complaints.do", method = RequestMethod.GET)
+	public String Complaints() {
+		return "views/layout/complaint";
+	}
+
+	@RequestMapping(value = "complaints.do", method = RequestMethod.POST)
+	public String ComplaintsPost(com.neusoft.cargo.entity.Complaints complaints) {
+		compliantservice.save(complaints);
+		return "";
+	}
+
+	@RequestMapping(value = "updatefreight.do", method = RequestMethod.POST)
+	public String updatefreight() {
+		return null;
+	}
 
 }

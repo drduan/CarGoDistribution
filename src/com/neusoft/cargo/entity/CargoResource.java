@@ -25,6 +25,20 @@ public class CargoResource implements Serializable {
 	@ManyToOne
 	private User _user;
 
+	
+	
+	//备注
+	private String note;
+	
+	
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 	public User get_user() {
 		User user1 = new User();
 		user1.setId(_user.getId());
@@ -107,13 +121,13 @@ public class CargoResource implements Serializable {
 		this.capacity = capacity;
 	}
 
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
+	// public boolean isStatus() {
+	// return status;
+	// }
+	//
+	// public void setStatus(boolean status) {
+	// this.status = status;
+	// }
 
 	private String destPlace;
 	@Column(nullable = true, columnDefinition = "timestamp default current_timestamp")
@@ -124,7 +138,19 @@ public class CargoResource implements Serializable {
 	// 运费
 	private String weightFate;
 	private double capacity;
-	private boolean status;
+	// private boolean status;
+	// 0 等待接单
+	// 1 运输中
+	// 2 运输结束
+	private int status;
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	private String goodName;
 
@@ -136,9 +162,10 @@ public class CargoResource implements Serializable {
 		this.goodName = goodName;
 	}
 
-//	@OneToOne(mappedBy = "cResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	// @OneToOne(mappedBy = "cResource", cascade = CascadeType.ALL,
+	// orphanRemoval = true, fetch = FetchType.LAZY)
 	@OneToMany(mappedBy = "cResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//	@OneToMany
+	// @OneToMany
 	private List<TrackOrder> order;
 
 	public List<TrackOrder> getOrder() {

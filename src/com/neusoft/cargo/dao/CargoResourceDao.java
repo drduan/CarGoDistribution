@@ -26,6 +26,11 @@ public class CargoResourceDao extends AbstractHibernateDAO<CargoResource> {
 	public CargoResourceDao() {
 		setClazz(CargoResource.class);
 	}
+	@Override
+	public void delete(CargoResource entity) {
+		// TODO Auto-generated method stub
+		super.delete(entity);
+	}
 
 	public void save(CargoResource cargoResource) {
 		try {

@@ -20,4 +20,6 @@ public interface CargoResourceService {
 	public CargoResource find(long id);
 
 	public List<CargoResource> getAll();
+	
+	public  void  delete(CargoResource cargoResource);
 }

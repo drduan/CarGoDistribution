@@ -59,6 +59,9 @@ public class MyShiro extends AuthorizingRealm {
 				info.addRole("user");
 			} else if (user.getUsertype().equals(UserType.DRIVER)) {
 				info.addRole("user");
+			} else if (user.getUsertype().equals(UserType.MANAGER)) {
+				info.addRole("manager");
+				info.addRole("user");
 			}
 			info.setRoles(sr);
 

@@ -284,6 +284,7 @@ ul, li {
 <link href="../static/css/examples.css">
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/jquery.easyui.min.js"></script>
+<script src="../static/js/message_zh.js"></script>
 <script src="../static/js/jquery.barrating.js"></script>
 <script src="../static/js/examples.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
@@ -315,7 +316,7 @@ ul, li {
 								<div class="right">
 									<ul>
 										<li class="text-success">￥0<span>收益总额</span></li>
-										<li class="text-info">100<span>我的信用</span></li>
+										<li class="text-info">${user.rate}<span>我的信用</span></li>
 										<li>优秀<span>信誉评级</span></li>
 									</ul>
 								</div>
@@ -384,7 +385,7 @@ ul, li {
 												<th>车辆状态</th>
 												<th>车牌号</th>
 												<th>联系方式</th>
-												<th>车主</th>
+												<th>联系人</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -438,44 +439,50 @@ ul, li {
 											<c:set var="not_paid" value="<%=OrderType.NOT_PAID%>"></c:set>
 											<c:set var="complete" value="<%=OrderType.COMPLETED%>"></c:set>
 											<c:set var="DISPATCHED" value="<%=OrderType.DISPATCHED%>"></c:set>
+											<c:set var="cancel" value="<%=OrderType.CANCEL%>"></c:set>
 											<c:forEach var="orders" items="${orders}">
 												<tr class="danger">
 													<td><input type="checkbox" id="orderid"
 														value="${orders.uuid}" name="aa" onclick="" /></td>
 
-													<c:if test="${orders.orderType eq paid}">
+													<c:if test="${orders.state eq paid}">
 														<td><select disabled="disabled">
 																<option>已经支付，等待货主通过</option>
 														</select></td>
 													</c:if>
-													<c:if test="${orders.orderType eq not_paid}">
+													<c:if test="${orders.state eq not_paid}">
 														<td><select disabled="disabled">
 																<option>订单未支付，已经被取消</option></td>
 													</c:if>
-													<c:if test="${orders.orderType eq pend}">
+													<c:if test="${orders.state eq pend}">
 														<td><select disabled="disabled">
 																<option>运输中，等待结束</option></td>
 													</c:if>
-													<c:if test="${orders.orderType eq complete}">
+													<c:if test="${orders.state eq complete}">
 														<td><select disabled="disabled">
 																<option>运输结束，等待货主支付</option></td>
 													</c:if>
-													<c:if test="${orders.orderType eq wait}">
+													<c:if test="${orders.state eq wait}">
 														<td><select disabled="disabled">
 																<option>已经支付，等待货主通过</option>
 														</select></td>
 													</c:if>
-													<c:if test="${orders.orderType eq DISPATCHED}">
+													<c:if test="${orders.state eq DISPATCHED}">
 														<td><select disabled="disabled">
 																<option>订单结束</option></td>
 													</c:if>
+													<c:if test="${orders.state eq cancel}">
+													<td><select disabled="disabled">
+																<option>订单被货主取消</option></td>
+													</c:if>
+													
 
 
 													<td>${orders.uuid}</td>
 													<td>${orders.cResource.contact}</td>
 													<td>${orders.cResource.phone}</td>
 													<td>${orders.createTime}</td>
-													<c:if test="${orders.orderType eq DISPATCHED }">
+													<c:if test="${orders.state eq DISPATCHED }">
 													 <c:if test="${orders.drivercommented ne true }">
 														<td>
 															<button id="btncomment" role="button" class="btn"
@@ -484,7 +491,7 @@ ul, li {
 														</td>
 														</c:if>
 													</c:if>
-													<c:if test="${orders.orderType eq pend }">
+													<c:if test="${orders.state eq pend }">
 														<td>
 															<button id="finishtrans" class="btn"
 																data-orderid="${orders.uuid}">运输结束</button>
@@ -618,7 +625,7 @@ ul, li {
 						订单号 <input class="form-control" type="text" id="uuid"
 							name="uuid"
 							type="hidden" size="16" width="1500px"> <input
-							class="form-control" type="text" name="rate"
+							class="form-control" type="number" name="rate"
 							placeholder="分数" name="orderid" maxlength="2">
 						<textarea
 						name="Content" class="form-control" rows="3" placeholder="输入评论"

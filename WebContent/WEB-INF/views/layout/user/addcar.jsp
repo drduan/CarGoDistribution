@@ -32,7 +32,7 @@
 								车牌号 </label>
 							<div class="col-sm-10">
 								<input type="text" name="CarNumber" class="form-control"
-									id="inputEmail3" required="true"/>
+									id="inputEmail3" required  minlength="3"/>
 							</div>
 						</div>
 						<div class="form-group">
@@ -41,7 +41,7 @@
 								联系人 </label>
 							<div class="col-sm-10">
 								<input type="text" name="CarHost" class="form-control"
-									id="inputPassword3" />
+									id="inputPassword3" required />
 							</div>
 						</div>
 						<div class="form-group">
@@ -51,8 +51,8 @@
 							<div class="col-sm-10 input-group" >
 								
 								 <input
-									name="FreightRates" type="text" class="form-control"
-									id="inputPassword3" />
+									name="FreightRates" type="number" class="form-control"
+									id="inputPassword3" required />
 									<span class="input-group-addon">元</span>
 							</div>
 						</div>
@@ -62,7 +62,7 @@
 								载重量 </label>
 							<div class="col-sm-10 input-group">
 								<input name="Capicity" type="text" class="form-control"
-									id="inputPassword3" />
+									id="inputPassword3"  required/>
 									<span class="input-group-addon">吨</span>
 							</div>
 						</div>
@@ -72,8 +72,14 @@
 							<label for="inputPassword3" class="col-sm-2 control-label">
 								车辆类型 </label>
 							<div class="col-sm-10">
-								<input name="CarType" type="text" class="form-control"
-									id="inputPassword3" />
+								<!--  <input name="CarType" type="text" class="form-control"
+									id="inputPassword3"  required/> -->
+								<select name="CarType" >
+									<option>牵引车</option>
+									<option>大型货车</option>
+									<option>小型货车</option>
+									<option>敞篷车</option>
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
@@ -82,7 +88,7 @@
 								联系方式 </label>
 							<div class="col-sm-10">
 								<input name="phone" type="text" class="form-control"
-									id="inputPassword3" />
+									id="inputPassword3" required/>
 							</div>
 						</div>
 						<div class="form-group">

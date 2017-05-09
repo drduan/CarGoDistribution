@@ -44,6 +44,7 @@ public class MsgAction extends Base {
 	public String upload(Model model, @RequestParam(value = "msg") String t_name,
 			@RequestParam(value = "info") String t_id) {
 
+		logger.info("message /successmsg.do");
 		model.addAttribute("msg", "支付请求");
 		model.addAttribute("info", "请您支付预约金额￥" + t_id);
 		model.addAttribute("btn", "ok");

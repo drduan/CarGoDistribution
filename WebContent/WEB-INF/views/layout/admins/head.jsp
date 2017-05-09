@@ -70,11 +70,11 @@
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li><a
 							href="<%=request.getContextPath()%>/admins/adminprofile.do">我的主页</a></li>
-						<li><a href="settings.do">账号设置</a></li>
+						<li><a href="../settings.do">账号设置</a></li>
 						<li><a
 							href="/User/logout.do">退出</a></li>
 							<li><a
-							href="/authentication.do">账户认证</a></li>
+							href="../authentication.do">账户认证</a></li>
 						<li class="divider"></li>
 						<li><a href="#">建议反馈</a></li>
 					</ul>

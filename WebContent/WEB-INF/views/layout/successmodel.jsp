@@ -25,10 +25,6 @@
 		function fun1(curObj) {
 
 			if (getQueryString("finishorderid") != null) {
-				
-				
-				alert("finishorder");
-				alert(getQueryString("finishorderid"));
 				htmlobj = $.ajax({
 					url : "admins/payorder.do?orderid="
 							+ getQueryString("finishorderid"),

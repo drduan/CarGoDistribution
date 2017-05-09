@@ -19,14 +19,13 @@
 <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
 <link href="../static/css/font-awesome.min.css" rel="stylesheet" />
 <link href="../static/css/easyui.css" rel="stylesheet" />
-<!-- 
-<link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css"
-	rel="stylesheet" type="text/css">
--->
+<link href="../static/css/default_theme.css" rel="stylesheet"
+	type="text/css">
 <link href="../static/css/icon.css">
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/jquery.easyui.min.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/messages_zh.js"></script>
 
 <style type="text/css">
 html, body {
@@ -286,7 +285,6 @@ ul, li {
 						function() {
 							$("#orderid").on("click", function() {
 								data = $(this).attr("data-orderid");
-								//alert(data);
 								htmlobj = $.ajax({
 									url : "passorder.do?orderid=" + data,
 									async : false
@@ -336,13 +334,13 @@ ul, li {
 										height="86">
 								</div>
 								<div class="right">
-									<ul style="display: none">
-										<li class="text-success">￥6,200.00<span>收益总额</span></li>
-										<li class="text-info">33<span>我的信用</span></li>
+									<ul>
+										<li class="text-success">￥0.00<span>支出总额</span></li>
+										<li class="text-info">${user.rate}<span>我的信用</span></li>
 										<li>优秀<span>信誉评级</span></li>
 									</ul>
 								</div>
-								<div class="center" style="display: none">
+								<div class="center" >
 									<h1>${user.username}
 
 										<c:if test="${user.hasauthentication}">
@@ -394,21 +392,26 @@ ul, li {
 									<c:if test="${empty carsource}">
 										<div class="row">没有车辆</div>
 									</c:if>
+									
 									<c:if test="${not  empty carsource}">
+									
 										<table
 											class="table table-hover table-condensed table-bordered">
+											<a href="../complaints.do"><label >投诉反馈</label></a>
 											<caption>
-												<button class="btn btn-xs btn-primary pull-right"
-													id="modal-111082" role="button" type="button"
-													data-toggle="modal">删除货源信息</button>
+												<button class="btn btn-xs btn-primary pull-right "
+													id="changefee" role="button" type="button"
+													data-toggle="modal" href="#modal-container-111082">更改运费</button>
 											</caption>
 											<thead>
 												<tr>
 													<th>选择</th>
-													<th>货源状态</th>
 													<th>货源名称</th>
+													<th>货源状态</th>
 													<th>联系方式</th>
 													<th>货物重量</th>
+													<th>货物体积</th>
+													<th>货物运费</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -417,17 +420,22 @@ ul, li {
 													<tr class="danger">
 														<td><input type="checkbox" name="bb"
 															value="${carsource.carresourceid}" /></td>
-														<c:if test="${carsource.status eq false}">
+														<td>${carsource.goodName}</td>
+														<c:if test="${carsource.status eq 0}">
 															<td>可以使用</td>
 														</c:if>
-														<c:if test="${carsource.status ne false}">
+														<c:if test="${carsource.status eq 1}">
 															<td>运输中</td>
-															
+
+														</c:if>
+														<c:if test="${carsource.status eq 3}">
+															<td>运输完成</td>
 														</c:if>
 
-														<td>${carsource.goodName}</td>
 														<td>${carsource.phone}</td>
 														<td>${carsource.weight}</td>
+														<td>${carsource.capacity}</td>
+														<td>${carsource.weightFate}</td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -436,8 +444,6 @@ ul, li {
 								</div>
 								<div id="second">
 									<div class="icon big"></div>
-
-
 									<c:if test="${empty orders}">
 										<div class="row">没有订单</div>
 									</c:if>
@@ -446,6 +452,7 @@ ul, li {
 									<c:set var="pend" value="<%=OrderType.PENDING%>"></c:set>
 									<c:set var="complete" value="<%=OrderType.COMPLETED%>"></c:set>
 									<c:set var="DISPATCHED" value="<%=OrderType.DISPATCHED%>"></c:set>
+									<c:set var="cancel" value="<%=OrderType.CANCEL%>"></c:set>
 									<c:if test="${not  empty orders}">
 										<table
 											class="table table-hover table-condensed table-bordered">
@@ -473,37 +480,44 @@ ul, li {
 															name="aa" onclick="" /></td>
 														<td>${orders.id	}</td>
 
-														<c:if test="${orders.orderType eq paid}">
-														<c:if test="${orders.cResource.status ne true}" >
+
+
+														<c:if test="${orders.state eq cancel}">
 															<td><select disabled="disabled">
-																	<option>等待货主通过</option>
+																	<option>订单未通过</option>
 															</select></td>
+														</c:if>
+														<c:if test="${orders.state eq paid}">
+															<c:if test="${orders.cResource.status eq 0}">
+																<td><select disabled="disabled">
+																		<option>等待货主通过</option>
+																</select></td>
 															</c:if>
-															<c:if test="${orders.cResource.status eq true}" >
-															<td><select disabled="disabled">
-																	<option>订单被拒绝</option>
-															</select></td>
+															<c:if test="${orders.cResource.status ne 0}">
+																<td><select disabled="disabled">
+																		<option>订单运输中</option>
+																</select></td>
 															</c:if>
 														</c:if>
-														<c:if test="${orders.orderType eq WAITINGACCESS}">
+														<c:if test="${orders.state eq WAITINGACCESS}">
 															<td><select disabled="disabled">
 																	<option>已经支付，等待货主通过</option>
 															</select></td>
 														</c:if>
-														<c:if test="${orders.orderType eq not_paid}">
+														<c:if test="${orders.state eq not_paid}">
 															<td><select disabled="disabled">
 																	<option>订单已经被取消</option></td>
 														</c:if>
-														<c:if test="${orders.orderType eq pend}">
+														<c:if test="${orders.state eq pend}">
 															<td><select disabled="disabled">
 																	<option>运输中，等待结束</option></td>
 														</c:if>
 
-														<c:if test="${orders.orderType eq complete}">
+														<c:if test="${orders.state eq complete}">
 															<td><select disabled="disabled">
 																	<option>运输结束</option></td>
 														</c:if>
-														<c:if test="${orders.orderType eq DISPATCHED }">
+														<c:if test="${orders.state eq DISPATCHED }">
 															<td><select disabled="disabled">
 																	<option>订单结束</option></td>
 														</c:if>
@@ -512,23 +526,24 @@ ul, li {
 														<td>${orders.cResource.contact}</td>
 														<td>${orders.cResource.phone}</td>
 														<td>${orders.createTime}</td>
-														<c:if test="${orders.orderType eq paid}">
-															<c:if test="${orders.cResource.status ne true}" >
-															
-															<td><button id="orderid" class="btn foo"
-																	data-orderid="${orders.uuid}">通过</button></td>
-																	</c:if>
+														<c:if test="${orders.state eq paid}">
+															<c:if test="${orders.cResource.status eq 0}">
+
+																<td><button id="orderid" class="btn foo"
+																		data-orderid="${orders.uuid}">通过</button></td>
+															</c:if>
 														</c:if>
-														<c:if test="${orders.orderType eq complete }">
+														<c:if test="${orders.state eq complete }">
 															<td><button id="payid" class="btn"
 																	data-orderid="${orders.uuid}">去支付</button></td>
 														</c:if>
-														<c:if test="${orders.orderType eq DISPATCHED }">
+														<c:if test="${orders.state eq DISPATCHED }">
 															<c:if test="${orders.ownercommented ne true }">
-																<td><button id="btncomment" role="button" class="btn"
-																data-toggle="modal" href="#modal-container-111081"
-																data-orderid="${orders.uuid}" class="btn ">评论订单</button>
-															</td></c:if>
+																<td><button id="btncomment" role="button"
+																		class="btn" data-toggle="modal"
+																		href="#modal-container-111081"
+																		data-orderid="${orders.uuid}">评论订单</button></td>
+															</c:if>
 														</c:if>
 													</tr>
 
@@ -537,7 +552,7 @@ ul, li {
 										</table>
 									</c:if>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
@@ -642,14 +657,43 @@ ul, li {
 				</div>
 				<div class="modal-body" id="modal-body">
 					<form action="../commentto.do" method="get">
-						订单号 <input class="form-control" type="text" id="uuid"
-							name="uuid"
+						订单号 <input class="form-control" type="text" id="uuid" name="uuid"
 							type="hidden" size="16" width="1500px"> <input
-							class="form-control" type="text" name="rate"
-							placeholder="分数" name="orderid" maxlength="2">
-						<textarea
-						name="Content" class="form-control" rows="3" placeholder="输入评论"
-							class="" cols="7" name="comment"></textarea>
+							class="form-control" type="text" name="rate" placeholder="分数"
+							name="orderid" maxlength="2">
+						<textarea name="Content" class="form-control" rows="3"
+							placeholder="输入评论" class="" cols="7" name="comment"></textarea>
+
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							取消</button>
+						<button type="submit" class="btn btn-primary">提交</button>
+					</form>
+
+
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal-container-111082" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h4 class="modal-title">修改货源运费</h4>
+				</div>
+				<div class="modal-body" id="modal-body">
+					<form action="../updatefreight.do" method="post">
+						<input name="sourceid" id="sourceid"> 商品名 
+						<input
+							class="form-control" type="text" name="rate" placeholder="运费"
+							name="orderid">
+
 
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							取消</button>
@@ -664,11 +708,11 @@ ul, li {
 		</div>
 
 	</div>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#finishtrans").on("click", function() {
 				data = $(this).attr("data-orderid");
-				//alert(data);
 				htmlobj = $.ajax({
 					url : "../finishtrans.do?orderid=" + data,
 					async : false
@@ -679,7 +723,7 @@ ul, li {
 			});
 		});
 
-		$("#modal-111082").click(function() {
+		$("#changefee").click(function() {
 			var obj = document.getElementsByName("bb");
 			var len = 0;
 			var checkedobj;
@@ -690,31 +734,20 @@ ul, li {
 				}
 			}
 			if (len > 1) {
-				alert("只能删除一项内容");
+				alert("只能更改一项内容");
 				return;
 			}
 			if (len < 1) {
 				alert("请选择一项内容");
 				return;
 			}
-
-			htmlobj = $.ajax({
-				url : "../Car/delcar.do?carid=" + checkedobj.value,
-				dataType : "json",
-				async : false
-			});
-			if (htmlobj.responseText == 'success') {
-				location.reload()
-			} else {
-				alert("稍后重试");
-			}
+			$("#sourceid").val(checkedobj.value);
+			
 		});
 
 		$("#btncomment").click(function() {
 			data = $(this).attr("data-orderid");
 			$("#uuid").val(data);
-			//document.getElementById('commentmodel').style.display = 'block'
-
 		});
 	</script>
 </body>

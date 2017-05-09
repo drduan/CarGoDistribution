@@ -53,8 +53,9 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 	}
 
 	@Override
-	public void remove(int id) {
+	public void delete(CargoResource cargoResource) {
 		// TODO Auto-generated method stub
+		cargoResourceDao.delete(cargoResource);
 
 	}
 
@@ -73,6 +74,12 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 	public void update(CargoResource cargoResource) {
 		// TODO Auto-generated method stub
 		cargoResourceDao.update(cargoResource);
+	}
+
+	@Override
+	public void remove(int id) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

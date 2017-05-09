@@ -57,9 +57,11 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="filterChainDefinitions">
 			<value>
 				<!-- anon表示此地址不需要任何权限即可访问 -->
+				/complaints.do = anon
 				/static/** = anon
 				/userfiles/** = anon
 				/home.do = anon
+				/user.do = anon 
 				/loginform.do = anon
 				/User/login.do = anon
 				/User/register.do = anon

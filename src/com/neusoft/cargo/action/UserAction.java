@@ -113,8 +113,7 @@ public class UserAction extends Base {
 			return "redirect:/admins/home.do";
 		}
 
-		logger.error("orderid" + orderid);
-
+		model.addAttribute("messagecount", getMessageCount());
 		Subject subject = SecurityUtils.getSubject();
 		model.addAttribute("avater", "https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
@@ -123,7 +122,10 @@ public class UserAction extends Base {
 		for (Car iterable_element : userService.GetCarList(user)) {
 
 			if (iterable_element.getTock() != null) {
-				orders.add(iterable_element.getTock());
+				for (TrackOrder trackOrder : iterable_element.getTock()) {
+					orders.add(trackOrder);
+				}
+
 			}
 
 		}
@@ -133,6 +135,21 @@ public class UserAction extends Base {
 		}
 
 		return "views/layout/user/profile";
+	}
+
+	public int getMessageCount() {
+		List<Message> lmsg = messageservice.findAll();
+		int messagecount = 0;
+		for (Message message : lmsg) {
+
+			if (message.getToperson().equals(getUser())) {
+				if (!message.isStatus()) {
+					messagecount++;
+				}
+
+			}
+		}
+		return messagecount;
 	}
 
 	@RequiresRoles(value = "user")
@@ -420,16 +437,21 @@ public class UserAction extends Base {
 		List<Order> ark = new ArrayList<>();
 		User user = userService.find(getUser().getId());
 		for (Car iterable_element : user.getCars()) {
-			Order order = new Order();
-			order.setUuid(iterable_element.getTock().getUuid());
-			order.setCreateTime(iterable_element.getTock().getCreateTime());
-			order.setGoodName(iterable_element.getTock().getcResource().getGoodName());
-			order.setDepartPlace(iterable_element.getTock().getcResource().getDeparturePlace());
-			order.setDestPlace(iterable_element.getTock().getcResource().getDestPlace());
-			order.setMstatus(iterable_element.getTock().getMstatus());
-			order.setContact(iterable_element.getTock().getCar().getUser().getUsername());
-			order.setPhone(iterable_element.getTock().getCar().getUser().getPhone());
-			ark.add(order);
+
+			for (TrackOrder order : iterable_element.getTock()) {
+
+				Order order1 = new Order();
+				order1.setUuid(order.getUuid());
+				order1.setCreateTime(order.getCreateTime());
+				order1.setGoodName(order.getcResource().getGoodName());
+				order1.setDepartPlace(order.getcResource().getDeparturePlace());
+				order1.setDestPlace(order.getcResource().getDestPlace());
+				order1.setMstatus(order.getMstatus());
+				order1.setContact(order.getCar().getUser().getUsername());
+				order1.setPhone(order.getCar().getUser().getPhone());
+				ark.add(order1);
+			}
+
 		}
 
 		return null;

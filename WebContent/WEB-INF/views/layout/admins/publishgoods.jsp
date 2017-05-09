@@ -12,64 +12,68 @@
 <script src="../static/js/jquery.easyui.min.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../static/js/jquery.validate.min.js"></script>
+<script src="../static/js/messages_zh.js"></script>
 <title>发布货源</title>
 </head>
 <body>
 
 
-<script type="text/javascript">
-	$.validator.setDefaults({
-		submitHandler : function() {
+	<script type="text/javascript">
+		$.validator.setDefaults({
+			submitHandler : function() {
 
-		
-			form.submit();
-		}
-	});
+				//判断 
+				var value = $("#departurePlace").val();
+				if (value.indexOf('省') >= 0 && value.indexOf('市') >= 0
+						&& value.indexOf('县') >= 0) {
+					form.submit();
+				}
 
-	
-	
-	$().ready(function() {
-		$("#publishgoods").validate({
-			rules : {
-				weightFate : {
-					required : true,
-					minlength : 2
-				},
-				contact : {
-					required : true,
-				},
-				
-				Phone : {
-					required : true,
-					minlength : 11
-				},
-				destPlace: {
-					required : true
-				},
-				goodName: {
-					required : true
-				},
-				weight: {
-					required : true,
-				},
-				volume: {
-					required : true,
-				},
-				capacity : {
-					required : true,
-				},
-				departurePlace : {
-					required : true,
-				},
-				
-				
-		 messages: {
-			
-         }
-		}});
+			}
+		});
 
-	})
-</script>
+		$().ready(function() {
+			$("#publishgoods").validate({
+				rules : {
+					weightFate : {
+						required : true,
+						minlength : 2
+					},
+					contact : {
+						required : true,
+					},
+
+					Phone : {
+						required : true,
+						minlength : 11
+					},
+					destPlace : {
+						required : true
+					},
+					goodName : {
+						required : true
+					},
+					weight : {
+						required : true,
+					},
+					volume : {
+						required : true,
+					},
+					capacity : {
+						required : true,
+					},
+					departurePlace : {
+						required : true,
+					},
+
+					messages : {
+
+					}
+				}
+			});
+
+		})
+	</script>
 
 	<script type="text/javascript">
 		
@@ -85,64 +89,99 @@
 			<div class="col-md-4"></div>
 			<div class="col-md-4">
 
-<div class="form-group">
+				<div class="form-group">
 
-				<form action="publishgoods.do" id="publishgoods"  class="publishgoods" method="post">
-					<table>
-					</table>
-
-
-
-
-					<div>
-						<label for="weightFate">货物名</label> <input
-							class="form-control"  type="text" name="goodName"
-							data-options="required:true" />
-					</div>
-					<div>
-						<label for="contact">联系人:</label> <input
-							class="form-control"  type="text" name="contact"
-							data-options="required:true" />
-					</div>
-					<div>
-						<label for="Phone">手机号:</label> <input class="form-control" 
-							type="text" name="Phone" data-options="validType:'phone'" />
-					</div>
-					<div>
-						<label for="capacity">负载:</label> <input
-							class="form-control"  type="text" name="capacity"
-							data-options="required:true" />
-					</div>
-					<div>
-						<label for="departurePlace">出发地</label> <input
-							class="form-control" type="text" name="departurePlace"
-							data-options="required:true" />
-					</div>
-					<div>
-						<label for="destPlace">目的地</label> <input
-							class="form-control"  type="text" name="destPlace"
-							data-options="required:true" />
-					</div>
-					<div>
-						<label for="weight">重量</label> <input class="form-control" 
-							type="text" name="weight" data-options="required:true" />
-					</div>
-					<div>
-						<label for="volume">体积</label> <input class="form-control" 
-							type="text" name="volume" data-options="required:true" />
-					</div>
-					<div>
-						<label for="weightFate">费率</label> <input
-							class="form-control"  type="text" name="weightFate"
-							data-options="required:true" />
-					</div>
+					<form class="form-horizontal" role="form" action="publishgoods.do"
+						id="publishgoods" class="publishgoods" method="post">
+						<table>
+						</table>
 
 
-					<div>
-						<button type="submit" class="btn btn-default">发布货源</button>
-					</div>
-				</form>
-</div>
+
+
+						<div class="form-group">
+							<label for="weightFate" class="col-sm-3 control-label">货物名</label>
+							<div class="col-sm-9">
+
+								<input class="form-control" type="text" name="goodName"
+									data-options="required:true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="contact" class="col-sm-3 control-label">联系人:</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" name="contact"
+									data-options="required:true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="Phone" class="col-sm-3 control-label">手机号:</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" name="Phone"
+									data-options="validType:'phone'" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="capacity" class="col-sm-3 control-label">负载:</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" name="capacity"
+									data-options="required:true" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="departurePlace" class="col-sm-3 control-label">出发地</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" name="departurePlace"
+									id="departurePlace" data-options="required:true" />
+							</div>
+
+						</div>
+						<div class="form-group">
+							<label for="destPlace" class="col-sm-3 control-label">目的地</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" name="destPlace"
+									data-options="required:true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="weight" class="col-sm-3 control-label">重量</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" name="weight"
+									data-options="required:true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="volume" class="col-sm-3 control-label">体积</label>
+
+							<div class="col-sm-9">
+								<input class="form-control" type="text" name="volume"
+									data-options="required:true" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="weightFate" class="col-sm-3 control-label">费率</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" name="weightFate"
+									data-options="required:true" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="weightFate" class="col-sm-3 control-label">备注</label>
+							<div class="col-sm-9">
+								<textarea class="form-control" type="text" name="note"
+									data-options="required:true"></textarea>
+							</div>
+						</div>
+
+
+
+						<div class="form-group">
+							<button type="submit" class="btn btn-default">发布货源</button>
+						</div>
+					</form>
+				</div>
 
 			</div>
 			<div class="col-md-4"></div>

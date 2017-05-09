@@ -61,7 +61,7 @@
 								{
 								alert("已通知车主，请等待审核通过！");
 								$('#submitNext').attr('disabled',"true");
-								window.open("paying.do");
+								//window.open("paying.do");
 								window.location.href="successmsg.do?msg=&orderid="+dataObj.orderno+"&info="+${cargoResource.weightFate}; 
 								}
 							else
@@ -71,7 +71,7 @@
 								}  
 						},
 						error : function(xhr, textStatus) {
-							alert('请刷新网页重试一下');
+							alert('未选中车辆');
 						},
 						complete : function() {
 							
@@ -99,6 +99,7 @@
 							<div class="col-md-12">
 								<h3>确认订单</h3>
 								<div class="row">
+								<a href="complaints.do"><label for="state">投诉反馈</label></a>
 									<label for="state">选择车源</label> <select class="easyui-combobox"
 										name="state" label="State:" labelPosition="top"
 										style="width: 100%;">
@@ -107,14 +108,18 @@
 
 											<c:if test="${carsource.carStatus eq true}">
 												<option disabled="disabled"  value="${carsource.id}"> 
-													联系人：${carsource.carHost}
-													车牌号：${carsource.carNumber} 
-													手机号：${carsource.phone} 
+													联系人：${carsource.carHost} 
+													车牌号：${carsource.carNumber}  
+													手机号：${carsource.phone}  
+													车辆类型：${carsource.carType}  
 													运输中 暂时不可选择</option>
 											</c:if>
 											<c:if test="${carsource.carStatus ne true}">
-												<option  value="${carsource.id}">${carsource.carHost}
-													${carsource.carNumber} ${carsource.phone}</option>
+												<option value="${carsource.id}">  联系人：${carsource.carHost} 
+													车牌号：${carsource.carNumber}  
+													手机号：${carsource.phone}  
+													车辆类型：${carsource.carType}  
+												</option>
 											</c:if>
 										</c:forEach>
 									</select>
@@ -174,7 +179,12 @@
 										<tr class="warn">
 
 											<td>需要支付押金</td>
+											<c:if test="${cargoResource.weightFate ne '面议' }">
 											<td><span> ${cargoResource.weightFate}</span>元</td>
+											</c:if>
+											<c:if test="${cargoResource.weightFate eq '面议' }">
+											<td><span> 面议</span></td>
+											</c:if>
 										</tr>
 
 

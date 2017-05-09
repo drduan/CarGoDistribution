@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.neusoft.cargo.entity.Complaints;
 import com.neusoft.cargo.entity.Message;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.entity.UserAuthInfo;
@@ -31,6 +32,7 @@ import com.neusoft.cargo.entity.User.UserType;
 import com.neusoft.cargo.service.MessageService;
 import com.neusoft.cargo.service.UserAuthService;
 import com.neusoft.cargo.service.UserService;
+import com.neusoft.cargo.service.impl.ComplaintServiceImpl;
 import com.neusoft.cargo.util.Md5Util;
 
 /*
@@ -46,6 +48,9 @@ public class ManagementAction {
 	MessageService msgService;
 	@Autowired
 	UserAuthService userauthService;
+
+	@Autowired
+	ComplaintServiceImpl complaintServiceImpl;
 
 	private Logger logger = Logger.getLogger(ManagementAction.class);
 
@@ -65,42 +70,38 @@ public class ManagementAction {
 
 		return "views/layout/manager/welcome";
 
-		
 	}
-	
+
 	@RequestMapping(value = "banner-edit.do", method = RequestMethod.GET)
-	public String edit(Model model, @RequestParam("auid") int auid ) {
-//		http://localhost:8080/_CarGoDistribution/Manager/banner-edit.do?auid=9
-		
+	public String edit(Model model, @RequestParam("auid") int auid) {
+		// http://localhost:8080/_CarGoDistribution/Manager/banner-edit.do?auid=9
+
 		UserAuthInfo ui = userauthService.find(auid);
-		model.addAttribute("au",ui);
+		model.addAttribute("au", ui);
 		return "views/layout/manager/banner-edit";
 
-		
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "banner-add.do")
-	public String add(Model model,String suggest) {
+	public String add(Model model, String suggest) {
 		logger.info(suggest);
 		JSONObject jObject = JSON.parseObject(suggest);
 		UserAuthInfo userAuthInfo = userauthService.find(jObject.getInteger("id"));
 		userAuthInfo.setResult(jObject.getString("result"));
 		userAuthInfo.setPass(jObject.getBooleanValue("pass"));
 		userauthService.save(userAuthInfo);
-		
-		if(jObject.getBooleanValue("pass"))
-		{
+
+		if (jObject.getBooleanValue("pass")) {
 			userAuthInfo.getUser().setHasauthentication(true);
-		}
-		else {
+		} else {
 			userAuthInfo.getUser().setHasauthentication(false);
-			
+
 		}
 		return "success";
 
-		
 	}
+
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public String login(Model model, User user) {
 
@@ -111,12 +112,12 @@ public class ManagementAction {
 	@RequestMapping("banner-list")
 	public String bannerL(Model model) {
 		List<UserAuthInfo> auth = new ArrayList<>();
-//		List<UserAuthInfo> newauth = new ArrayList<>();
-//		for (UserAuthInfo userAuthInfo : auth) {
-//			userAuthInfo.setAddress1(userAuthInfo.getAddress1().);
-//		}
+		// List<UserAuthInfo> newauth = new ArrayList<>();
+		// for (UserAuthInfo userAuthInfo : auth) {
+		// userAuthInfo.setAddress1(userAuthInfo.getAddress1().);
+		// }
 		auth = userauthService.findAll();
-		
+
 		logger.info("auth message" + auth.size());
 		model.addAttribute("auth", auth);
 		return "views/layout/manager/banner-list";
@@ -156,7 +157,7 @@ public class ManagementAction {
 		msgService.save(message);
 		return "success";
 	}
-	
+
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(User userValidate, boolean rememberMe, Model model) {
 		ensureUserIsLoggedOut();
@@ -190,9 +191,10 @@ public class ManagementAction {
 		if (uType == null) {
 			return "";
 		}
-			return "redirect:/Manager/home.do";
+		return "redirect:/Manager/home.do";
 
 	}
+
 	private void ensureUserIsLoggedOut() {
 		try {
 			// Get the user if one is logged in.
@@ -213,6 +215,23 @@ public class ManagementAction {
 		}
 	}
 
-	
+	@RequestMapping("getAllComplaints.do")
+	public String GetAllComplaints(Model model) {
+
+		List<Complaints> lComplaints = complaintServiceImpl.findAll();
+		model.addAttribute("lComplaints", lComplaints);
+		// complaintServiceImpl
+		return null;
+	}
+
+	@RequestMapping("updateComplaints.do")
+	public String UpdateComplaints(Model model, Complaints complaints) {
+		complaintServiceImpl.save(complaints);
+		// List<Complaints> lComplaints = complaintServiceImpl.findAll();
+		// model.addAttribute("lComplaints", lComplaints)
+		// complaintServiceImpl
+
+		return null;
+	}
 
 }
