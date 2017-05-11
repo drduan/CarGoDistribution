@@ -3,20 +3,17 @@ package com.neusoft.cargo.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity(name = "trackorder")
 public class TrackOrder implements Serializable {
@@ -27,7 +24,7 @@ public class TrackOrder implements Serializable {
 	private long id;
 
 	private long temp_cargo_id;
-	
+
 	public long getTemp_cargo_id() {
 		return temp_cargo_id;
 	}
@@ -38,8 +35,6 @@ public class TrackOrder implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private OrderType state;
-
-	
 
 	public OrderType getState() {
 		return state;
@@ -93,17 +88,12 @@ public class TrackOrder implements Serializable {
 	}
 
 	public void setUuid(String uuid) {
-		UUID _uuid = UUID.randomUUID();
-
-		this.uuid = _uuid.toString();
+		this.uuid = uuid;
 	}
 
-//	@OneToOne(fetch = FetchType.LAZY)
 	@ManyToOne
-//	@JoinColumn(name = "order_id")
 	private CargoResource cResource;
 
-//	@OneToOne(fetch = FetchType.LAZY)
 	@ManyToOne
 	@JoinColumn(name = "car_order_id")
 	private Car car;

@@ -15,13 +15,13 @@ public class Comment implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String uuid;
+	private long uuid;
 	
 	
-	public String getUuid() {
+	public long getUuid() {
 		return uuid;
 	}
-	public void setUuid(String uuid) {
+	public void setUuid(long uuid) {
 		this.uuid = uuid;
 	}
 	private String Content;

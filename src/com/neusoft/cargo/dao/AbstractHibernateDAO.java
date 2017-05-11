@@ -29,7 +29,6 @@ public abstract class AbstractHibernateDAO<T extends Serializable> {
 		return (T) getCurrentSession().get(clazz, id);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		return getCurrentSession().createQuery("from " + clazz.getName()).getResultList();
 	}

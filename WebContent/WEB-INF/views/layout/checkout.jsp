@@ -99,7 +99,7 @@
 							<div class="col-md-12">
 								<h3>确认订单</h3>
 								<div class="row">
-								<a href="complaints.do"><label for="state">投诉反馈</label></a>
+								<a target="_blank" href="complaints.do"><label for="state">投诉反馈</label></a>
 									<label for="state">选择车源</label> <select class="easyui-combobox"
 										name="state" label="State:" labelPosition="top"
 										style="width: 100%;">
@@ -161,7 +161,7 @@
 										</tr>
 										<tr class="success">
 
-											<td>联系人</td>
+											<td>联系人/联系方式</td>
 											<td>${cargoResource.contact}/${cargoResource.phone}</td>
 										</tr>
 

@@ -52,8 +52,6 @@ public class BaseAction extends Base {
 	public UserAuthService userAuthService;
 
 	@Autowired
-	public ComplaintServiceImpl compliantservice;
-	@Autowired
 	private MessageService messageservice;
 
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
@@ -102,21 +100,6 @@ public class BaseAction extends Base {
 
 	}
 
-	public int getMessageCount() {
-		List<Message> lmsg = messageservice.findAll();
-		int messagecount = 0;
-		for (Message message : lmsg) {
-
-			if (message.getToperson().equals(getUser())) {
-				if (!message.isStatus()) {
-					messagecount++;
-				}
-
-			}
-		}
-		return messagecount;
-	}
-
 	@RequestMapping(value = "/loginform.do", method = RequestMethod.GET)
 	public String loginform() {
 		return "views/layout/login";
@@ -137,8 +120,9 @@ public class BaseAction extends Base {
 	}
 
 	@RequestMapping(value = "user.do")
-	public String user() {
-
+	public String user(Model model) {
+		
+		model.addAttribute("messagecount", getMessageCount());
 		return "views/layout/user/index.jsp";
 	}
 
@@ -198,7 +182,6 @@ public class BaseAction extends Base {
 				if (!files[i].isEmpty()) {
 					logger.info(request.getSession().getServletContext().getRealPath("/"));
 					logger.info(request.getSession().getServletContext().getContextPath());
-					// logger.info(request.getSession().getServletContext().getResourcePaths(arg0));
 					path[i] = request.getSession().getServletContext().getRealPath("/") + "upload/"
 							+ getUser().getEmail() + "/" + files[i].getOriginalFilename();
 
@@ -225,13 +208,6 @@ public class BaseAction extends Base {
 			return "redirect:home.do";
 		}
 	}
-
-	/***
-	 * 保存文件
-	 * 
-	 * @param file
-	 * @return
-	 */
 
 	@RequestMapping("sysmsglist.do")
 	public String SysMsgList(Model model) {
@@ -270,25 +246,31 @@ public class BaseAction extends Base {
 
 		MailUtil.sendEmail("smtp.163.com", mail, "系统邮件", "验证码为" + randomcode, "dxd19930902@163.com", "dxd19930902",
 				"19930902dxd");
-
 		return String.valueOf(randomcode);
 	}
 
-	// 投诉接口
-	@RequestMapping(value = "complaints.do", method = RequestMethod.GET)
-	public String Complaints() {
-		return "views/layout/complaint";
-	}
-
-	@RequestMapping(value = "complaints.do", method = RequestMethod.POST)
-	public String ComplaintsPost(com.neusoft.cargo.entity.Complaints complaints) {
-		compliantservice.save(complaints);
-		return "";
-	}
-
 	@RequestMapping(value = "updatefreight.do", method = RequestMethod.POST)
-	public String updatefreight() {
-		return null;
+	@ResponseBody
+	public String updatefreight(long sourceid, double fee) {
+		CargoResource cargoResource = cargoResourceService.find(sourceid);
+		cargoResource.setWeightFate(""+fee);
+		cargoResourceService.update(cargoResource);
+		return "success";
+	}
+
+	public int getMessageCount() {
+		List<Message> lmsg = messageservice.findAll();
+		int messagecount = 0;
+		for (Message message : lmsg) {
+
+			if (message.getToperson().equals(getUser())) {
+				if (!message.isStatus()) {
+					messagecount++;
+				}
+
+			}
+		}
+		return messagecount;
 	}
 
 }

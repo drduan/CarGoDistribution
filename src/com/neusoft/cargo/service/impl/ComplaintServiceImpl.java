@@ -19,32 +19,25 @@ public class ComplaintServiceImpl {
 
 	private Logger logger = Logger.getLogger(ComplaintServiceImpl.class);
 
-	// @Override
 	public List<Complaints> findAll() {
-		return null;
+		return carDao.findAll();
 	}
 
-	// @Override
 	public void save(Complaints complaints) {
-		// TODO Auto-generated method stub
-
 		carDao.save(complaints);
 
 	}
 
-	// @Override
 	public void remove(Long id) {
 		// TODO Auto-generated method stub
 		carDao.delete(find(id));
 	}
 
-	// @Override
 	public Complaints find(Long id) {
 		// TODO Auto-generated method stub
 		return carDao.findOne(id);
 	}
 
-	// @Override
 	public void update(Complaints car) {
 		// TODO Auto-generated method stub
 		carDao.update(car);

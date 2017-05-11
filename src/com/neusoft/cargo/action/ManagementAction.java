@@ -16,7 +16,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,8 +26,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.neusoft.cargo.entity.Complaints;
 import com.neusoft.cargo.entity.Message;
 import com.neusoft.cargo.entity.User;
-import com.neusoft.cargo.entity.UserAuthInfo;
 import com.neusoft.cargo.entity.User.UserType;
+import com.neusoft.cargo.entity.UserAuthInfo;
 import com.neusoft.cargo.service.MessageService;
 import com.neusoft.cargo.service.UserAuthService;
 import com.neusoft.cargo.service.UserService;
@@ -112,10 +111,6 @@ public class ManagementAction {
 	@RequestMapping("banner-list")
 	public String bannerL(Model model) {
 		List<UserAuthInfo> auth = new ArrayList<>();
-		// List<UserAuthInfo> newauth = new ArrayList<>();
-		// for (UserAuthInfo userAuthInfo : auth) {
-		// userAuthInfo.setAddress1(userAuthInfo.getAddress1().);
-		// }
 		auth = userauthService.findAll();
 
 		logger.info("auth message" + auth.size());
@@ -215,23 +210,11 @@ public class ManagementAction {
 		}
 	}
 
-	@RequestMapping("getAllComplaints.do")
-	public String GetAllComplaints(Model model) {
-
-		List<Complaints> lComplaints = complaintServiceImpl.findAll();
-		model.addAttribute("lComplaints", lComplaints);
-		// complaintServiceImpl
-		return null;
-	}
-
+	@ResponseBody
 	@RequestMapping("updateComplaints.do")
 	public String UpdateComplaints(Model model, Complaints complaints) {
 		complaintServiceImpl.save(complaints);
-		// List<Complaints> lComplaints = complaintServiceImpl.findAll();
-		// model.addAttribute("lComplaints", lComplaints)
-		// complaintServiceImpl
-
-		return null;
+		return "success";
 	}
 
 }

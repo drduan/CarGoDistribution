@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>等待支付完成</title>
+<title>支付中</title>
 <link href="_CarGoDistribution/../static/css/bootstrap.min.css"
 	rel="stylesheet" />
 <link href="_CarGoDistribution/../static/css/font-awesome.min.css"

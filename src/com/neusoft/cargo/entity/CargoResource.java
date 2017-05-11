@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity(name = "cargoresource")
 public class CargoResource implements Serializable {
@@ -25,12 +24,20 @@ public class CargoResource implements Serializable {
 	@ManyToOne
 	private User _user;
 
+	private String  ypbm;
 	
 	
-	//备注
+	public String getYpbm() {
+		return ypbm;
+	}
+
+	public void setYpbm(String ypbm) {
+		this.ypbm = ypbm;
+	}
+
+	// 备注
 	private String note;
-	
-	
+
 	public String getNote() {
 		return note;
 	}
@@ -162,10 +169,7 @@ public class CargoResource implements Serializable {
 		this.goodName = goodName;
 	}
 
-	// @OneToOne(mappedBy = "cResource", cascade = CascadeType.ALL,
-	// orphanRemoval = true, fetch = FetchType.LAZY)
 	@OneToMany(mappedBy = "cResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	// @OneToMany
 	private List<TrackOrder> order;
 
 	public List<TrackOrder> getOrder() {

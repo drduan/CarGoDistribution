@@ -191,9 +191,7 @@ public class UserAction extends Base {
 		try {
 			SecurityUtils.getSubject().login(token);
 			SecurityUtils.getSubject().getSession();
-			SecurityUtils.getSubject().getSession().setAttribute("avater",
-					"https://sfault-avatar.b0.upaiyun.com/397/343/3973431515-5871a5d594750_big64");
-
+		
 		} catch (UnknownAccountException e) {
 			return "views/layout/UnknownAccountException";
 		} catch (IncorrectCredentialsException e) {
@@ -209,8 +207,16 @@ public class UserAction extends Base {
 		}
 
 		UserType uType = (UserType) SecurityUtils.getSubject().getSession().getAttribute("usertype");
+		
 		if (uType == null) {
 			return "";
+		}
+		// true  禁止
+		boolean userstates = (boolean) SecurityUtils.getSubject().getSession().getAttribute("userstates");
+		if(userstates)
+		{
+			model.addAttribute("message","用户访问被禁止");
+			return "views/layout/SuccessMessage";
 		}
 		if (uType.equals(UserType.DRIVER)) {
 			return "redirect:/home.do";
@@ -259,16 +265,17 @@ public class UserAction extends Base {
 		session.setAttribute("usertype", userType);
 		session.setMaxInactiveInterval(6000);
 		user.setUsertype(UserType.DRIVER);
-		// Role role = new Role("user", "user");
-		// List<Role> roles = roleDao.findAll();
-		// Set<Role> roleList = new HashSet<>();
-		// Set<Role> roleList = new HashSet<>(roles);
-		// for (Role r : roles) {
-		// if (r.getDescription().equals("user")) {
-		// roleList.add(r);
-		// }
-		// }
-		// roleList.add(ro);
+		user.setRate(50);
+		 Role role = new Role("user", "user");
+//		 List<Role> roles = roleDao.findAll();
+//		 Set<Role> roleList = new HashSet<>();
+//		 Set<Role> roleList = new HashSet<>(roles);
+//		 for (Role r : roles) {
+//		 if (r.getDescription().equals("user")) {
+//		 roleList.add(r);
+//		 }
+//		 }
+//		 roleList.add(ro);
 		String pwd = user.getPassword();
 		String newpwd = Md5Util.md5Encode(pwd);
 		user.setPassword(newpwd);

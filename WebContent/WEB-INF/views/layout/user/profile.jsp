@@ -20,14 +20,15 @@
 	href="../static/css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="../static/css/default.css">
 
-<link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+
 <link href="../static/css/font-awesome.min.css" rel="stylesheet" />
 <!-- -->
 <link href="../static/css/easyui.css" rel="stylesheet" />
 <link href="../static/css/icon.css">
 
-<link href="https://cdn.insdep.com/themes/1.0.0/default_theme.css"
+<link href="../static/css/default_theme.css"
 	rel="stylesheet" type="text/css">
+	<link href="../static/css/bootstrap.min.css" rel="stylesheet" />
 
 
 
@@ -279,6 +280,7 @@ ul, li {
 	-webkit-transition: all .6s ease-in-out;
 	transition: all .6s ease-in-out;
 }
+
 </style>
 <link href="../static/css/main.css">
 <link href="../static/css/examples.css">
@@ -288,7 +290,9 @@ ul, li {
 <script src="../static/js/jquery.barrating.js"></script>
 <script src="../static/js/examples.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
+<style type="text/css">
 
+</style>
 
 
 </head>
@@ -421,7 +425,7 @@ ul, li {
 								</c:if>
 								<c:if test="${not  empty orders}">
 									<table class="table table-hover table-condensed table-bordered">
-										<caption></caption>
+										<a href="../complaints.do"><label><font color="#337AB7">投诉反馈</font></label></a>
 										<thead>
 											<tr>
 												<th>选择</th>
@@ -654,7 +658,7 @@ ul, li {
 					async : false
 				});
 				if (htmlobj.responseText == 'success') {
-					localation.reload();
+					localtion.reload();
 				}
 			});
 		});

@@ -57,6 +57,7 @@
 		<logger name="org.apache.log4j.xml" level="info"></logger>
 		<logger name="org.hibernate" level="info"></logger>
 		<logger name="org.springframework.beans" level="INFO"></logger>
+		<logger name="org.apache.shiro" level="INFO"></logger>
 
 
 		<root level="all">

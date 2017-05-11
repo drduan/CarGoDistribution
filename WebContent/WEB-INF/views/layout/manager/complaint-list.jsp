@@ -15,7 +15,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
-<link rel="stylesheet" href="../static/css/x-admin.css" media="all">
+<link rel="stylesheet" href="static/css/x-admin.css" media="all">
 </head>
 <body>
 	<div class="x-nav">
@@ -35,45 +35,44 @@
 			onclick="banner_add('添加用户','banner-add.do','600','500')">
 			<i class="layui-icon">&#xe608;</i>添加
 		</button>
-		<span class="x-right" style="line-height: 40px">共有数据：${auth.size()}条</span></xblock>
+		<span class="x-right" style="line-height: 40px">共有数据：${complaints.size()}条</span></xblock>
 		<table class="layui-table">
 			<thead>
 				<tr>
 					<th><input type="checkbox" name="" value=""></th>
-					<th>用户ID</th>
 					<th>订单号</th>
 					<th>发布时间</th>
 					<th>投诉内容</th>
 					<th>状态</th>
+					<th>举报人</th>
+					<th>类型</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody id="x-img">
-				<c:forEach items="${auth}" var="auth">
-				<tr>
-			
-					<td><input type="checkbox" value="${auth.id}" name="del"></td>
-					<td>${auth.id} </td>
-					<td><img src="../${auth.address1}" width="200" alt="点击图片试试">
-					</td>
-					<td>${auth.add_date}</td>
-					<td></td>
-					<c:if test="${auth.user.hasauthentication eq true}">
-					<td class="td-status"><span
-						class="layui-btn layui-btn-normal layui-btn-mini"> 已认证 </span></td>
-					</c:if>
-					<c:if test="${auth.user.hasauthentication ne true}">
-					<td class="td-status"><span
-						class="layui-btn layui-btn-normal layui-btn-mini"> 未认证 </span></td>
-					</c:if>
-					<td class="td-manage">
-					 <a title="编辑" href="javascript:;"
-						onclick="banner_edit('编辑','banner-edit.do?auid=${auth.id}','4','','510')"
-						class="ml-5" style="text-decoration: none"> <i
-							class="layui-icon">&#xe642;</i>
-					</a> </td>
-					
-				</tr>
+				<c:forEach items="${complaints}" var="complaints">
+					<tr>
+
+						<td><input type="checkbox" value="${complaints.id}"
+							name="del"></td>
+						<td>${complaints.uuid}</td>
+						<td>${complaints.add_time}</td>
+						<td>${complaints.content}</td>
+						<td>${complaints.result}</td>
+						<td>${complaints.launchMan.email}</td>
+						<c:if test="${complaints.comptype eq 0}">
+						<td> 运品举报</td>
+						</c:if>
+						<c:if test="${complaints.comptype eq 1}">
+						<td> 运单举报</td>
+						</c:if>
+						<td class="td-manage"><a title="编辑" href="javascript:;"
+							onclick="banner_edit('编辑','banner-edit.do?auid=${auth.id}','4','','510')"
+							class="ml-5" style="text-decoration: none"> <i
+								class="layui-icon">&#xe642;</i>
+						</a></td>
+
+					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
@@ -180,6 +179,6 @@
 			});
 		}
 	</script>
-	
+
 </body>
 </html>

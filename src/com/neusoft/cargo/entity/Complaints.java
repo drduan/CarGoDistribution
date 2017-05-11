@@ -1,13 +1,14 @@
 package com.neusoft.cargo.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Table(name = "Complaints")
@@ -17,20 +18,41 @@ public class Complaints implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@OneToOne
 	private User LaunchMan;
+
+	@OneToOne
+	private User relateMan;
+
+	private String ypbm;
+
+	public String getYpbm() {
+		return ypbm;
+	}
+
+	public void setYpbm(String ypbm) {
+		this.ypbm = ypbm;
+	}
+
+	// 订单号
+	private long uuid;
+
+	// 运品链接
+
 	private long complaintsid;
 	private String Content;
-	private String title;
+	// 0 1 2
+	private int comptype;
+
 	private String result;
 	@Column(nullable = true, columnDefinition = "timestamp default current_timestamp")
-	private Date add_time;
-	
+	private Timestamp add_time;
 
-	public Date getAdd_time() {
+	public Timestamp getAdd_time() {
 		return add_time;
 	}
 
-	public void setAdd_time(Date add_time) {
+	public void setAdd_time(Timestamp add_time) {
 		this.add_time = add_time;
 	}
 
@@ -66,12 +88,12 @@ public class Complaints implements Serializable {
 		Content = content;
 	}
 
-	public String getTitle() {
-		return title;
+	public int getComptype() {
+		return comptype;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setComptype(int comptype) {
+		this.comptype = comptype;
 	}
 
 	public String getResult() {
@@ -80,6 +102,24 @@ public class Complaints implements Serializable {
 
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public long getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(long uuid) {
+		this.uuid = uuid;
+	}
+
+
+
+	public User getRelateMan() {
+		return relateMan;
+	}
+
+	public void setRelateMan(User relateMan) {
+		this.relateMan = relateMan;
 	}
 
 }

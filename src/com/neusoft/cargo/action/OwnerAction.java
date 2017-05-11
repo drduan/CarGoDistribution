@@ -2,6 +2,7 @@ package com.neusoft.cargo.action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -26,11 +27,11 @@ import com.neusoft.cargo.service.MessageService;
 import com.neusoft.cargo.service.TrackOrderService;
 import com.neusoft.cargo.service.UserService;
 
-@Controller("AdminAction")
+@Controller("OwnerAction")
 @RequestMapping("/admins")
-public class AdminAction extends Base {
+public class OwnerAction extends Base {
 
-	private Logger logger = Logger.getLogger(AdminAction.class);
+	private Logger logger = Logger.getLogger(OwnerAction.class);
 	@Autowired
 	private UserService userservice;
 	@Autowired
@@ -128,7 +129,15 @@ public class AdminAction extends Base {
 	public String publishgoodsPost(CargoResource resource) {
 
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-
+		StringBuilder str = new StringBuilder();// 定义变长字符串
+		Random random = new Random();
+		// 随机生成数字，并添加到字符串
+		for (int i = 0; i < 8; i++) {
+			str.append(random.nextInt(10));
+		}
+		// 将字符串转换为数字并输出
+		int num = Integer.parseInt(str.toString());
+		resource.setYpbm("");
 		resource.set_user(user);
 		carResourceService.save(resource);
 		return "redirect:adminprofile.do";

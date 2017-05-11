@@ -718,7 +718,7 @@ ul, li {
 					async : false
 				});
 				if (htmlobj.responseText == 'success') {
-					localation.reload();
+					localtion.reload();
 				}
 			});
 		});

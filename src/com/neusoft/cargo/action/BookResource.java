@@ -38,8 +38,7 @@ public class BookResource extends Base {
 	private TrackOrderService trackOrderService;
 	@Autowired
 	private MessageService messageservice;
-	@Autowired
-	private MessageService msgService;
+
 
 	// ${pageContext.request.contextPath}/person/updatePersonList.action"
 	@RequestMapping(value = "bookresource.do", method = RequestMethod.GET)
@@ -97,6 +96,7 @@ public class BookResource extends Base {
 		}
 		// 将字符串转换为数字并输出
 		int num = Integer.parseInt(str.toString());
+		
 
 		TrackOrder tOrder = new TrackOrder();
 		tOrder.setCar(car2);
@@ -105,7 +105,7 @@ public class BookResource extends Base {
 		// 可以未支付
 		// tOrder.setOrderType(OrderType.WAITINGACCESS);
 		tOrder.setState(OrderType.NOT_PAID);
-		tOrder.setUuid(random.toString());
+		tOrder.setUuid(""+num);
 		trackOrderService.save(tOrder);
 
 		JSONObject jsonObject = new JSONObject();
@@ -127,8 +127,8 @@ public class BookResource extends Base {
 	 * 车主支付完押金
 	 */
 	@RequestMapping(value = "paid.do", method = RequestMethod.GET)
-	public String paid(String orderid) {
-		TrackOrder order = trackOrderService.find(orderid);
+	public String paid(long orderid) {
+		TrackOrder order = trackOrderService.find(""+orderid);
 		CargoResource cargoResource = cargoResourceService.find(order.getTemp_cargo_id());
 		order.setState(OrderType.PAID);
 		order.setcResource(cargoResource);
@@ -139,16 +139,16 @@ public class BookResource extends Base {
 		Message message = new Message();
 		message.setContent("有新的预约 前去查看;订单号" + order.getUuid());
 		message.setToperson(userservice.find(order.getcResource().get_user().getId()));
-		msgService.save(message);
+		messageservice.save(message);
 
 		return "redirect:/User/profile.do";
 	}
 
 	@RequestMapping("finishtrans.do")
 	@ResponseBody
-	public String finishtrans(String orderid) {
+	public String finishtrans(long orderid) {
 		logger.info("orderid" + orderid);
-		TrackOrder order = trackOrderService.find(orderid);
+		TrackOrder order = trackOrderService.find(""+orderid);
 		order.setState(OrderType.COMPLETED);// 订单完成
 		order.getcResource().setStatus(3);
 		trackOrderService.save(order);

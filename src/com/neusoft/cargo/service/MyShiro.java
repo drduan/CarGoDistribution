@@ -108,6 +108,7 @@ public class MyShiro extends AuthorizingRealm {
 			// 若存在，将此用户存放到登录认证info中
 			SecurityUtils.getSubject().getSession().setAttribute("user", user);
 			SecurityUtils.getSubject().getSession().setAttribute("usertype", user.getUsertype());
+			SecurityUtils.getSubject().getSession().setAttribute("userstates", user.getLocked());
 			return new SimpleAuthenticationInfo(user.getEmail(), user.getPassword(), getName());
 
 		}

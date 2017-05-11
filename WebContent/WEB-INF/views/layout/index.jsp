@@ -92,13 +92,14 @@
 									<c:forEach var="resource" items="${resource}">
 
 										<tr>
-											<td ><a href='user.do'><img class="img-circle" width="100" height="100"
+											<td ><a href="user.do?id=${resource._user.id}"><img class="img-circle" width="100" height="100"
 												alt="alt"
 												src="<%=request.getContextPath()%>/userfiles/avatar/${resource._user.img}"></a>
 												<br> <b class="text-center">联系人：${resource.contact}</b></td>
 											<td>
 												<h1 style="color: #333; font-size: 14px; font-weight: 700">从
-													${resource.departurePlace} 到 ${resource.destPlace}</h1> <c:if
+													${resource.departurePlace} 到 ${resource.destPlace}</h1>
+													 <c:if
 													test="${resource.weightFate ne '面议' }">
 													<span class="price" style="font-size: 18px">运费：${resource.weightFate}元</span>
 												</c:if> <c:if test="${resource.weightFate eq '面议' }">

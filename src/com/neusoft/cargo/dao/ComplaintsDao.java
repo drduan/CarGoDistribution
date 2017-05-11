@@ -1,5 +1,7 @@
 package com.neusoft.cargo.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.neusoft.cargo.entity.Complaints;
@@ -19,6 +21,18 @@ public class ComplaintsDao extends AbstractHibernateDAO<Complaints> {
 			// TODO: handle exception
 		}
 
+	}
+	@Override
+	public List<Complaints> findAll() {
+		// TODO Auto-generated method stub
+		//try {
+			return  (List<Complaints>) this.getHibernateTemplate().find("from Complaints", null);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// // TODO: handle exception
+		// }
+		// (List<TrackOrder>) (List<TrackOrder>) (List<TrackOrder>) 
+//	return super.findAll();
 	}
 
 }
