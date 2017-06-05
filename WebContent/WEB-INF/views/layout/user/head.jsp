@@ -53,6 +53,7 @@
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li><a href="<%=request.getContextPath()%>/User/profile.do">我的主页</a></li>
 						<li><a href="<%=request.getContextPath()%>/User/settings.do">账号设置</a></li>
+						<li><a href="<%=request.getContextPath()%>/authentication.do">个人认证</a></li>
 						<li><a href="logout.do">退出</a></li>
 						<li class="divider"></li>
 					</ul>

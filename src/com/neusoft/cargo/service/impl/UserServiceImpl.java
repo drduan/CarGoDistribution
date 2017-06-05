@@ -31,9 +31,7 @@ public class UserServiceImpl implements UserService {
 
 	public void save(User person) {
 
-		logger.info("message" + "执行User Save" + person.getId());
 
-		logger.log(Priority.DEBUG, person.toString() + "person ID" + person.getId());
 		try {
 			userDao.save(person);
 		} catch (Exception e) {

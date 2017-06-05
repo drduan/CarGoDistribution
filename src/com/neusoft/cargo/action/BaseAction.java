@@ -3,7 +3,9 @@ package com.neusoft.cargo.action;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -30,7 +32,6 @@ import com.neusoft.cargo.service.CargoResourceService;
 import com.neusoft.cargo.service.MessageService;
 import com.neusoft.cargo.service.UserAuthService;
 import com.neusoft.cargo.service.UserService;
-import com.neusoft.cargo.service.impl.ComplaintServiceImpl;
 import com.neusoft.cargo.util.AddressUtils;
 import com.neusoft.cargo.util.MailUtil;
 import com.neusoft.cargo.util.Md5Util;
@@ -39,8 +40,6 @@ import com.neusoft.cargo.util.Md5Util;
 public class BaseAction extends Base {
 	private org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(BaseAction.class);
 
-	@Autowired
-	public UserService us;
 
 	@Autowired
 	public CargoResourceService cargoResourceService;
@@ -142,19 +141,19 @@ public class BaseAction extends Base {
 		return "/views/layout/uploadFileToAuth";
 	}
 
-	@RequestMapping(value = "authenticationstatus.do")
-	public String authenticationstatus() {
-		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
-		user.setHasauthentication(true);
-		us.save(user);
-
-		if (user.getUsertype().equals(UserType.OWNER)) {
-			return "redirect:/admins/adminprofile.do";
-		} else {
-			return "redirect:/User/profile.do";
-		}
-
-	}
+//	@RequestMapping(value = "authenticationstatus.do")
+//	public String authenticationstatus() {
+//		User user = (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+//		user.setHasauthentication(true);
+//		userservice.save(user);
+//
+//		if (user.getUsertype().equals(UserType.OWNER)) {
+//			return "redirect:/admins/adminprofile.do";
+//		} else {
+//			return "redirect:/User/profile.do";
+//		}
+//
+//	}
 
 	/*
 	 * 
@@ -244,16 +243,19 @@ public class BaseAction extends Base {
 	public String getmailcode(Model model, @RequestParam("mail") String mail) throws MessagingException {
 		int randomcode = (int) ((Math.random() * 9 + 1) * 100000);
 
-		MailUtil.sendEmail("smtp.163.com", mail, "系统邮件", "验证码为" + randomcode, "dxd19930902@163.com", "dxd19930902",
+		MailUtil.sendEmail("smtp.163.com", mail, "空车配货信息系统重置密码邮件", "验证码为" + randomcode+"\n 打死都不要告诉别人哦！ \n 系统管理团队 \n", "dxd19930902@163.com", "dxd19930902",
 				"19930902dxd");
 		return String.valueOf(randomcode);
 	}
 
+	/*
+	 * 更改运品运费
+	 */
 	@RequestMapping(value = "updatefreight.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String updatefreight(long sourceid, double fee) {
+	public String updatefreight(long sourceid, double rate) {
 		CargoResource cargoResource = cargoResourceService.find(sourceid);
-		cargoResource.setWeightFate(""+fee);
+		cargoResource.setWeightFate(""+rate);
 		cargoResourceService.update(cargoResource);
 		return "success";
 	}

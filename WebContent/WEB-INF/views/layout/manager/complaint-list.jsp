@@ -43,7 +43,7 @@
 					<th>订单号</th>
 					<th>发布时间</th>
 					<th>投诉内容</th>
-					<th>状态</th>
+					<th>处理结果</th>
 					<th>举报人</th>
 					<th>类型</th>
 					<th>操作</th>
@@ -66,11 +66,21 @@
 						<c:if test="${complaints.comptype eq 1}">
 						<td> 运单举报</td>
 						</c:if>
-						<td class="td-manage"><a title="编辑" href="javascript:;"
-							onclick="banner_edit('编辑','banner-edit.do?auid=${auth.id}','4','','510')"
-							class="ml-5" style="text-decoration: none"> <i
-								class="layui-icon">&#xe642;</i>
+						
+						<c:if test="${complaints.comptype eq 0}">
+						<td class="td-manage"><a title="删除" href="javascript:;"
+							onclick="javascript:window.location.href='Manager/banuser.do?type=yp&id=${complaints.relateMan.id}'"
+							class="ml-5" style="text-decoration: none"> 屏蔽用户
 						</a></td>
+						</c:if>
+						<c:if test="${complaints.comptype eq 1}">
+						<td class="td-manage"><a title="删除" href="javascript:;"
+							onclick="javascript:window.location.href='Manager/banuser.do?type=yd&id=${complaints.relateMan.id}'"
+							class="ml-5" style="text-decoration: none"> 屏蔽用户
+						</a></td>
+						</c:if>
+						
+						
 
 					</tr>
 				</c:forEach>

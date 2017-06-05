@@ -75,18 +75,17 @@
 							</div>
 						</div>
 						<div id="page">
+						
 							<ol id="timeline">
-
 								<c:forEach var="order" items="${orders}">
-									<li><time datetime="1991-10-01">${order.createTime}</time>
+									<li><time datetime="${order.createTime}">${order.createTime}</time>
 										<p>${order.cResource.goodName}</p>
 										<div class="description">
 											<p>${user.rate}</p>
 										</div></li>
 								</c:forEach>
 
-								<li><time datetime="1981-10-02">Septembre 1981</time>
-									<p>Rentrée des classes !</p></li>
+							
 							</ol>
 						</div>
 

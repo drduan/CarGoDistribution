@@ -319,9 +319,17 @@ ul, li {
 								</div>
 								<div class="right">
 									<ul>
-										<li class="text-success">￥0<span>收益总额</span></li>
+										<li class="text-success hide">￥0<span>收益总额</span></li>
 										<li class="text-info">${user.rate}<span>我的信用</span></li>
+										<c:if test="${user.rate <= 30}">
+										<li>一般<span>信誉评级</span></li>
+										</c:if>
+										<c:if test="${user.rate >= 30 }">
+										<li>良好<span>信誉评级</span></li>
+										</c:if>
+										<c:if test="${user.rate >= 60}">
 										<li>优秀<span>信誉评级</span></li>
+										</c:if>
 									</ul>
 								</div>
 								<div class="center">
@@ -626,9 +634,9 @@ ul, li {
 				</div>
 				<div class="modal-body" id="modal-body">
 					<form action="../comment.do" method="get">
-						订单号 <input class="form-control" type="text" id="uuid"
+						订单号 <input class="form-control" type="text" id="uuid" disabled="disabled"
 							name="uuid"
-							type="hidden" size="16" width="1500px"> <input
+							type="hidden" size="16" width="1500px"> <input 
 							class="form-control" type="number" name="rate"
 							placeholder="分数" name="orderid" maxlength="2">
 						<textarea
@@ -658,7 +666,7 @@ ul, li {
 					async : false
 				});
 				if (htmlobj.responseText == 'success') {
-					localtion.reload();
+					location.reload();
 				}
 			});
 		});

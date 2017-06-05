@@ -16,15 +16,16 @@
 		</button>
 		<a class="navbar-brand"
 			href="<%=request.getContextPath()%>/admins/home.do">欢迎来到空车配货网站</a>
-			
+
 	</div>
 
 
 	<div class="collapse navbar-collapse "
 		id="bs-example-navbar-collapse-1">
-		
+
 		<ul class="nav navbar-nav navbar-left">
-		<li><a href="<%=request.getContextPath()%>/admins/publishgoods.do">发布货源</a></li>
+			<li><a
+				href="<%=request.getContextPath()%>/admins/publishgoods.do">发布货源</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 
@@ -36,30 +37,16 @@
 					role="button" class="btn" data-toggle="modal"><i
 						class="fa fa-user"></i>登录</a></li>
 
-
-
-
-
-
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown"> 菜单<strong class="caret"></strong></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-						<li class="divider"></li>
-						<li><a href="#">One more separated link</a></li>
-					</ul></li>
-
 			</shiro:notAuthenticated>
 			<shiro:authenticated>
 
 
+		
 				<li><label> <a
 						href="<%=request.getContextPath()%>/logout.do">注销</a></label></li>
 
-				<li class="opts__item message"><a
-					id="dLabel" class="dropdown-toggle-message" href="../admins/msgl.do"> <span
+				<li class="opts__item message"><a id="dLabel"
+					class="dropdown-toggle-message" href="../admins/msgl.do"> <span
 						class="sr-only"> 消息</span> <span id="messageCount"
 						class="fa fa-bell-o">${messagecount} </span></a></li>
 				<li class="dropdown hoverDropdown"
@@ -71,12 +58,9 @@
 						<li><a
 							href="<%=request.getContextPath()%>/admins/adminprofile.do">我的主页</a></li>
 						<li><a href="../settings.do">账号设置</a></li>
-						<li><a
-							href="/User/logout.do">退出</a></li>
-							<li><a
-							href="../authentication.do">账户认证</a></li>
+						<li><a href="/User/logout.do">退出</a></li>
+						<li><a href="../authentication.do">账户认证</a></li>
 						<li class="divider"></li>
-						<li><a href="#">建议反馈</a></li>
 					</ul>
 			</shiro:authenticated>
 		</ul>
@@ -111,8 +95,7 @@
 
 					<div class="checkbox">
 
-						<label> <input type="checkbox" name="rememberMe" /> 
-						记住我
+						<label> <input type="checkbox" name="rememberMe" /> 记住我
 						</label>
 					</div>
 					<button type="submit" class="btn btn-default">登录</button>

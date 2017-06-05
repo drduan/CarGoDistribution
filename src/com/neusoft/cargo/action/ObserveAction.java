@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.neusoft.cargo.entity.Car;
+import com.neusoft.cargo.entity.CargoResource;
+import com.neusoft.cargo.entity.OrderType;
 import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.entity.User;
 import com.neusoft.cargo.service.UserService;
@@ -31,10 +33,23 @@ public class ObserveAction extends Base {
 		List<TrackOrder> orders = new ArrayList<>();
 		for (Car iterable_element : user.getCars()) {
 			for (TrackOrder trackOrder : iterable_element.getTock()) {
-				orders.add(trackOrder);
+				
+				if (trackOrder.getState()==OrderType.DISPATCHED ) {
+					orders.add(trackOrder);
+				}
+				
 			}
 		}
 
+		for (CargoResource iterable_element : user.getCargoResources()) {
+			for (TrackOrder trackOrder : iterable_element.getOrder()) {
+				if (trackOrder.getState()==OrderType.DISPATCHED ) {
+					orders.add(trackOrder);
+				}
+				
+			}
+		}
+		
 		model.addAttribute("orders", orders);
 
 		return "views/layout/userinfo";

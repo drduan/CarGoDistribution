@@ -13,19 +13,13 @@ import com.neusoft.cargo.entity.User;
 @Repository("CargoResourceDao")
 public class CargoResourceDao extends AbstractHibernateDAO<CargoResource> {
 
-	private static final Log log = LogFactory.getLog(UserDao.class);
+	private static final Log log = LogFactory.getLog(CargoResourceDao.class);
 	// property constants
-	public static final String OPENING_BALENCE = "openingBalence";
-	public static final String RECEIVE = "receive";
-	public static final String TRANSFER = "transfer";
-	public static final String TRANSFER_TO_COMMENT = "transferToComment";
-	public static final String DAY_BRAND_RATE = "dayBrandRate";
-	public static final String CLOSING_BALANCE = "closingBalance";
-	public static final String LAST_UPDATE_USE_ID = "lastUpdateUseId";
 
 	public CargoResourceDao() {
 		setClazz(CargoResource.class);
 	}
+
 	@Override
 	public void delete(CargoResource entity) {
 		// TODO Auto-generated method stub
@@ -56,13 +50,6 @@ public class CargoResourceDao extends AbstractHibernateDAO<CargoResource> {
 	// }
 	//
 	// }
-
-	public User getUniqueByProperty(String paramName, String value) {
-		// TODO Auto-generated method stub
-		// log.error("paramName"+paramName+"value"+value);
-
-		return (User) this.getHibernateTemplate().find("from User u where u.username=?", value).get(0);
-	}
 
 	public List<Car> GetCarList(User entity) {
 
@@ -103,6 +90,20 @@ public class CargoResourceDao extends AbstractHibernateDAO<CargoResource> {
 		getCurrentSession().save(cargoresource);
 		getCurrentSession().saveOrUpdate(user1);
 
+	}
+
+	public CargoResource findByYpbm(String ypbm) {
+		List<CargoResource> lc = (List<CargoResource>) this.getHibernateTemplate()
+				.find("from cargoresource u where u.ypbm=?", ypbm);
+		if (lc.isEmpty() ) {
+
+			return null;
+		} else {
+			return lc.get(0);
+		}
+		// CargoResource ciUser = (CargoResource) this.getHibernateTemplate()
+		// .find("from cargoresource u where u.ypbm=?", ypbm).get(0);
+		// return ciUser;
 	}
 
 }

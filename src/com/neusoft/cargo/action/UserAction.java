@@ -215,6 +215,8 @@ public class UserAction extends Base {
 		boolean userstates = (boolean) SecurityUtils.getSubject().getSession().getAttribute("userstates");
 		if(userstates)
 		{
+			
+			ensureUserIsLoggedOut();
 			model.addAttribute("message","用户访问被禁止");
 			return "views/layout/SuccessMessage";
 		}

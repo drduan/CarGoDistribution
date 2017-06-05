@@ -30,6 +30,7 @@
 							+ getQueryString("finishorderid"),
 					async : false
 				});
+				
 				window.location.href = "home.do";
 
 			} else {

@@ -69,8 +69,8 @@
                             <dl class="layui-nav-child">
                                 <dd class="">
                                     <dd class="">
-                                        <a href="javascript:;" _href="./welcome.html">
-                                            <cite>产品列表（待开发）</cite>
+                                        <a href="javascript:;"   _href="./banner-list.do" >
+                                            <cite>认证管理</cite>
                                         </a>
                                     </dd>
                                 </dd>
@@ -101,14 +101,5 @@
 	</div>
 	<script src="../static/lib/layui/layui.js" charset="utf-8"></script>
 	<script src="../static/js/x-admin.js"></script>
-	<script>
-		var _hmt = _hmt || [];
-		(function() {
-			var hm = document.createElement("script");
-			hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-			var s = document.getElementsByTagName("script")[0];
-			s.parentNode.insertBefore(hm, s);
-		})();
-	</script>
 </body>
 </html>

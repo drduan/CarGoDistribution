@@ -290,7 +290,7 @@ ul, li {
 									async : false
 								});
 								if (htmlobj.responseText == 'success') {
-									localation.reload();
+									location.reload();
 								}
 							});
 							$("#payid")
@@ -335,9 +335,19 @@ ul, li {
 								</div>
 								<div class="right">
 									<ul>
-										<li class="text-success">￥0.00<span>支出总额</span></li>
+										<li class="text-success hide">￥0.00<span>支出总额</span></li>
 										<li class="text-info">${user.rate}<span>我的信用</span></li>
+										
+										<c:if test="${user.rate <= 30}">
+										<li>一般<span>信誉评级</span></li>
+										</c:if>
+										<c:if test="${user.rate >= 30 }">
+										<li>良好<span>信誉评级</span></li>
+										</c:if>
+										<c:if test="${user.rate >= 60}">
 										<li>优秀<span>信誉评级</span></li>
+										</c:if>
+										
 									</ul>
 								</div>
 								<div class="center" >
@@ -390,14 +400,14 @@ ul, li {
 								<div id="first" class="active">
 
 									<c:if test="${empty carsource}">
-										<div class="row">没有车辆</div>
+										<div class="row">没有货源</div>
 									</c:if>
 									
 									<c:if test="${not  empty carsource}">
 									
 										<table
 											class="table table-hover table-condensed table-bordered">
-											<a href="../complaints.do"><label >投诉反馈</label></a>
+										<a href="../complaints.do"><label><font color="#337AB7">投诉反馈</font></label></a>
 											<caption>
 												<button class="btn btn-xs btn-primary pull-right "
 													id="changefee" role="button" type="button"
@@ -523,7 +533,7 @@ ul, li {
 														</c:if>
 
 														<td>${orders.uuid}</td>
-														<td>${orders.cResource.contact}</td>
+														<td> <a href="../user.do?id=${orders.car.user.id}">${orders.cResource.contact}</a></td>
 														<td>${orders.cResource.phone}</td>
 														<td>${orders.createTime}</td>
 														<c:if test="${orders.state eq paid}">
@@ -689,6 +699,7 @@ ul, li {
 				</div>
 				<div class="modal-body" id="modal-body">
 					<form action="../updatefreight.do" method="post">
+					
 						<input name="sourceid" id="sourceid"> 商品名 
 						<input
 							class="form-control" type="text" name="rate" placeholder="运费"
@@ -718,7 +729,7 @@ ul, li {
 					async : false
 				});
 				if (htmlobj.responseText == 'success') {
-					localtion.reload();
+					location.reload();
 				}
 			});
 		});

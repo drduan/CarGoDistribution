@@ -40,6 +40,16 @@ public class TrackOrder implements Serializable {
 		return state;
 	}
 
+	private Timestamp finish_time;
+	
+	public Timestamp getFinish_time() {
+		return finish_time;
+	}
+
+	public void setFinish_time(Timestamp finish_time) {
+		this.finish_time = finish_time;
+	}
+
 	public void setState(OrderType state) {
 		this.state = state;
 	}

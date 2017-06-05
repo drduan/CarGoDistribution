@@ -22,4 +22,6 @@ public interface CargoResourceService {
 	public List<CargoResource> getAll();
 	
 	public  void  delete(CargoResource cargoResource);
+	
+	public CargoResource findByYpbm(String ypbm);
 }

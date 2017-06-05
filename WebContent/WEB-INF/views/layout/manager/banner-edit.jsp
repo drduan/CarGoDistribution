@@ -29,8 +29,8 @@
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">缩略图 </label> <img
-					id="LAY_demo_upload" width="400" src="${au.address1}"> <img
-					id="LAY_demo_upload" width="400" src="${au.address2}">
+					id="LAY_demo_upload" width="400" src="../${au.address1}"> <img
+					id="LAY_demo_upload" width="400" src="../${au.address2}">
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label"> </label>
@@ -106,7 +106,7 @@
 				}, function(result) {
 					if (result == "success") {
 
-						layer.alert("增加成功", {
+						layer.alert("处理成功", {
 							icon : 6
 						},
 								function() {

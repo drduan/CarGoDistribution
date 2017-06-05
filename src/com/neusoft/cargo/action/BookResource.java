@@ -40,7 +40,6 @@ public class BookResource extends Base {
 	private MessageService messageservice;
 
 
-	// ${pageContext.request.contextPath}/person/updatePersonList.action"
 	@RequestMapping(value = "bookresource.do", method = RequestMethod.GET)
 	public String bookresource(String idname, Model model) {
 		// JsonParameter
@@ -81,39 +80,24 @@ public class BookResource extends Base {
 			jsonObject.put("status", "faild");
 			return jsonObject.toJSONString();
 		}
-
 		// 设置资源状态 不可用
-
-		// car.setStatus(true);
-
-		// UUID uuid = UUID.randomUUID();
-
 		StringBuilder str = new StringBuilder();// 定义变长字符串
 		Random random = new Random();
-		// 随机生成数字，并添加到字符串
 		for (int i = 0; i < 8; i++) {
 			str.append(random.nextInt(10));
 		}
 		// 将字符串转换为数字并输出
 		int num = Integer.parseInt(str.toString());
-		
-
 		TrackOrder tOrder = new TrackOrder();
 		tOrder.setCar(car2);
 		tOrder.setTemp_cargo_id(rid);
-		// tOrder.setcResource(car);
-		// 可以未支付
-		// tOrder.setOrderType(OrderType.WAITINGACCESS);
 		tOrder.setState(OrderType.NOT_PAID);
 		tOrder.setUuid(""+num);
 		trackOrderService.save(tOrder);
-
 		JSONObject jsonObject = new JSONObject();
-
 		jsonObject.put("status", "success");
 		jsonObject.put("orderno", tOrder.getUuid());
 		return jsonObject.toJSONString();
-
 	}
 
 	@RequestMapping(value = "paying.do", method = RequestMethod.GET)
@@ -140,7 +124,6 @@ public class BookResource extends Base {
 		message.setContent("有新的预约 前去查看;订单号" + order.getUuid());
 		message.setToperson(userservice.find(order.getcResource().get_user().getId()));
 		messageservice.save(message);
-
 		return "redirect:/User/profile.do";
 	}
 

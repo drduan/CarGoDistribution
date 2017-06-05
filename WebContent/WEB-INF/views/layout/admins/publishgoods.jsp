@@ -24,9 +24,11 @@
 
 				//判断 
 				var value = $("#departurePlace").val();
-				if (value.indexOf('省') >= 0 && value.indexOf('市') >= 0
-						&& value.indexOf('县') >= 0) {
+				if (value.indexOf('省') >= 0 && value.indexOf('市') >= 0) {
 					form.submit();
+				} else {
+					alert("输入地址中需要包括 省 市 关键字");
+
 				}
 
 			}
@@ -133,12 +135,12 @@
 							<label for="departurePlace" class="col-sm-3 control-label">出发地</label>
 							<div class="col-sm-9">
 								<input class="form-control" type="text" name="departurePlace"
-									id="departurePlace" data-options="required:true" />
+									id="departurePlace" placeholder="请输入含有 省 市关键字 的地点" data-options="required:true" />
 							</div>
 
 						</div>
 						<div class="form-group">
-							<label for="destPlace" class="col-sm-3 control-label">目的地</label>
+							<label for="destPlace"  placeholder="请输入含有 省 市关键字 的地点"  class="col-sm-3 control-label">目的地</label>
 							<div class="col-sm-9">
 								<input class="form-control" type="text" name="destPlace"
 									data-options="required:true" />

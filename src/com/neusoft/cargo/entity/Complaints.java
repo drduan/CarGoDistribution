@@ -112,8 +112,6 @@ public class Complaints implements Serializable {
 		this.uuid = uuid;
 	}
 
-
-
 	public User getRelateMan() {
 		return relateMan;
 	}

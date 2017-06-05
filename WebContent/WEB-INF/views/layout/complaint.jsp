@@ -23,19 +23,22 @@
 						<div class="row">
 							<jsp:include page="../include/head.jsp"></jsp:include>
 						</div>
+						<div class="row">
+							<label><a href="comresult.do">查看投诉结果</a></label>
+						</div>
 
- 
 						<form class="form-horizontal" role="form" action="complaints.do"
-						 method="post">
+							method="post">
 							<div class="form-group">
 
 								<label for="inputEmail3" class="col-sm-2 control-label">
 									投诉反馈类型 </label>
 								<div class="col-sm-10">
 									<select name="comptype">
-										<option value="0">投诉货主</option>
-										<option value="1">投诉车主</option>
-										<option value="2">货物违禁</option>
+										<option value="0">货物违禁</option>
+										<option value="1">投诉货主</option>
+										<option value="2">投诉车主</option>
+
 									</select>
 								</div>
 							</div>
@@ -45,34 +48,35 @@
 								<label for="inputEmail3" class="col-sm-2 control-label">
 									订单号</label>
 								<div class="col-sm-10">
-									<input type="uuid" class="form-control" 
-									placeholder="若无可置空" name="uuid"/>
+									<input class="form-control" type="number"
+										placeholder="若无则填写无" name="uuid" required />
 								</div>
 							</div>
 							<div class="form-group">
 
 								<label for="inputPassword3" class="col-sm-2 control-label">
-									运品详情链接 </label>
+									运品编码 </label>
 								<div class="col-sm-10">
-									<input name="goodurl" placeholder="若无可置空" type="url" class="form-control" id="inputPassword3" />
+									<input name="ypbm" placeholder="若无则填写无" type="number"
+										class="form-control" id="inputPassword3" required />
 								</div>
 							</div>
-							
+
 							<div class="form-group">
 
 								<label for="inputPassword3" class="col-sm-2 control-label">
 									投诉内容 </label>
 								<div class="col-sm-10">
-									<textarea name="Content"  class="form-control" id="inputPassword3" required>
+									<textarea name="Content" class="form-control"
+										id="inputPassword3" required>
 									</textarea>
 								</div>
 							</div>
-							
+
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 
-									<button type="submit" class="btn btn-default"> 提交
-									</button>
+									<button type="submit" class="btn btn-default">提交</button>
 								</div>
 							</div>
 						</form>
@@ -82,6 +86,6 @@
 			</div>
 		</div>
 	</div>
-		<script src="static/js/bootstrap.min.js"></script>
+	<script src="static/js/bootstrap.min.js"></script>
 </body>
 </html>

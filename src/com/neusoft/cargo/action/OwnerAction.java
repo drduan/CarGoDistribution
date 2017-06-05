@@ -1,5 +1,6 @@
 package com.neusoft.cargo.action;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -137,10 +138,10 @@ public class OwnerAction extends Base {
 		}
 		// 将字符串转换为数字并输出
 		int num = Integer.parseInt(str.toString());
-		resource.setYpbm("");
+		resource.setYpbm(""+num);
 		resource.set_user(user);
 		carResourceService.save(resource);
-		return "redirect:adminprofile.do";
+		return "redirect:home.do";
 	}
 
 	@RequestMapping(value = "GetUserCargoResource.json")
@@ -254,13 +255,17 @@ public class OwnerAction extends Base {
 	{
 		TrackOrder order = orderservice.find(orderid);
 		order.setState(OrderType.DISPATCHED);
+		order.setFinish_time(new Timestamp(System.currentTimeMillis()));
 		orderservice.save(order);
 
 		Car car = carService.find(order.getCar().getId());
 		car.setCarStatus(false);
 		carService.update(car);
-		// messageservice.updateMsgAsRead(Integer.parseInt(id));
-		// return "redirect:msgl.do";
+		Message message = new Message();
+		message.setContent("订单结束~ 请您抓紧时间评论哦");
+		message.setToperson(order.getCar().getUser());
+		messageservice.save(message);
+		
 		return "success";
 	}
 

@@ -89,7 +89,7 @@ public class ManagementAction {
 		UserAuthInfo userAuthInfo = userauthService.find(jObject.getInteger("id"));
 		userAuthInfo.setResult(jObject.getString("result"));
 		userAuthInfo.setPass(jObject.getBooleanValue("pass"));
-		userauthService.save(userAuthInfo);
+		
 
 		if (jObject.getBooleanValue("pass")) {
 			userAuthInfo.getUser().setHasauthentication(true);
@@ -97,6 +97,7 @@ public class ManagementAction {
 			userAuthInfo.getUser().setHasauthentication(false);
 
 		}
+		userauthService.save(userAuthInfo);
 		return "success";
 
 	}
@@ -112,8 +113,6 @@ public class ManagementAction {
 	public String bannerL(Model model) {
 		List<UserAuthInfo> auth = new ArrayList<>();
 		auth = userauthService.findAll();
-
-		logger.info("auth message" + auth.size());
 		model.addAttribute("auth", auth);
 		return "views/layout/manager/banner-list";
 	}
@@ -215,6 +214,16 @@ public class ManagementAction {
 	public String UpdateComplaints(Model model, Complaints complaints) {
 		complaintServiceImpl.save(complaints);
 		return "success";
+	}
+	
+	
+	@RequestMapping("banuser.do")
+	public String banuser(@RequestParam("id") long id,@RequestParam("type") String type)
+	{
+		User user = userservice.find(id);
+		user.setLocked(true);
+		userservice.save(user);
+		return "redirect:../complaintlist.do?type="+type;
 	}
 
 }

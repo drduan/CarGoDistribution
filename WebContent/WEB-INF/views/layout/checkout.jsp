@@ -154,6 +154,11 @@
 											<td>${cargoResource.goodName}</td>
 
 										</tr>
+										<tr>
+											<td>商品编码</td>
+											<td>${cargoResource.ypbm}</td>
+
+										</tr>
 										<tr class="active">
 
 											<td>发布日期</td>

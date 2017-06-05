@@ -10,20 +10,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.neusoft.cargo.entity.Car;
 import com.neusoft.cargo.entity.CargoResource;
 import com.neusoft.cargo.entity.Comment;
 import com.neusoft.cargo.entity.Complaints;
+import com.neusoft.cargo.entity.Message;
 import com.neusoft.cargo.entity.TrackOrder;
 import com.neusoft.cargo.entity.User;
+import com.neusoft.cargo.service.CargoResourceService;
 import com.neusoft.cargo.service.MessageService;
 import com.neusoft.cargo.service.TrackOrderService;
 import com.neusoft.cargo.service.UserService;
 import com.neusoft.cargo.service.impl.CommentServiceImpl;
 import com.neusoft.cargo.service.impl.ComplaintServiceImpl;
+import com.opensymphony.xwork2.Result;
 
 @Controller("MsgAction")
 public class MsgAction extends Base {
@@ -38,7 +39,10 @@ public class MsgAction extends Base {
 	private UserService userService;
 	@Autowired
 	public ComplaintServiceImpl compliantservice;
-
+	@Autowired
+	private CargoResourceService cargoResourceService;
+	
+	
 	Logger logger = Logger.getLogger(UserAction.class);
 
 	@RequestMapping(value = "markasread.do")
@@ -51,7 +55,7 @@ public class MsgAction extends Base {
 	public String upload(Model model, @RequestParam(value = "msg") String t_name,
 			@RequestParam(value = "info") String t_id) {
 		logger.info("message /successmsg.do");
-		model.addAttribute("msg", "支付请求");
+		model.addAttribute("msg", "支付请求"+t_name);
 		model.addAttribute("info", "请您支付预约金额￥" + t_id);
 		model.addAttribute("btn", "ok");
 		model.addAttribute("btn1", "支付完成");
@@ -59,20 +63,34 @@ public class MsgAction extends Base {
 		return "/views/layout/successmodel";
 	}
 
+	/*
+	 * 车主给评论
+	 */
 	@RequestMapping("comment.do")
 	public String Comment(Comment comment) {
 		TrackOrder order = orderService.find("" + comment.getUuid());
 		User user = userService.find(order.getcResource().get_user().getId());
 		user.setRate((user.getRate() + Integer.parseInt(comment.getRate())) / 2);
 		userService.save(user);
+		
 		order.setDrivercommented(true);
 		orderService.save(order);
 		comment.setOrder(order);
 		comment.setFlag("toowner");
 		commentService.save(comment);
+		
+		Message message = new Message();
+		message.setContent("车主已经评论过订单 评论内容"+comment.getContent()+"\n  给您评分"+comment.getRate());
+		message.setToperson(user);
+		messageservice.save(message);
+		
 		return "redirect:/home.do";
 	}
 
+
+	/*
+	 * 货主给评论
+	 */
 	@RequestMapping("commentto.do")
 	public String Commentto(Comment comment) {
 		TrackOrder order = orderService.find("" + comment.getUuid());
@@ -84,6 +102,12 @@ public class MsgAction extends Base {
 		comment.setOrder(order);
 		comment.setFlag("todriver");
 		commentService.save(comment);
+		
+		Message message = new Message();
+		message.setContent("货主已经评论过订单 评论内容"+comment.getContent()+"\n   给您评分"+comment.getRate());
+		message.setToperson(user);
+		messageservice.save(message);
+		
 		return "redirect:/home.do";
 	}
 
@@ -91,23 +115,26 @@ public class MsgAction extends Base {
 	public String PostComplaints(Complaints complaints) {
 		complaints.setLaunchMan(getUser());
 
-		if (complaints.getUuid() != 0) {
+		if (orderService.find("" + complaints.getUuid()) != null) {
 			Car car = orderService.find("" + complaints.getUuid()).getCar();
-			CargoResource resource = orderService.find(""+complaints.getUuid()).getcResource();
-			if (car != null && resource!=null) {
+			CargoResource resource = orderService.find("" + complaints.getUuid()).getcResource();
+			if (car != null && resource != null) {
 				if (car.getUser().getId() == getUser().getId()) {
 					complaints.setRelateMan(resource.get_user());
-				}
-				else{
+				} else {
 					complaints.setRelateMan(car.getUser());
 				}
-				
 			}
 		}
-		if (complaints.getYpbm()!=null) {
-			logger.info("message good url empty");
+		if (complaints.getYpbm() != null) {
+
+			CargoResource resource = cargoResourceService.findByYpbm("" + complaints.getYpbm());
+			if (resource!=null) {
+				complaints.setRelateMan(resource.get_user());
+			}
+			
+
 		}
-		
 		compliantservice.save(complaints);
 		return "redirect:/home.do";
 	}
@@ -133,7 +160,6 @@ public class MsgAction extends Base {
 
 				if (complaints2.getComptype() == 0) {
 					TrackOrder order = orderService.find("" + complaints2.getUuid());
-
 					complaintsshow.add(complaints2);
 				}
 			}
@@ -144,9 +170,31 @@ public class MsgAction extends Base {
 				}
 			}
 		}
-		logger.error("message" + complaintsshow.size());
 		model.addAttribute("complaints", complaintsshow);
 		return "views/layout/manager/complaint-list";
 	}
+	
+	@RequestMapping("comresult.do")
+	public String comresult(Model model)
+	{
+		
+		model.addAttribute("messagecuount",getMessageCount());
+		model.addAttribute("model",compliantservice.findAll());
+		return "views/layout/comresult";
+	}
+	
+	public int getMessageCount() {
+		List<Message> lmsg = messageservice.findAll();
+		int messagecount = 0;
+		for (Message message : lmsg) {
 
+			if (message.getToperson().equals(getUser())) {
+				if (!message.isStatus()) {
+					messagecount++;
+				}
+
+			}
+		}
+		return messagecount;
+	}
 }

@@ -82,4 +82,11 @@ public class CargoResourceServiceImpl implements CargoResourceService {
 		
 	}
 
+	@Override
+	public CargoResource findByYpbm(String ypbm) {
+		// TODO Auto-generated method stub
+		return cargoResourceDao.findByYpbm(ypbm);
+		
+	}
+
 }

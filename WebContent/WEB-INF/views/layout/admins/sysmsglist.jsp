@@ -42,7 +42,7 @@
 						<div class="alert alert-success alert-dismissable">
 							<p />
 
-							消息内容:<a href="adminprofile.do">${msglist.content} </a>
+							消息内容:<a href="home.do">${msglist.content} </a>
 
 							<p />
 							<a class="markasread" href="#">已读</a>
